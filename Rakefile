@@ -8,6 +8,6 @@ require 'bundler'
 Bundler.require
 
 Motion::Project::App.setup do |app|
-  # Use `rake config' to see complete project settings.
   app.name = 'Scribbeo'
+  app.device_family = :iphone
 end

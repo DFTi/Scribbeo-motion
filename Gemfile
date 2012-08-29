@@ -1,3 +1,3 @@
 source :rubygems
 
-gem 'bubble-wrap'
+gem 'bubble-wrap', require:'bubble-wrap/http'

@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<signatures version='1.0'>
-<class name='GetIPAddress'>
-<method class_method='true' selector='IPAddress'>
-<retval type='@' declared_type='NSString*'/>
-</method>
-</class>
-</signatures>

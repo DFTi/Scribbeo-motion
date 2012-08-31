@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<class name='HostToIP'>
+<method selector='IPAddress:' class_method='true'>
+<arg index='0' name='host' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+</signatures>

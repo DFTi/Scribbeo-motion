@@ -10,5 +10,5 @@ Bundler.require
 Motion::Project::App.setup do |app|
   app.name = 'Scribbeo'
   app.device_family = :iphone
-  app.vendor_project "vendor/GetIPAddress", :static
+  app.vendor_project "vendor/HostToIP", :xcode, headers_dir:"HostToIP"
 end

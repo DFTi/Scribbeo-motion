@@ -17,4 +17,12 @@ module App
     App.delegate.media_source
   end
 
+  def debug
+    App.delegate.debug
+  end
+
+  def debug=(val)
+    App.delegate.debug = val
+  end
+
 end

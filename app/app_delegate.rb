@@ -1,23 +1,35 @@
 class AppDelegate
-  attr_accessor :media_source
+  attr_accessor :media_source, :debug
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
+    @debug = nil
     # Setup default values needed 
     # Temporary until we setup the settings bundle and UI
-    App::Persistence["networking"] = false
-    App::Persistence["autodiscover"] = false
-    App::Persistence["scheme"] = "http"
-    App::Persistence["ip"] = "thundermini.local"
-    App::Persistence["port"] = "8080"
-    App::Persistence["username"] = ""
-    App::Persistence["password"] = ""
+    Persistence["networking"] = true
+    Persistence["autodiscover"] = false
+    Persistence["scheme"] = "http"
+    Persistence["ip"] = "thundermini.local"
+    Persistence["port"] = "8080"
+    Persistence["username"] = ""
+    Persistence["password"] = ""
 
     # ---- end temp values ---
 
     @media_source = MediaSource.new_from_settings
-    
-    @media_source.on(:contents_ready) do
-      puts "Contents ready! Call .contents to populate your UI"
+    bindMediaSourceEvents
+
+    # Set up the UI however way you want
+    # When it's ready to go, just call:
+    @media_source.connect
+
+    # And let the event handlers notify you...
+
+    true
+  end
+
+  def bindMediaSourceEvents
+    @media_source.on(:contents_fetched) do
+      puts "Contents ready! Use App.media_source.contents to retrieve"
       puts "Recalling .fetch_contents will retrigger this block"
       # At this point we can trust that
       # media_source.contents will give us the right
@@ -25,12 +37,14 @@ class AppDelegate
       # and existing view with these contents
     end
 
-    @media_source.on(:connection_ready) do
+    @media_source.on(:connected) do
       puts "Connection ready! Fetching contents!"
       @media_source.fetch_contents
     end
 
-    true
+    @media_source.on(:connection_failed) do
+      puts "Connection failed..."
+    end
   end
 
   def applicationWillResignActive(application)

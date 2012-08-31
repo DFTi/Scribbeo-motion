@@ -7,6 +7,10 @@ describe MediaSource do
       @ms = MediaSource.new_from_settings
     end
 
+    it "should be in local mode" do
+      @ms.config[:mode].should.equal :local
+    end
+
     it "fetches contents" do
       @ms.contents.should.equal []
       @ms.fetch_contents

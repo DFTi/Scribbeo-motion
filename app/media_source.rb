@@ -18,7 +18,6 @@ class MediaSource
     when :local
       fetch_local_contents
     end
-    self.trigger(:contents_fetched)
   end
 
   def connect

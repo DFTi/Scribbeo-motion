@@ -7,6 +7,7 @@ module ContentFetcher
         @contents << MediaAsset.new(name: name, uri: File.join(dp, name), ext: ext)
       end
     end
+    self.trigger(:contents_fetched)
   end
 
   def fetch_python_contents
@@ -29,6 +30,7 @@ module ContentFetcher
           })
           @contents << MediaAsset.new(params)
         end
+        self.trigger(:contents_fetched)
       else
         raise "Failed to fetch contents from python server"
       end
@@ -37,6 +39,7 @@ module ContentFetcher
 
   def fetch_caps_contents
     # ...
+    raise "Caps content fetching is not implemented yet"
   end
 
 end

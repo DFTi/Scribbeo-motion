@@ -7,7 +7,6 @@ class MediaSource
   end
 
   def fetch_contents
-    # Should give me back MediaSources and MediaAssets
     case @config[:mode]
     when :caps
       raise "caps mode not yet implemented"
@@ -20,6 +19,7 @@ class MediaSource
         @contents << asset unless asset.type == :unknown
       end
     end
+    @contents
   end
 
   def self.new_from_settings

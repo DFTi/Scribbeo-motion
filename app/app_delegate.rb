@@ -5,7 +5,7 @@ class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     # Setup default values needed 
     # Temporary until we setup the settings bundle and UI
-    
+
     @media_source = MediaSource.new_from_settings
     true
   end
@@ -22,6 +22,10 @@ class AppDelegate
     # If yes, cleanup the player and start from the beginning by reading settings
     # => and creating a new media source from it
     # If no, resume where we left off.
+  end
+
+  def mediaSourceReady
+    # Call this method with KVO when the media source is ready to go!
   end
 
 end

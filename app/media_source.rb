@@ -1,5 +1,6 @@
 class MediaSource
   attr_reader :contents
+  include EM::Eventable
 
   def initialize(opts=nil)
     @contents = []
@@ -7,6 +8,7 @@ class MediaSource
   end
 
   def fetch_contents
+    @contents = []
     case @config[:mode]
     when :caps
       raise "caps mode not yet implemented"
@@ -19,7 +21,7 @@ class MediaSource
         @contents << asset unless asset.type == :unknown
       end
     end
-    @contents
+    self.trigger(:contents_ready)
   end
 
   def self.new_from_settings
@@ -36,16 +38,13 @@ class MediaSource
         uri = "#{scheme}://#{ip}:#{port}"
         username = Persistence["username"]
         password = Persistence["password"]
-        mode = "#{username}#{password}".empty? ? :python : :caps
-        options = {
-          mode:mode, path:'/', uri:uri,
-          username:username, password:password
+        self.new {
+          mode:("#{username}#{password}".empty? ? :python : :caps),
+          path:'/', uri:uri, username:username, password:password
         }
-        MediaSource.new options
       end
     else
-      mode = :local
-      MediaSource.new mode:mode, path:'/'
+      self.new :mode => :local, path:'/'
     end
   end
 

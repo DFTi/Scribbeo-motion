@@ -1,5 +1,5 @@
 source :rubygems
 
-gem 'bubble-wrap', require:'bubble-wrap/core'
+gem 'bubble-wrap', require:'bubble-wrap/all'
 gem 'motion-redgreen'
 gem 'motion-fixtures'

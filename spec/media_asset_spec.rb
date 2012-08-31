@@ -1,10 +1,12 @@
 describe MediaAsset do
 
-  it "determines asset type based on extension" do
-    movie = MediaAsset.new "file.mov"
-    still = MediaAsset.new "file.png"
-    movie.type.should.equal :movie
-    still.type.should.equal :still
+  it "tests file type support" do
+    t = MediaAsset.supports_extension? "MOV"
+    t.should.equal true
+    t = MediaAsset.supports_extension? "PNG"
+    t.should.equal true
+    t = MediaAsset.supports_extension? "ABC"
+    t.should.equal false
   end
 
 end

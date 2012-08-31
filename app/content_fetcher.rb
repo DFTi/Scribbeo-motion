@@ -1,10 +1,10 @@
 module ContentFetcher
 
   def fetch_local_contents
-    docs_path = App.documents_path
+    dp = App.documents_path
     App.documents.each do |name|
-      if MediaAsset.supports? name
-        @contents << MediaAsset.new(name, File.join(docs_path, name))
+      if MediaAsset.supports_extension?(ext=File.extname(name)[1..-1].upcase)
+        @contents << MediaAsset.new(name: name, uri: File.join(dp, name), ext: ext)
       end
     end
   end

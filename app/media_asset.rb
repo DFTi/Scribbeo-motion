@@ -19,6 +19,14 @@ class MediaAsset
     end
   end
 
+  def name
+    @info["name"]
+  end
+
+  def uri
+    @info["uri"]
+  end
+
   def self.supports_extension?(ext)
     STILLS.include?(ext) || MOVIES.include?(ext)
   end

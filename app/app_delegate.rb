@@ -6,7 +6,7 @@ class AppDelegate
     # Setup default values needed 
     # Temporary until we setup the settings bundle and UI
     Persistence["networking"] = true
-    Persistence["autodiscover"] = false
+    Persistence["autodiscover"] = true
     Persistence["scheme"] = "http"
     Persistence["ip"] = "thundermini.local"
     Persistence["port"] = "8080"

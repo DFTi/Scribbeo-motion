@@ -19,10 +19,7 @@ class AppDelegate
     bindMediaSourceEvents
 
     # Set up the UI however way you want
-    # When it's ready to go, just call:
-    @media_source.connect
-
-    # And let the event handlers notify you...
+    # Let the event handlers notify you of stuff you care about ...
 
     true
   end
@@ -44,6 +41,11 @@ class AppDelegate
 
     @media_source.on(:connection_failed) do
       puts "Connection failed..."
+    end
+
+    @media_source.on(:ready_to_connect) do
+      puts "Ready"
+      @media_source.connect
     end
   end
 

@@ -6,7 +6,7 @@ describe MediaAsset do
     t = MediaAsset.supports_extension? "PNG"
     t.should.equal true
     t = MediaAsset.supports_extension? "ABC"
-    t.should.equal false
+    t.should.not.equal false
   end
 
 end

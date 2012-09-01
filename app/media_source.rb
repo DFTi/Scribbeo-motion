@@ -59,8 +59,7 @@ class MediaSource
         ms = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
         if Persistence["autodiscover"]
           puts "Autodiscover will use BonjourFinder"
-          finder = BonjourFinder.new(ms)
-          ms.finder = finder
+          ms.finder = BonjourFinder.new(ms)
         end
       end
     else

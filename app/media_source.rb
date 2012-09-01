@@ -53,21 +53,21 @@ class MediaSource
       password = Persistence["password"]
       mode = "#{username}#{password}".empty? ? :python : :caps
       if mode == :caps
-        self.new mode:mode, uri:uri, username:username, password:password
-        self.trigger(:ready_to_connect)
+        ms = self.new mode:mode, uri:uri, username:username, password:password
+        ms.trigger(:ready_to_connect)
       elsif mode == :python
-        media_source = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
+        ms = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
         if Persistence["autodiscover"]
           puts "Autodiscover will use BonjourFinder"
-          finder = BonjourFinder.new(media_source)
-          media_source.finder = finder
+          finder = BonjourFinder.new(ms)
+          ms.finder = finder
         end
-        return media_source
       end
     else
-      self.new :mode => :local
-      self.trigger(:ready_to_connect)
+      ms = self.new :mode => :local
+      ms.trigger(:ready_to_connect)
     end
+    return ms
   end
 
 end

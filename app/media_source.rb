@@ -1,39 +1,41 @@
 class MediaSource
   attr_reader :contents, :config
-  attr_accessor :finder
   include EM::Eventable
   include ContentFetcher
+  include BonjourExtension
 
   def initialize(opts)
     @contents = []
-    @config = opts
-    @finder = nil
-  end
-
-  def connect
-    case @config[:mode]
-    when :caps
-      raise "caps mode not yet implemented"
-    when :python
-      BW::HTTP.get(@config[:uri]) do |response|
-        trigger(response.ok? ? :connected : :connection_failed)
+    @media_source = true
+    @mode = opts[:mode]
+    if bonjour_finder = opts[:autodiscover]
+      bonjour_finder.notify do |ip, port|
+        @config["server"] = {address: ip, port: port}
       end
-    when :local
-      trigger(:connected)
+    else
+      @uri = opts[:uri]
     end
   end
 
-  def python_discovered(ip, port)
-    base_uri = "http://#{ip}:#{port}"
-    @config[:base_uri] = base_uri
-    @config[:uri] = base_uri+'/list'
-    trigger(:ready_to_connect)
-  end
+  # def connect
+  #   case @mode
+  #   when :caps
+  #     # @uri = "http://#{config[:server]["address"]}:#{config[:server]["port"]}"
+  #     raise "caps mode not yet implemented"
+  #   when :python
+  #     @uri = "http://#{config[:server]["address"]}:#{config[:server]["port"]}"
+  #     BW::HTTP.get(@uri) do |response|
+  #       trigger(response.ok? ? :connected : :connection_failed)
+  #     end
+  #   when :local
+  #     trigger(:connected)
+  #   end
+  # end
 
   def bind
-    on(:ready_to_connect) do
+    on(:ready) do
       puts "Ready"
-      connect
+      # connect
     end
     
     on(:connected) do
@@ -55,59 +57,24 @@ class MediaSource
     end
   end
 
-  # def self.prepare_from_settings
-  #   if Persistence["networking"]
-  #     scheme = Persistence["scheme"]
-  #     ip = Persistence["ip"]
-  #     port = Persistence["port"]
-  #     uri = "#{scheme}://#{ip}:#{port}"
-  #     username = Persistence["username"]
-  #     password = Persistence["password"]
-  #     mode = "#{username}#{password}".empty? ? :python : :caps
-  #     if mode == :caps
-  #       ms = self.new mode:mode, uri:uri, username:username, password:password
-  #     elsif mode == :python
-  #       ms = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
-  #       if Persistence["autodiscover"]
-  #         puts "Autodiscover will use BonjourFinder"
-  #         ms.finder = BonjourFinder.new
-  #         ms.finder.on(:found_bonjour_server) do
-  #           finder = App.media_source.finder
-  #           host = NSHost.hostWithName finder.server.hostName
-  #           App.media_source.python_discovered(host.address, finder.server.port)
-  #           finder.stop
-  #         end
-  #         ms.finder.start
-  #       end
-  #     end
-  #   else
-  #     ms = self.new :mode => :local
-  #   end
-  #   ms.bind
-  #   return ms
-  # end
-
   def self.prepare_from_settings
     if Persistence["networking"]
       if Persistence["autodiscover"]
-        new mode: :python
-      elsif Persistence["server"]
-        if Persistence["login"]
-          new mode: :caps
+        new mode: :python, autodiscover: BonjourFinder.new("_videoTree._tcp.")
+      elsif server = Persistence["server"]
+        if login = Persistence["login"]
+          new mode: :caps, server: server, login: login
         else
-          new mode: :python
+          new mode: :python, server: server
         end
       else
         App.alert "Network mode requires target server address & port, \
           Alternatively, use autodiscover or disable networking."
+        # UI_TASK Redirect to settings.
       end
     else
       new mode: :local
     end
-  end
-
-  def self.auth?
-
   end
 
 end

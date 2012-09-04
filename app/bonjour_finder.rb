@@ -1,15 +1,16 @@
 class BonjourFinder
-  include EM::Eventable
+  attr_writer :notify
 
-  def initialize
+  def initialize(search)
     @servers = []
+    @search = search
     @browser = NSNetServiceBrowser.new
     @browser.delegate = self
   end
 
   def start
     stop
-    @browser.searchForServicesOfType("_videoTree._tcp.", inDomain:"")
+    @browser.searchForServicesOfType(@search, inDomain:"")
   end
 
   def stop
@@ -24,10 +25,18 @@ class BonjourFinder
   end
 
   def netServiceDidResolveAddress(sender)
-    trigger(:found_bonjour_server)
+    ip = NSHost.hostWithName(sender.hostName).address
+    port = sender.port
+    @block.call(ip, port)
+    stop
   end
 
   def server
-    @servers.first
+    server = @servers.first
+  end
+
+  def notify(&block)
+    @block = block
+    start
   end
 end

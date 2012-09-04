@@ -28,7 +28,7 @@ module ContentFetcher
   end
 
   def fetch_python_contents!
-    BW::HTTP.get(@config[:uri]) do |response|
+    BW::HTTP.get(@uri) do |response|
       if response.ok?
         json = BW::JSON.parse response.body.to_str
         opts = {mode: :python, base_uri: @config[:base_uri]}

@@ -11,4 +11,5 @@ begin; require 'guard/motion'; rescue LoadError; end
 Motion::Project::App.setup do |app|
   app.name = 'Scribbeo'
   app.device_family = :iphone
+  app.redgreen_style = :focused
 end

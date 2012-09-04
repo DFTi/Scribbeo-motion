@@ -55,36 +55,67 @@ class MediaSource
     end
   end
 
+  # def self.prepare_from_settings
+  #   if Persistence["networking"]
+  #     scheme = Persistence["scheme"]
+  #     ip = Persistence["ip"]
+  #     port = Persistence["port"]
+  #     uri = "#{scheme}://#{ip}:#{port}"
+  #     username = Persistence["username"]
+  #     password = Persistence["password"]
+  #     mode = "#{username}#{password}".empty? ? :python : :caps
+  #     if mode == :caps
+  #       ms = self.new mode:mode, uri:uri, username:username, password:password
+  #     elsif mode == :python
+  #       ms = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
+  #       if Persistence["autodiscover"]
+  #         puts "Autodiscover will use BonjourFinder"
+  #         ms.finder = BonjourFinder.new
+  #         ms.finder.on(:found_bonjour_server) do
+  #           finder = App.media_source.finder
+  #           host = NSHost.hostWithName finder.server.hostName
+  #           App.media_source.python_discovered(host.address, finder.server.port)
+  #           finder.stop
+  #         end
+  #         ms.finder.start
+  #       end
+  #     end
+  #   else
+  #     ms = self.new :mode => :local
+  #   end
+  #   ms.bind
+  #   return ms
+  # end
+
   def self.prepare_from_settings
     if Persistence["networking"]
-      scheme = Persistence["scheme"]
-      ip = Persistence["ip"]
-      port = Persistence["port"]
-      uri = "#{scheme}://#{ip}:#{port}"
-      username = Persistence["username"]
-      password = Persistence["password"]
-      mode = "#{username}#{password}".empty? ? :python : :caps
-      if mode == :caps
-        ms = self.new mode:mode, uri:uri, username:username, password:password
-      elsif mode == :python
-        ms = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
-        if Persistence["autodiscover"]
-          puts "Autodiscover will use BonjourFinder"
-          ms.finder = BonjourFinder.new
-          ms.finder.on(:found_bonjour_server) do
-            finder = App.media_source.finder
-            host = NSHost.hostWithName finder.server.hostName
-            App.media_source.python_discovered(host.address, finder.server.port)
-            finder.stop
-          end
-          ms.finder.start
+      if Persistence["autodiscover"]
+        new mode: :python
+      elsif Persistence["server"]
+        if Persistence["login"]
+          new mode: :caps
+        else
+          new mode: :python
         end
+      else
+        App.alert "Network mode requires target server address & port, \
+          Alternatively, use autodiscover or disable networking."
       end
     else
-      ms = self.new :mode => :local
+      new mode: :local
     end
-    ms.bind
-    return ms
+  end
+
+  def self.auth?
+
   end
 
 end
+
+
+
+
+
+
+
+

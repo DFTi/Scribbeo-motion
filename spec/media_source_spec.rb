@@ -3,84 +3,99 @@ describe MediaSource do
   CAPS_SERVER_ADDRESS, CAPS_SERVER_PORT = "caps.local", "3000"
   CAPS_USERNAME, CAPS_PASSWORD = "tester@caps.local", "asdf"
 
-  shared "in local mode" do
+  shared "networking off" do
     Persistence["networking"] = false
-  end
-
-  shared "in network mode with autodiscover (python)" do
-    Persistence["networking"] = true
-    Persistence["autodiscover"] = true
-  end
-
-  shared "in network mode with manual server address (python)" do
-    Persistence["networking"] = true
-    Persistence["address"] = PYTHON_SERVER_ADDRESS
-    Persistence["port"] = PYTHON_SERVER_PORT
-  end
-
-  shared "in network mode with manual server address (caps)" do
-    Persistence["networking"] = true
-    Persistence["autodiscover"] = false
-    Persistence["address"] = CAPS_SERVER_ADDRESS
-    Persistence["port"] = CAPS_SERVER_PORT
-    Persistence["username"] = CAPS_USERNAME
-    Persistence["password"] = CAPS_PASSWORD
-  end
-  
-  #
-  # => "in local mode"
-  #
-
-  before do
-    behaves_like "in local mode"
     @ms = MediaSource.prepare_from_settings
   end
 
-  it "should be in local mode" do
-    @ms.config[:mode].should.equal :local
+  shared "networking on, autodiscover on" do
+    Persistence["networking"] = true
+    Persistence["autodiscover"] = true
+    @ms = MediaSource.prepare_from_settings
   end
 
-  it "fetches contents" do
+  shared "networking on, autodiscover off, server not given, auth not given" do
+    Persistence["networking"] = true
+    Persistence["autodiscover"] = false
+    Persistence["server"] = nil
+    Persistence["login"] = nil
+    @ms = MediaSource.prepare_from_settings
+  end
+
+  shared "networking on, autodiscover off, server given, login not given" do
+    Persistence["networking"] = true
+    Persistence["autodiscover"] = false
+    Persistence["server"] = {address: PYTHON_SERVER_ADDRESS, port: PYTHON_SERVER_PORT}
+    Persistence["login"] = nil
+    @ms = MediaSource.prepare_from_settings
+  end
+
+  shared "networking on, autodiscover off, server given, login given" do
+    Persistence["networking"] = true
+    Persistence["autodiscover"] = false
+    Persistence["server"] = {address: CAPS_SERVER_ADDRESS, port: CAPS_SERVER_PORT}
+    Persistence["login"] = {username: CAPS_USERNAME, password: CAPS_PASSWORD}
+    @ms = MediaSource.prepare_from_settings
+  end
+  
+  shared "content fetching" do
     @ms.contents.should.equal []
     @ms.fetch_contents
     @ms.contents.should.not.equal []
   end
 
-  before do
-    behaves_like "in network mode with autodiscover (python)"
-    @ms = MediaSource.prepare_from_settings
+  ###
+
+  describe "with invalid settings" do
+    behaves_like "networking on, autodiscover off, server not given, auth not given"
+    
+    it "returns and presents an alert" do
+      @ms.class.should.equal UIAlertView
+    end
   end
 
-  it "should be in python mode" do
-    @ms.config[:mode].should.equal :python
+  ###
+
+  describe "in local mode" do
+    behaves_like "networking off"
+    
+    it "should be in local mode" do
+      @ms.config[:mode].should.equal :local
+    end
+
+    it "fetches contents from local storage" do
+      behaves_like "content fetching"
+    end
   end
 
-  before do
-    behaves_like "in network mode with manual server address (python)"
-    @ms = MediaSource.prepare_from_settings
+  ###
+
+  describe "python mode (autodiscovery)" do
+    behaves_like "networking on, autodiscover on"
+
+    it "should be in python mode" do
+      @ms.config[:mode].should.equal :python
+    end
   end
 
-  it "should be in python mode" do
-    @ms.config[:mode].should.equal :python
+  ###
+
+  describe "python mode (no autodiscovery)" do
+    behaves_like "networking on, autodiscover off, server given, login not given"
+
+    it "should be in python mode" do
+      @ms.config[:mode].should.equal :python
+    end
   end
 
-  it "can connect to the designated server" do
-    # @ms.config[:]
-    # @ms.should trigger :connected
+  ###
+
+  describe "caps mode" do
+    behaves_like "networking on, autodiscover off, server given, login given"
+
+    it "should be in caps mode" do
+      @ms.config[:mode].should.equal :caps
+    end
   end
-
-  # describe "networked mode (python, no autodiscover)" do
-  #   before do
-  #     App::Persistence["networking"] = true
-  #     App::Persistence["autodiscover"] = false
-  #     @ms = App.setup_media_source
-  #   end
-
-  #   it "fetches contents" do
-  #     @ms.contents.should.equal []
-  #     @ms.fetch_contents
-  #     @ms.contents.should.not.equal []
-  #   end
-  # end
 
 end

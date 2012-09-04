@@ -1,26 +1,9 @@
-require 'guard'
-require 'guard/guard'
-require 'guard/test'
+guard 'motion' do
+  watch(%r{^spec/.+_spec\.rb$})
 
-hide_sim_script = %{
-  tell application "Finder"
-    set visible of process "iOS Simulator" to false
-    repeat while (visible of process "iOS Simulator" is false)
-      delay 0.1
-    end repeat
-    set visible of process "iOS Simulator" to false
-  end tell
-}
+  # RubyMotion App example
+  watch(%r{^app/(.+)\.rb$})     { |m| "./spec/#{m[1]}_spec.rb" }
 
-guard :test do
-  watching = [
-    /^spec\/(.+)\.rb$/, 
-    /^app\/(.+)\.rb$/, 
-    /^resources\/(.+)\.storyboard$/
-  ].each do |regex|
-    watch(regex) do
-      fork { system("osascript -e '#{hide_sim_script}'") }
-      system("rake spec")
-    end
-  end
+  # RubyMotion gem example
+  watch(%r{^lib/[^/]+/(.+)\.rb$})     { |m| "./spec/#{m[1]}_spec.rb" }
 end

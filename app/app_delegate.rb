@@ -8,7 +8,7 @@ class AppDelegate
     Persistence["networking"] = true
     Persistence["autodiscover"] = true
     Persistence["scheme"] = "http"
-    Persistence["ip"] = "thundermini.local"
+    Persistence["ip"] = "keyvan-mbp.local"
     Persistence["port"] = "8080"
     Persistence["username"] = ""
     Persistence["password"] = ""

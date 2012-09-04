@@ -1,30 +1,33 @@
 class BonjourFinder
-  attr_reader :servers
   include EM::Eventable
 
-  def initialize(media_source)
+  def initialize
     @servers = []
     @browser = NSNetServiceBrowser.new
     @browser.delegate = self
+  end
+
+  def start
+    stop
     @browser.searchForServicesOfType("_videoTree._tcp.", inDomain:"")
-    @media_source = media_source
+  end
+
+  def stop
+    @browser.stop
   end
 
   def netServiceBrowser(browser, didFindService:service, moreComing:more_coming)
     return if @servers.include?(service)
-    service.resolve
+    service.delegate = self
+    service.resolveWithTimeout(100)
     @servers << service
-    @browser.stop
-    @browser = nil
   end
 
-  def netServiceDidResolveAddress(service)
-    # @media_source.python_discovered(service.hostName[0..-2], service.port)
-    puts "!!!!!!!!!!!=> "+service.hostName
+  def netServiceDidResolveAddress(sender)
+    trigger(:found_bonjour_server)
   end
 
   def server
     @servers.first
   end
-
 end

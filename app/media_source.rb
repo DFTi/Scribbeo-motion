@@ -20,6 +20,7 @@ class MediaSource
     when :local
       fetch_local_contents
     end
+    true
   end
 
   def connect
@@ -35,9 +36,8 @@ class MediaSource
     end
   end
 
-  def python_discovered(hostname, port)
-    puts "service discovered, triggering connection now!"
-    base_uri = "http://#{hostname}:#{port}"
+  def python_discovered(ip, port)
+    base_uri = "http://#{ip}:#{port}"
     @config[:base_uri] = base_uri
     @config[:uri] = base_uri+'/list'
     self.trigger(:ready_to_connect)
@@ -59,7 +59,14 @@ class MediaSource
         ms = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
         if Persistence["autodiscover"]
           puts "Autodiscover will use BonjourFinder"
-          ms.finder = BonjourFinder.new(ms)
+          ms.finder = BonjourFinder.new
+          ms.finder.on(:found_bonjour_server) do
+            finder = App.media_source.finder
+            host = NSHost.hostWithName finder.server.hostName
+            App.media_source.python_discovered(host.address, finder.server.port)
+            finder.stop
+          end
+          ms.finder.start
         end
       end
     else

@@ -8,8 +8,8 @@ describe "Application 'Scribbeo'" do
   #   @app.windows.size.should == 1
   # end
 
-  it "sets up a media source" do
-    App.delegate.media_source.should != nil
+  it "has a root media source" do
+    @app.delegate.media_source.should.equal App.media_source
   end
 
   it "has fixtures for local mode" do

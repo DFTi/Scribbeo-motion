@@ -10,29 +10,16 @@ class MediaSource
     @finder = nil
   end
 
-  def fetch_contents
-    @contents = []
-    case @config[:mode]
-    when :caps
-      fetch_caps_contents
-    when :python
-      fetch_python_contents
-    when :local
-      fetch_local_contents
-    end
-    true
-  end
-
   def connect
     case @config[:mode]
     when :caps
       raise "caps mode not yet implemented"
     when :python
       BW::HTTP.get(@config[:uri]) do |response|
-        self.trigger(response.ok? ? :connected : :connection_failed)
+        trigger(response.ok? ? :connected : :connection_failed)
       end
     when :local
-      self.trigger(:connected)
+      trigger(:connected)
     end
   end
 
@@ -40,10 +27,35 @@ class MediaSource
     base_uri = "http://#{ip}:#{port}"
     @config[:base_uri] = base_uri
     @config[:uri] = base_uri+'/list'
-    self.trigger(:ready_to_connect)
+    trigger(:ready_to_connect)
   end
 
-  def self.new_from_settings
+  def bind
+    on(:ready_to_connect) do
+      puts "Ready"
+      connect
+    end
+    
+    on(:connected) do
+      puts "Connection ready! Fetching contents!"
+      fetch_contents
+    end
+
+    on(:connection_failed) do
+      puts "Connection failed..."
+    end
+
+    on(:contents_fetched) do
+      puts "Contents ready! Use App.media_source.contents to retrieve"
+      puts "Recalling .fetch_contents will retrigger this block"
+      # At this point we can trust that
+      # media_source.contents will give us the right
+      # contents, so we can present a view or update
+      # and existing view with these contents
+    end
+  end
+
+  def self.prepare_from_settings
     if Persistence["networking"]
       scheme = Persistence["scheme"]
       ip = Persistence["ip"]
@@ -54,7 +66,6 @@ class MediaSource
       mode = "#{username}#{password}".empty? ? :python : :caps
       if mode == :caps
         ms = self.new mode:mode, uri:uri, username:username, password:password
-        ms.trigger(:ready_to_connect)
       elsif mode == :python
         ms = self.new mode:mode, uri:"#{uri}/list", base_uri:uri
         if Persistence["autodiscover"]
@@ -71,8 +82,8 @@ class MediaSource
       end
     else
       ms = self.new :mode => :local
-      ms.trigger(:ready_to_connect)
     end
+    ms.bind
     return ms
   end
 

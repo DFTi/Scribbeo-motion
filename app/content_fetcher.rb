@@ -1,16 +1,33 @@
 module ContentFetcher
 
-  def fetch_local_contents
+  def fetch_contents
+    @contents = []
+    trigger(:contents_fetched) if case @config[:mode]
+    when :caps
+      fetch_caps_contents!
+    when :python
+      fetch_python_contents!
+    when :local
+      fetch_local_contents!
+    end
+  end
+
+  def fetch_caps_contents!
+    # ...
+    raise "Caps content fetching is not implemented yet"
+  end
+
+  def fetch_local_contents!
     dp = App.documents_path
     App.documents.each do |name|
       if MediaAsset.supports_extension?(ext=File.extname(name)[1..-1].upcase)
         @contents << MediaAsset.new(name: name, uri: File.join(dp, name), ext: ext)
       end
     end
-    self.trigger(:contents_fetched)
+    true
   end
 
-  def fetch_python_contents
+  def fetch_python_contents!
     BW::HTTP.get(@config[:uri]) do |response|
       if response.ok?
         json = BW::JSON.parse response.body.to_str
@@ -35,11 +52,6 @@ module ContentFetcher
         raise "Failed to fetch contents from python server"
       end
     end
-  end
-
-  def fetch_caps_contents
-    # ...
-    raise "Caps content fetching is not implemented yet"
   end
 
 end

@@ -1,20 +1,11 @@
 class BonjourFinder
   attr_writer :notify
 
-  def initialize(search)
+  def initialize(service_type)
     @servers = []
-    @search = search
+    @search = service_type
     @browser = NSNetServiceBrowser.new
     @browser.delegate = self
-  end
-
-  def start
-    stop
-    @browser.searchForServicesOfType(@search, inDomain:"")
-  end
-
-  def stop
-    @browser.stop
   end
 
   def netServiceBrowser(browser, didFindService:service, moreComing:more_coming)
@@ -26,17 +17,18 @@ class BonjourFinder
 
   def netServiceDidResolveAddress(sender)
     ip = NSHost.hostWithName(sender.hostName).address
-    port = sender.port
-    @block.call(ip, port)
-    stop
+    return if ip.include? ":" # No IPv6
+    @browser.stop
+    @target.instance_exec(ip, sender.port, &@block)
   end
 
   def server
     server = @servers.first
   end
 
-  def notify(&block)
+  def notify(target, &block)
+    @target = target
     @block = block
-    start
+    @browser.searchForServicesOfType(@search, inDomain:"")
   end
 end

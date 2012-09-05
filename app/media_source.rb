@@ -1,71 +1,42 @@
 class MediaSource
-  attr_reader :contents, :config
-  include EM::Eventable
-  include ContentFetcher
-  include BonjourExtension
+  attr_reader :contents, :mode, :uri, :base_uri
 
   def initialize(opts)
-    @contents = []
-    @media_source = true
+    @uri = opts[:uri]
+    @base_uri = opts[:base_uri]
+    @autodiscover = opts[:autodiscover]
     @mode = opts[:mode]
-    if bonjour_finder = opts[:autodiscover]
-      bonjour_finder.notify do |ip, port|
-        @config["server"] = {address: ip, port: port}
-      end
-    else
-      @uri = opts[:uri]
+    @ready = false
+    @login = opts[:login]
+    connect! if opts[:root]
+  end
+
+  def connected?
+    @connected ? true : false
+  end
+
+  ##
+  # Requests content and fills `@contents` with MediaSources and MediaAssets
+  # When complete, the event :contents_fetched is triggered
+  def fetch_contents
+    if connected?
+      @contents = []
+      fetch_contents!
     end
   end
 
-  # def connect
-  #   case @mode
-  #   when :caps
-  #     # @uri = "http://#{config[:server]["address"]}:#{config[:server]["port"]}"
-  #     raise "caps mode not yet implemented"
-  #   when :python
-  #     @uri = "http://#{config[:server]["address"]}:#{config[:server]["port"]}"
-  #     BW::HTTP.get(@uri) do |response|
-  #       trigger(response.ok? ? :connected : :connection_failed)
-  #     end
-  #   when :local
-  #     trigger(:connected)
-  #   end
-  # end
-
-  def bind
-    on(:ready) do
-      puts "Ready"
-      # connect
-    end
-    
-    on(:connected) do
-      puts "Connection ready! Fetching contents!"
-      fetch_contents
-    end
-
-    on(:connection_failed) do
-      puts "Connection failed..."
-    end
-
-    on(:contents_fetched) do
-      puts "Contents ready! Use App.media_source.contents to retrieve"
-      puts "Recalling .fetch_contents will retrigger this block"
-      # At this point we can trust that
-      # media_source.contents will give us the right
-      # contents, so we can present a view or update
-      # and existing view with these contents
-    end
-  end
-
+  ## 
+  # Uses settings to produce a new MediaSource
   def self.prepare_from_settings
     if Persistence["networking"]
       if Persistence["autodiscover"]
-        new mode: :python, autodiscover: BonjourFinder.new("_videoTree._tcp.")
+        new mode: :python, autodiscover: true, root: true
       elsif server = Persistence["server"]
+        uri = "http://#{server['address']}:#{server['port']}"
         if login = Persistence["login"]
-          new mode: :caps, server: server, login: login
+          new mode: :caps, base_uri:uri , login: login, root: true
         else
-          new mode: :python, server: server
+          new mode: :python, base_uri:uri, root: true
         end
       else
         App.alert "Network mode requires target server address & port, \
@@ -73,7 +44,127 @@ class MediaSource
         # UI_TASK Redirect to settings.
       end
     else
-      new mode: :local
+      new mode: :local, root: true
+    end
+  end
+
+  private
+
+  def connected!
+    puts "Connected!"
+  end
+
+  def connection_failed!
+    puts "Connection Failed"
+  end
+
+  def contents_fetched!
+    puts "Contents fetched"
+  end
+
+  ##
+  # Connects to the target source and sets @connected ivar
+  #
+  # Calls #connected! or #connection_failed!
+  def connect!
+    @connected = false
+    case @mode
+    when :local
+      @connected = true
+      connected!
+    when :caps
+      caps_connect!
+    when :python
+      if @base_uri
+        python_connect!
+      elsif @autodiscover
+        @finder = BonjourFinder.new("_videoTree._tcp.")
+        @finder.notify(self) do |ip, port|
+          @base_uri = "http://#{ip}:#{port}"
+          python_connect!
+        end
+      else
+        connection_failed!
+      end
+    end
+  end
+
+  ##
+  # #connect!'s underlying method for python mode
+  def python_connect!
+    @uri = "#{@base_uri}/list"
+    BW::HTTP.get(@uri) do |res|
+      @connected = res.ok?
+      connected? ? connected! : connection_failed!
+    end
+  end
+
+  ##
+  # #connect!'s underlying method for caps mode
+  def caps_connect!
+    @uri = "#{@base_uri}/users/sign_in"
+    payload = {
+      user:{
+        email:@login["username"],
+        password:@login["password"]
+      }
+    }
+    BW::HTTP.post(@uri, payload) do |res|
+      @connected = res.ok?
+      connected? ? connected! : connection_failed!
+    end
+  end
+
+  def fetch_contents!
+    case @mode
+    when :caps
+      fetch_caps_contents!
+    when :python
+      fetch_python_contents!
+    when :local
+      fetch_local_contents!
+    end
+  end
+
+  def fetch_caps_contents!
+    # ...
+    raise "Caps content fetching is not implemented yet"
+  end
+
+  def fetch_local_contents!
+    dp = App.documents_path
+    App.documents.each do |name|
+      if MediaAsset.supports_extension?(ext=File.extname(name)[1..-1].upcase)
+        @contents << MediaAsset.new(name: name, uri: File.join(dp, name), ext: ext)
+      end
+    end
+    contents_fetched!
+  end
+
+  def fetch_python_contents!
+    BW::HTTP.get(@uri) do |response|
+      if response.ok?
+        json = BW::JSON.parse response.body.to_str
+        opts = {mode: :python, base_uri: @base_uri}
+        json["folders"].each do |item|
+          params = opts.merge({
+            name: item["name"],
+            uri: @base_uri+item["list_url"]
+          })
+          @contents << MediaSource.new(params)
+        end
+        json["files"].each do |item|
+          next unless MediaAsset.supports_extension?(item["ext"].upcase)
+          params = opts.merge({
+            name: item["name"], ext: item["ext"],
+            uri: @base_uri+item["asset_url"]
+          })
+          @contents << MediaAsset.new(params)
+        end
+        contents_fetched!
+      else
+        raise "Failed to fetch contents from python server"
+      end
     end
   end
 

@@ -2,12 +2,6 @@ class AppDelegate
   attr_accessor :media_source
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    Persistence["networking"] = true
-    Persistence["autodiscover"] = true
-    @media_source = MediaSource.prepare_from_settings
-
-    # Set up the UI however way you want
-    # Let the event handlers notify you of stuff you care about ...
 
     true
   end

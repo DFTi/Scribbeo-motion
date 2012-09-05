@@ -1,7 +1,7 @@
 describe MediaSource do
-  PYTHON_SERVER_ADDRESS, PYTHON_SERVER_PORT = "devbox.local", "8080"
-  CAPS_SERVER_ADDRESS, CAPS_SERVER_PORT = "caps.local", "3000"
-  CAPS_USERNAME, CAPS_PASSWORD = "tester@caps.local", "asdf"
+  PYTHON_SERVER_ADDRESS, PYTHON_SERVER_PORT = "devebox.local", "8080"
+  CAPS_SERVER_ADDRESS, CAPS_SERVER_PORT = "capsbox.local", "3000"
+  CAPS_USERNAME, CAPS_PASSWORD = "tester@caps.local", "qweqwe"
 
   shared "networking off" do
     Persistence["networking"] = false
@@ -40,6 +40,7 @@ describe MediaSource do
   
   shared "content fetching" do
     @ms.contents.should.equal []
+    @ms.connected?.should.equal true
     @ms.fetch_contents
     @ms.contents.should.not.equal []
   end
@@ -60,12 +61,18 @@ describe MediaSource do
     behaves_like "networking off"
     
     it "should be in local mode" do
-      @ms.config[:mode].should.equal :local
+      @ms.mode.should.equal :local
     end
 
-    it "fetches contents from local storage" do
-      behaves_like "content fetching"
+    it "connects immediately" do
+      wait 1 do
+        @ms.connected?.should.equal true
+      end
     end
+
+    # it "fetches contents from local storage" do
+    #   behaves_like "content fetching"
+    # end
   end
 
   ###
@@ -74,7 +81,7 @@ describe MediaSource do
     behaves_like "networking on, autodiscover on"
 
     it "should be in python mode" do
-      @ms.config[:mode].should.equal :python
+      @ms.mode.should.equal :python
     end
   end
 
@@ -84,7 +91,7 @@ describe MediaSource do
     behaves_like "networking on, autodiscover off, server given, login not given"
 
     it "should be in python mode" do
-      @ms.config[:mode].should.equal :python
+      @ms.mode.should.equal :python
     end
   end
 
@@ -94,7 +101,7 @@ describe MediaSource do
     behaves_like "networking on, autodiscover off, server given, login given"
 
     it "should be in caps mode" do
-      @ms.config[:mode].should.equal :caps
+      @ms.mode.should.equal :caps
     end
   end
 

@@ -38,13 +38,6 @@ describe MediaSource do
     @ms = MediaSource.prepare_from_settings
   end
   
-  shared "content fetching" do
-    @ms.contents.should.equal []
-    @ms.connected?.should.equal true
-    @ms.fetch_contents
-    @ms.contents.should.not.equal []
-  end
-
   ###
 
   describe "with invalid settings" do
@@ -63,16 +56,6 @@ describe MediaSource do
     it "should be in local mode" do
       @ms.mode.should.equal :local
     end
-
-    it "connects immediately" do
-      wait 1 do
-        @ms.connected?.should.equal true
-      end
-    end
-
-    # it "fetches contents from local storage" do
-    #   behaves_like "content fetching"
-    # end
   end
 
   ###

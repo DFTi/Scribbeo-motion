@@ -1,5 +1,5 @@
 describe MediaSource do
-  PYTHON_SERVER_ADDRESS, PYTHON_SERVER_PORT = "devebox.local", "8080"
+  PYTHON_SERVER_ADDRESS, PYTHON_SERVER_PORT = "devbox.local", "8080"
   CAPS_SERVER_ADDRESS, CAPS_SERVER_PORT = "capsbox.local", "3000"
   CAPS_USERNAME, CAPS_PASSWORD = "tester@caps.local", "qweqwe"
 

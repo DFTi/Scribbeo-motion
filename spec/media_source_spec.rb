@@ -37,12 +37,12 @@ describe MediaSource do
     Persistence["login"] = {username: CAPS_USERNAME, password: CAPS_PASSWORD}
     @ms = MediaSource.prepare_from_settings
   end
-  
+
   ###
 
   describe "with invalid settings" do
     behaves_like "networking on, autodiscover off, server not given, auth not given"
-    
+
     it "returns and presents an alert" do
       @ms.class.should.equal UIAlertView
     end
@@ -52,7 +52,7 @@ describe MediaSource do
 
   describe "in local mode" do
     behaves_like "networking off"
-    
+
     it "should be in local mode" do
       @ms.mode.should.equal :local
     end
@@ -85,7 +85,38 @@ describe MediaSource do
 
     it "should be in caps mode" do
       @ms.mode.should.equal :caps
+      wait 2 do
+        @ms.connected?.should.equal true
+      end
     end
+
+    it "should fetch contents" do
+      @ms.fetch_contents
+      wait 2 do
+        @ms.contents.size.should.equal 1
+      end
+    end
+
+    # really test MediaAsset
+    # but this establishes
+    # nice pretense for this
+
+    it "should fetch annotations" do
+      @ms.contents[0].fetch_annotations
+      wait 2 do
+        @last_size = @ms.contents[0].annotations.length
+        @last_size.should > 0
+      end
+    end
+
+    it "should be able to create annotation" do
+      note = {"seconds"=>"2", "note"=>"2!", "timecode"=>"00:00:00:02", "media_asset_id"=>@ms.contents[0].info[:id]}
+      @ms.contents[0].create_note(note)
+      wait 1 do
+        @ms.contents[0].annotations.length.should.equal (@last_size + 1)
+      end
+    end
+
   end
 
 end

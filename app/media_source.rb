@@ -3,7 +3,7 @@ class MediaSource
 
   def initialize(opts)
     @uri = opts[:uri]
-    @base_uri = opts[:base_uri]
+    $base_uri = opts[:base_uri]
     @autodiscover = opts[:autodiscover]
     @mode = opts[:mode]
     @ready = false
@@ -25,7 +25,7 @@ class MediaSource
     end
   end
 
-  ## 
+  ##
   # Uses settings to produce a new MediaSource
   def self.prepare_from_settings
     if Persistence["networking"]
@@ -34,13 +34,13 @@ class MediaSource
       elsif server = Persistence["server"]
         uri = "http://#{server['address']}:#{server['port']}"
         if login = Persistence["login"]
-          new mode: :caps, base_uri:uri , login: login, root: true
+          new mode: :caps, base_uri:uri, login: login, root: true
         else
           new mode: :python, base_uri:uri, root: true
         end
       else
         App.alert "Network mode requires target server address & port, \
-          Alternatively, use autodiscover or disable networking."
+        Alternatively, use autodiscover or disable networking."
         # UI_TASK Redirect to settings.
       end
     else
@@ -75,12 +75,12 @@ class MediaSource
     when :caps
       caps_connect!
     when :python
-      if @base_uri
+      if $base_uri
         python_connect!
       elsif @autodiscover
         @finder = BonjourFinder.new("_videoTree._tcp.")
         @finder.notify(self) do |ip, port|
-          @base_uri = "http://#{ip}:#{port}"
+          $base_uri = "http://#{ip}:#{port}"
           python_connect!
         end
       else
@@ -92,7 +92,7 @@ class MediaSource
   ##
   # #connect!'s underlying method for python mode
   def python_connect!
-    @uri = "#{@base_uri}/list"
+    @uri = "#{$base_uri}/list"
     BW::HTTP.get(@uri) do |res|
       @connected = res.ok?
       connected? ? connected! : connection_failed!
@@ -102,14 +102,14 @@ class MediaSource
   ##
   # #connect!'s underlying method for caps mode
   def caps_connect!
-    @uri = "#{@base_uri}/users/sign_in"
+    @uri = "#{$base_uri}/api/v1/session"
     payload = {
-      user:{
-        email:@login["username"],
-        password:@login["password"]
-      }
+      email:@login["username"],
+      password:@login["password"]
     }
-    BW::HTTP.post(@uri, payload) do |res|
+    BW::HTTP.post(@uri, payload: payload) do |res|
+      reply = BW::JSON.parse(res.body.to_str)
+      $token = reply[:private_token]
       @connected = res.ok?
       connected? ? connected! : connection_failed!
     end
@@ -127,15 +127,22 @@ class MediaSource
   end
 
   def fetch_caps_contents!
-    # ...
-    raise "Caps content fetching is not implemented yet"
+    @uri = "#{$base_uri}/api/v1/all_accessible"
+    BW::HTTP.get(@uri, payload: {private_token: $token}) do |res|
+      reply = BW::JSON.parse(res.body.to_str)
+      reply.each do |asset|
+        if MediaAsset.supports_extension?(ext=File.extname(asset["name"])[1..-1].upcase)
+          @contents << MediaAsset.new(name: asset["name"], uri: asset["location_uri"], ext: ext, mode: @mode, id: asset["id"])
+        end
+      end
+    end
   end
 
   def fetch_local_contents!
     dp = App.documents_path
     App.documents.each do |name|
       if MediaAsset.supports_extension?(ext=File.extname(name)[1..-1].upcase)
-        @contents << MediaAsset.new(name: name, uri: File.join(dp, name), ext: ext)
+        @contents << MediaAsset.new(name: name, uri: File.join(dp, name), ext: ext, mode: @mode)
       end
     end
     contents_fetched!
@@ -145,11 +152,12 @@ class MediaSource
     BW::HTTP.get(@uri) do |response|
       if response.ok?
         json = BW::JSON.parse response.body.to_str
-        opts = {mode: :python, base_uri: @base_uri}
+        opts = {mode: :python, base_uri: $base_uri}
         json["folders"].each do |item|
           params = opts.merge({
             name: item["name"],
-            uri: @base_uri+item["list_url"]
+            uri: $base_uri+item["list_url"],
+            mode: @mode
           })
           @contents << MediaSource.new(params)
         end
@@ -157,7 +165,8 @@ class MediaSource
           next unless MediaAsset.supports_extension?(item["ext"].upcase)
           params = opts.merge({
             name: item["name"], ext: item["ext"],
-            uri: @base_uri+item["asset_url"]
+            uri: $base_uri+item["asset_url"],
+            mode: @mode
           })
           @contents << MediaAsset.new(params)
         end

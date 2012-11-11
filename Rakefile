@@ -6,7 +6,11 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-begin; require 'guard/motion'; rescue LoadError; end
+require 'guard/motion'
+
+def puts str
+  NSLog str
+end
 
 Motion::Project::App.setup do |app|
   app.name = 'Scribbeo'

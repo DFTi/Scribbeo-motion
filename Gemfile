@@ -18,3 +18,5 @@ gem 'motion-fixtures'
 
 gem 'guard'
 gem 'guard-motion'
+
+# gem 'timecode', :github => "jsilverMDX/timecode"

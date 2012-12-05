@@ -1,22 +1,16 @@
 source :rubygems
 
+gem 'ib'
 gem 'rake'
 
-# test nuke unused group
+gem 'sugarcube', :github => "rubymotion/sugarcube"
+gem 'bubble-wrap', :github => "rubymotion/BubbleWrap", :require=>'bubble-wrap/all'
+
+# ... for tests
 gem 'listen', '0.4.7'
 gem 'rb-fsevent'
-gem 'terminal-notifier-guard'
-
-
-gem 'sugarcube', :github => "rubymotion/sugarcube"
-gem 'ib' #, :github => "yury/ib"
-gem 'bubble-wrap', :github => "rubymotion/BubbleWrap", :require=>'bubble-wrap/all'
 gem 'motion-redgreen'
 gem 'motion-fixtures'
-# gem 'cocoapods'
-# gem 'motion-cocoapods'
-
+gem 'terminal-notifier-guard'
 gem 'guard'
 gem 'guard-motion'
-
-# gem 'timecode', :github => "jsilverMDX/timecode"

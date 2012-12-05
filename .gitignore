@@ -6,3 +6,4 @@ build
 resources/*.nib
 resources/*.momd
 resources/*.storyboardc
+ib.xcodeproj

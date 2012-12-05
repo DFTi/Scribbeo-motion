@@ -22,6 +22,8 @@ class MediaSource
     if connected?
       @contents = []
       fetch_contents!
+    else
+      App.alert "Cannot fetch contents: not connected"
     end
   end
 
@@ -51,15 +53,15 @@ class MediaSource
   private
 
   def connected!
-    puts "Connected!"
+    NSLog "Connected!"
   end
 
   def connection_failed!
-    puts "Connection Failed"
+    NSLog "Connection Failed"
   end
 
   def contents_fetched!
-    puts "Contents fetched"
+    NSLog "Contents fetched"
   end
 
   ##

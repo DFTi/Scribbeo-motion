@@ -2,18 +2,15 @@
 $:.unshift("/Library/RubyMotion/lib")
 require 'motion/project'
 
-require 'rubygems'
 require 'bundler'
 Bundler.require
 
 require 'guard/motion'
 
-def puts str
-  NSLog str
-end
-
 Motion::Project::App.setup do |app|
-  app.name = 'Scribbeo'
+  app.identifier = "com.digitalfilmtree.ScribbeoMotion"
+  app.name = 'Scribbeo Motion'
   app.device_family = :iphone
-  app.redgreen_style = :focused
+  app.interface_orientations = [:landscape_right]
+  app.redgreen_style = :full
 end

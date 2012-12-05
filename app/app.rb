@@ -25,4 +25,10 @@ module App
     App.delegate.debug = val
   end
 
+  ##
+  # Change to the view controller specified by the identifier
+  def switch_to(identifier)
+    App.delegate.switch_to_vc App.delegate.load_vc identifier
+  end
+
 end

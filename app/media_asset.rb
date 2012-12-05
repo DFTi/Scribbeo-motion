@@ -83,6 +83,7 @@ class MediaAsset
   end
 
   def self.supports_extension?(ext)
+    ext.upcase!
     STILLS.include?(ext) || MOVIES.include?(ext)
   end
 

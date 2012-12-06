@@ -4,7 +4,7 @@ class EnterpriseServer < MediaSource::Server
     super(opts)
   end
 
-  def connect
+  def connect!
     return @status if connected? || connecting?
     @status = :connecting
     payload = {email:@login["username"], password:@login["password"]}
@@ -28,18 +28,19 @@ class EnterpriseServer < MediaSource::Server
     return self
   end
 
-  def contents
+  def fetch_contents!
     @contents = []
     @uri = "#{@base_uri}/api/v1/all_accessible"
     BW::HTTP.get(@uri, payload: {private_token: $token}) do |res|
       reply = BW::JSON.parse(res.body.to_str)
       reply.each do |asset|
-        if MediaAsset.supports_extension?(ext=File.extname(asset["name"])[1..-1].upcase)
+        if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
           @contents << MediaAsset.new(name: asset["name"], uri: asset["location_uri"], ext: ext, mode: @mode, id: asset["id"])
         end
       end
+      contents_fetched!
     end
-    return @contents
+    self
   end
 
 end

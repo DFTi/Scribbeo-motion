@@ -4,7 +4,7 @@ class PythonServer < MediaSource::Server
     super(opts)
   end
 
-  def connect
+  def connect!
     return @status if connected? || connecting?
     @finder = BonjourFinder.new("_videoTree._tcp.")
     @finder.notify(self) do |ip, port|
@@ -17,7 +17,8 @@ class PythonServer < MediaSource::Server
     end
   end
 
-  def contents
+  def fetch_contents!
+    @contents = []
     BW::HTTP.get(@uri) do |response|
       if response.ok?
         json = BW::JSON.parse response.body.to_str
@@ -44,5 +45,7 @@ class PythonServer < MediaSource::Server
         raise "Failed to fetch contents from python server"
       end
     end
+    self
   end
+
 end

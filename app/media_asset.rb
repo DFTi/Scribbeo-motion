@@ -1,8 +1,8 @@
 class MediaAsset
   attr_reader :info, :annotations
 
-  STILLS = ['JPG', 'JPEG', 'PNG', 'GIF']
-  MOVIES = ['MOV', 'MP4', 'M4V', 'M3U8']
+  STILLS = ['.JPG', '.JPEG', '.PNG', '.GIF']
+  MOVIES = ['.MOV', '.MP4', '.M4V', '.M3U8']
 
   def initialize(opts)
     @info = opts

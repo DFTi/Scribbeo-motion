@@ -7,6 +7,10 @@ module MediaSource
       @ready = false
       @status = :initializing
     end
+
+    def contents_fetched!
+      delegate.contents_fetched
+    end
   end
 
   class Server < Base

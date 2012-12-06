@@ -30,17 +30,29 @@
                                     <action selector="settings:" destination="SrS-4o-EwC" eventType="touchUpInside" id="41W-aD-sX5"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7Ws-Mh-a7n">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="157" id="27K-JX-T32"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="b7i-Z1-34Y" firstAttribute="top" secondItem="jhN-lD-cxe" secondAttribute="top" constant="-1" id="AEm-FZ-66H"/>
+                            <constraint firstItem="7Ws-Mh-a7n" firstAttribute="bottom" secondItem="jhN-lD-cxe" secondAttribute="bottom" type="default" id="C9m-fA-OT5"/>
+                            <constraint firstItem="7Ws-Mh-a7n" firstAttribute="top" secondItem="jhN-lD-cxe" secondAttribute="top" type="default" id="FZy-Rg-ASU"/>
                             <constraint firstItem="S9n-EM-drI" firstAttribute="centerX" secondItem="jhN-lD-cxe" secondAttribute="centerX" type="default" id="Zhw-fC-Ith"/>
+                            <constraint firstItem="7Ws-Mh-a7n" firstAttribute="leading" secondItem="jhN-lD-cxe" secondAttribute="leading" type="default" id="aJV-ir-UN8"/>
                             <constraint firstItem="b7i-Z1-34Y" firstAttribute="trailing" secondItem="jhN-lD-cxe" secondAttribute="trailing" type="default" id="h20-2a-kff"/>
                             <constraint firstItem="S9n-EM-drI" firstAttribute="top" secondItem="jhN-lD-cxe" secondAttribute="top" constant="59" id="iZU-J1-yYA"/>
-                            <constraint firstItem="b7i-Z1-34Y" firstAttribute="top" secondItem="jhN-lD-cxe" secondAttribute="top" type="default" id="rWL-1l-Ehx"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="asset_table" destination="7Ws-Mh-a7n" id="kOE-JO-AoF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEB-Hd-IyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -179,6 +191,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsController.h"/>
             <relationships>
                 <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="load_settings"/>
                 <relationship kind="action" name="save_settings"/>
                 <relationship kind="action" name="set_delegates"/>
                 <relationship kind="action" name="textFieldShouldReturn:"/>
@@ -194,9 +207,12 @@
         <class className="ViewerController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewerController.h"/>
             <relationships>
-                <relationship kind="action" name="reload_media_source"/>
+                <relationship kind="action" name="connected"/>
+                <relationship kind="action" name="connection_failed"/>
+                <relationship kind="action" name="contents_fetched"/>
                 <relationship kind="action" name="settings:"/>
                 <relationship kind="action" name="viewDidLoad"/>
+                <relationship kind="outlet" name="asset_table"/>
             </relationships>
         </class>
     </classes>

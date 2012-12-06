@@ -2,32 +2,47 @@ class ViewerController < UIViewController
   extend IB
   include ViewerHelper
 
+  outlet :asset_table
+
   def viewDidLoad
-    NSLog 'view did load'
-    if $source = new_source_from_settings
+    $source = new_source_from_settings
+    if $source.is_a? UIAlertView
+      App.switch_to "SettingsController"
+    else
       $source.delegate = self
       $source.connect!
-    else
-      App.switch_to "SettingsController"
     end
   end
 
-  def settings(sender)
-    App.delegate.switch_to_vc App.delegate.load_vc("SettingsController")
+  def tableView(tableView, didSelectRowAtIndexPath:indexPath)
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    
+    # then do something like this:
+    # Player.load($source.contents[indexPath.row])
+
+    NSLog "did select row at index path: #{indexPath.row}"
   end
 
-  # This is called when the media source has connected
+  def settings(sender)
+    App.switch_to "SettingsController"
+  end
+
+  ## MediaSource delegate methods:
+
   def connected
-    NSLog 'Connected, VC knows this.'
+    NSLog "Connected. Fetching contents now."
     $source.fetch_contents!
   end
 
   def connection_failed
-    NSLog 'Connection failed'
+    App.alert 'Failed to connect. Check settings or network connectivity.'
   end
 
-  # Called when assets are available in the $source
   def contents_fetched
-    NSLog "Contents fetched and available in $source.contents"
+    NSLog "Contents fetched and available in $source.contents. Reloading @asset_table"
+    @asset_table.delegate = self
+    @asset_table.dataSource = $source
+    @asset_table.reloadData
   end
+
 end

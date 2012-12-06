@@ -43,4 +43,19 @@ class EnterpriseServer < MediaSource::Server
     self
   end
 
+  # Act as tableview dataSource
+
+  def tableView(tableView, cellForRowAtIndexPath: indexPath)
+    @reuseIdentifier ||= "CELL_IDENTIFIER"
+    cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
+      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
+    end
+    cell.textLabel.text = @contents[indexPath.row].name
+    cell
+  end
+
+  def tableView(tableView, numberOfRowsInSection: section)
+    @contents.count
+  end
+
 end

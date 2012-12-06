@@ -1,6 +1,6 @@
 module App
   module_function
-  
+
   def documents_path
     NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).first
   end

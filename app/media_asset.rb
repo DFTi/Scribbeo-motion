@@ -75,11 +75,11 @@ class MediaAsset
   end
 
   def name
-    @info["name"]
+    @info[:name]
   end
 
   def uri
-    @info["uri"]
+    @info[:uri]
   end
 
   def self.supports_extension?(ext)

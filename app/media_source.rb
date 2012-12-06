@@ -4,6 +4,7 @@ module MediaSource
     attr_accessor :delegate
 
     def initialize
+      @contents = []
       @connected = false
       @status = :disconnected
     end

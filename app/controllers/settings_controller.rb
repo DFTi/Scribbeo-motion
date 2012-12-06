@@ -12,28 +12,47 @@ class SettingsController < UIViewController
   outlet :username
   outlet :password
 
-  outlet :test_button
-
   def viewDidLoad
-    # Load vars from Persistence
-    # address.returnKeyType = UIReturnKeyDone;
-    # address.delegate = self;
-    # http://stackoverflow.com/questions/5151808/how-to-hide-keyboard-in-uiviewcontroller-on-return-button-click-iphone
-    # textFieldTwo.returnKeyType = UIReturnKeyDone;
-    # textFieldCislo.delegate = self;
-  end
-
-  def test(sender)
-    # Test it, if it works, turn into "Save", which will apply to Persistence
-    # if it doesnt work, stay as Test
-  end
-
-  def back(sender)
-    App.switch_to('ViewerController')
+    load_settings
+    set_delegates
   end
 
   def textFieldShouldReturn(textfield)
     textfield.resignFirstResponder
   end
 
+  def back(sender)
+    save_settings
+    NSLog "Saved settings, switching back to Viewer"
+    App.switch_to('ViewerController')
+  end
+
+  private
+  def load_settings
+    @networking.on = App::Persistence["networking"]
+    @autodiscover.on = App::Persistence["autodiscover"]
+    if server = App::Persistence["server"]
+      @address.text = server['address']
+      @port.text = server['port']
+    end
+    if login = App::Persistence["login"]
+      @username.text = login['username']
+      @password.text = login['password']
+    end
+  end
+
+  def save_settings
+    App::Persistence["networking"] = @networking.on?
+    App::Persistence["autodiscover"] = @autodiscover.on?
+    App::Persistence["server"] = {address: @address.text, port: @port.text}
+    App::Persistence["login"] = {username: @username.text, password: @password.text}
+  end
+
+  # Set delegates such that the keyboard will go away on Done
+  def set_delegates
+    @address.delegate = self
+    @port.delegate = self
+    @username.delegate = self
+    @password.delegate = self
+  end
 end

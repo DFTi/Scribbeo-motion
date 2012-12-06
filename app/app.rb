@@ -12,19 +12,7 @@ module App
   def documents
     file_manager.contentsOfDirectoryAtPath(documents_path, error:nil)
   end
-
-  def media_source
-    App.delegate.media_source
-  end
-
-  def debug
-    App.delegate.debug
-  end
-
-  def debug=(val)
-    App.delegate.debug = val
-  end
-
+  
   ##
   # Change to the view controller specified by the identifier
   def switch_to(identifier)

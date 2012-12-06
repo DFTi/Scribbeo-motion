@@ -8,7 +8,7 @@ describe "Application 'Scribbeo'" do
   end
 
   it "has a root media source" do
-    @app.delegate.media_source.should.equal App.media_source
+    @app.delegate.media_source.should.equal App.delegate.media_source
   end
 
   it "has fixtures for local mode" do

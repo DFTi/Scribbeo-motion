@@ -2,6 +2,7 @@ class AppDelegate
   attr_accessor :media_source
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
+    $source = nil
     UIApplication.sharedApplication.setStatusBarHidden(true, animated:false)
     @window = UIWindow.alloc.initWithFrame UIScreen.mainScreen.bounds
     switch_to_vc load_vc("ViewerController")

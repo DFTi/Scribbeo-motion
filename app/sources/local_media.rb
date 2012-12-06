@@ -1,7 +1,7 @@
 class LocalMedia < MediaSource::Base
-  def initialize opts
+  def initialize
     @mode = :local
-    super(opts)
+    super
   end
 
   def connect!

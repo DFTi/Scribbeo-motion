@@ -1,5 +1,16 @@
 module ViewController
   class Base < UIViewController
+    def shouldAutorotateToInterfaceOrientation(o)
+      true
+    end
+
+    def supportedInterfaceOrientations
+      UIInterfaceOrientationMaskAll
+    end
+
+    def shouldAutorotate
+      true
+    end
   end
 
   class Landscape < Base

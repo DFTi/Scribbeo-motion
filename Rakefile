@@ -16,5 +16,5 @@ Motion::Project::App.setup do |app|
   app.interface_orientations = [:landscape_right, :landscape_left]
 
   app.deployment_target = "5.0" 
-  app.provisioning_profile = "/Users/keyvan/Library/MobileDevice/Provisioning Profiles/EACD30A9-5725-4871-999E-BCA0BF6CA3B6.mobileprovision"
+  app.provisioning_profile = "/Users/keyvan/Library/MobileDevice/Provisioning Profiles/4CACEC1A-FB3C-4808-9C5D-17D22A74A859.mobileprovision"
 end

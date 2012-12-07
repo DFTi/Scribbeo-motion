@@ -41,9 +41,4 @@ class AppDelegate
       @window.makeKeyAndVisible
     end
   end
-
-  # def application(application, supportedInterfaceOrientationsForWindow:window)
-  #   # UIInterfaceOrientationMaskLandscape
-  #   return (UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight)
-  # end
 end

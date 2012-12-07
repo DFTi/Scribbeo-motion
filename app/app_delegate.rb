@@ -6,6 +6,9 @@ class AppDelegate
     UIApplication.sharedApplication.setStatusBarHidden(true, animated:false)
     @window = UIWindow.alloc.initWithFrame UIScreen.mainScreen.bounds
     switch_to_vc load_vc("ViewerController")
+  rescue => ex
+    App.alert ex.message
+  ensure
     true
   end
 
@@ -13,7 +16,6 @@ class AppDelegate
     # Going into the background
     # Pause the player here
   end
-
 
   def applicationDidBecomeActive(application)
     # Resume code, e.g.:
@@ -40,4 +42,8 @@ class AppDelegate
     end
   end
 
+  # def application(application, supportedInterfaceOrientationsForWindow:window)
+  #   # UIInterfaceOrientationMaskLandscape
+  #   return (UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight)
+  # end
 end

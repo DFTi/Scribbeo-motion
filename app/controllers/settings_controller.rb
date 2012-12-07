@@ -1,4 +1,4 @@
-class SettingsController < UIViewController
+class SettingsController < ViewController::Landscape
   extend IB
 
   outlet :networking

@@ -1,6 +1,6 @@
-class ViewerController < UIViewController
-  extend IB
+class ViewerController < ViewController::Landscape
   include ViewerHelper
+  extend IB
 
   outlet :asset_table
 
@@ -16,9 +16,10 @@ class ViewerController < UIViewController
 
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    $current_asset = $source.contents[indexPath.row]
     
-    # then do something like this:
-    # Player.load($source.contents[indexPath.row])
+    # @player.play $current_asset
+    # @notes_table.reloadData -> $current_asset.annotations
 
     NSLog "did select row at index path: #{indexPath.row}"
   end
@@ -40,9 +41,8 @@ class ViewerController < UIViewController
 
   def contents_fetched
     NSLog "Contents fetched and available in $source.contents. Reloading @asset_table"
-    @asset_table.delegate = self
     @asset_table.dataSource = $source
+    @asset_table.delegate = self
     @asset_table.reloadData
   end
-
 end

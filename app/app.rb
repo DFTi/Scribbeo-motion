@@ -18,5 +18,4 @@ module App
   def switch_to(identifier)
     App.delegate.switch_to_vc App.delegate.load_vc identifier
   end
-
 end

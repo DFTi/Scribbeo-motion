@@ -39,6 +39,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <view contentMode="scaleToFill" id="z7R-MI-8sJ">
+                                <rect key="frame" x="200" y="83" width="240" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -46,6 +51,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="asset_table" destination="7Ws-Mh-a7n" id="kOE-JO-AoF"/>
+                        <outlet property="player_view" destination="z7R-MI-8sJ" id="6iT-CV-i9i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEB-Hd-IyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -176,6 +182,7 @@
                 <relationship kind="action" name="settings:"/>
                 <relationship kind="action" name="viewDidLoad"/>
                 <relationship kind="outlet" name="asset_table"/>
+                <relationship kind="outlet" name="player_view"/>
             </relationships>
         </class>
     </classes>

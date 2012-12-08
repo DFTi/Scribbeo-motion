@@ -4,11 +4,14 @@ class ViewerController < ViewController::Landscape
 
   outlet :asset_table
 
+  outlet :player_view
+
   def viewDidLoad
+    $player = BW::Media::Player.new
     $source = new_source_from_settings
     if $source.is_a? UIAlertView
       App.switch_to "SettingsController"
-    else
+    elsif $source.is_a? EnterpriseServer
       $source.delegate = self
       $source.connect!
     end
@@ -21,6 +24,27 @@ class ViewerController < ViewController::Landscape
     # @player.play $current_asset
     # @notes_table.reloadData -> $current_asset.annotations
 
+    o = {
+      allows_air_play:true,
+      movie_source_type:MPMovieSourceTypeStreaming,
+      should_autoplay:true
+    }
+
+    # movie_url = "http://localhost:9000/asset/testing/strawberries.mov"
+    movie_url = $current_asset.uri+"?auth_token=#{$token}"
+
+    $player.play(movie_url, o) do |media_player|
+      begin
+        media_player.view.frame = @player_view.bounds
+        @player_view.addSubview media_player.view
+      rescue => ex
+        App.alert ex.message
+      end
+    end
+
+  rescue => ex
+    App.alert ex.message
+  ensure
     NSLog "did select row at index path: #{indexPath.row}"
   end
 

@@ -35,6 +35,7 @@ class EnterpriseServer < MediaSource::Server
       reply = BW::JSON.parse(res.body.to_str)
       reply.each do |asset|
         if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
+          # temp = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"
           @contents << MediaAsset.new(name: asset["name"], uri: asset["location_uri"], ext: ext, mode: @mode, id: asset["id"])
         end
       end

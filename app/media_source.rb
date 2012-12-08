@@ -7,6 +7,7 @@ module MediaSource
       @contents = []
       @connected = false
       @status = :disconnected
+      NSLog "Initializing Source: #{self.class}"
     end
 
     def connected!

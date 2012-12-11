@@ -20,32 +20,15 @@ class ViewerController < ViewController::Landscape
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     $current_asset = $source.contents[indexPath.row]
-    
-    # @player.play $current_asset
+    url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
+    $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)
+    $media_player.allowsAirPlay = true
+    $media_player.movieSourceType = $source.type
+    $media_player.shouldAutoplay = false
+    $media_player.useApplicationAudioSession = true
+    $media_player.view.frame = @player_view.bounds
+    @player_view.addSubview $media_player.view
     # @notes_table.reloadData -> $current_asset.annotations
-
-    o = {
-      allows_air_play:true,
-      movie_source_type:MPMovieSourceTypeStreaming,
-      should_autoplay:true
-    }
-
-    # movie_url = "http://localhost:9000/asset/testing/strawberries.mov"
-    movie_url = $current_asset.uri+"?auth_token=#{$token}"
-
-    $player.play(movie_url, o) do |media_player|
-      begin
-        media_player.view.frame = @player_view.bounds
-        @player_view.addSubview media_player.view
-      rescue => ex
-        App.alert ex.message
-      end
-    end
-
-  rescue => ex
-    App.alert ex.message
-  ensure
-    NSLog "did select row at index path: #{indexPath.row}"
   end
 
   def settings(sender)

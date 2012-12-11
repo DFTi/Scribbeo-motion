@@ -10,11 +10,15 @@ class EnterpriseServer < MediaSource::Server
     payload = {email:@login["username"], password:@login["password"]}
     @url = "#{@base_uri}/api/v1"
     BW::HTTP.post("#{@url}/session", payload: payload) do |res|
-      if res.body
-        reply = BW::JSON.parse(res.body.to_str)
-        $token = reply[:private_token]
-        res.ok? ? connected! : connection_failed!
-      else
+      begin
+        if res.body
+          reply = BW::JSON.parse(res.body.to_str)
+          $token = reply[:private_token]
+          res.ok? ? connected! : connection_failed!
+        else
+          connection_failed!
+        end
+      rescue BubbleWrap::JSON::ParserError
         connection_failed!
       end
     end

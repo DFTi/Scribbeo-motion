@@ -19,4 +19,8 @@ class LocalMedia < MediaSource::Base
     end
     self
   end
+
+  def type
+    MPMovieSourceTypeFile
+  end
 end

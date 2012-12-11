@@ -33,6 +33,10 @@ module MediaSource
     def contents_fetched!
       delegate.contents_fetched
     end
+
+    def type
+      MPMovieSourceTypeUnknown
+    end
   end
 
   class Server < Base
@@ -40,6 +44,10 @@ module MediaSource
       @base_uri = opts[:base_uri]
       @login = opts[:login]
       super
+    end
+
+    def type
+      MPMovieSourceTypeStreaming
     end
   end
 end

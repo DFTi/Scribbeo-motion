@@ -1,90 +1,53 @@
 class MediaAsset
-  attr_reader :info, :annotations
+  attr_reader :name, :uri, :id, :notes
 
   STILLS = ['.JPG', '.JPEG', '.PNG', '.GIF']
   MOVIES = ['.MOV', '.MP4', '.M4V', '.M3U8']
 
-  def initialize(opts)
-    @info = opts
+  def initialize(name, uri, id=nil)
+    @name = name
+    @uri = uri
+    @id = id
+    @notes = []
   end
 
-  def type
-    ext = @info[:ext].upcase if @info[:ext]
-    if STILLS.include? ext
-      @info[:type] ||= :still
-    elsif MOVIES.include? ext
-      @info[:type] ||= :movie
-    else
-      @info[:type] ||= :unknown
+  def fetch_notes!
+    @notes = []
+    url = $source.api 'annotations'
+    BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|
+      BW::JSON.parse(res.body.to_str).each {|n| @notes << Annotation.new(n)}
     end
-    @info[:type]
-  end
-
-  def fetch_caps_annotations!
-    @uri = "#{$base_uri}/api/v1/annotations"
-    BW::HTTP.get(@uri, payload: {private_token: $token, id: info[:id]}) do |res|
-      reply = BW::JSON.parse(res.body.to_str)
-      reply.each do |note|
-        @annotations << Annotation.new(note)
-      end
-    end
-  end
-
-  def fetch_annotations!
-    case info[:mode]
-    when :caps
-      fetch_caps_annotations!
-    when :python
-      # fetch_python_contents!
-      raise 'Unimplemented note fetching'
-    when :local
-      # fetch_local_contents!
-      raise 'Unimplemented note fetching'
-    end
-  end
-
-  def fetch_annotations
-    @annotations = []
-    fetch_annotations!
+    delegate.notes_fetched
   end
 
   def create_note!(note)
-    case info[:mode]
-    when :caps
-      caps_create_note(note)
-    when :python
-      # fetch_python_contents!
-      raise 'Unimplemented note fetching'
-    when :local
-      # fetch_local_contents!
-      raise 'Unimplemented note fetching'
-    end
-  end
-
-  def create_note(note)
-    @annotations = []
-    create_note!(note)
-  end
-
-  def caps_create_note(annotation)
-    @uri = "#{$base_uri}/api/v1/annotations/new"
-    BW::HTTP.post(@uri, payload: {private_token: $token, annotation: annotation.to_hash}) do |res|
+    payload = {private_token: $token, annotation: note.to_hash}
+    url = $source.api 'annotations/new'
+    BW::HTTP.post(url, payload: payload) do |res|
       reply = BW::JSON.parse(res.body.to_str)
-      fetch_annotations
+      fetch_notes!
     end
-  end
-
-  def name
-    @info[:name]
-  end
-
-  def uri
-    @info[:uri]
+    self
   end
 
   def self.supports_extension?(ext)
     ext.upcase!
     STILLS.include?(ext) || MOVIES.include?(ext)
+  end
+
+  # Act as tableview dataSource
+
+  def tableView(tableView, cellForRowAtIndexPath: indexPath)
+    @reuseIdentifier ||= "CELL_IDENTIFIER"
+    cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
+      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
+    end
+    cell.textLabel.text = @notes[indexPath.row].name
+    cell
+  end
+
+  def tableView(tableView, numberOfRowsInSection: section)
+    @notes.count
   end
 
 end

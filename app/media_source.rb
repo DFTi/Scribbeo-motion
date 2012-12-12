@@ -1,4 +1,8 @@
 module MediaSource
+  module Alert
+    CONNECTION_FAILURE = 'Failed to connect. Check settings or network connectivity.'
+  end
+
   class Base
     attr_reader :contents, :mode, :uri, :base_uri, :status
     attr_accessor :delegate
@@ -40,10 +44,16 @@ module MediaSource
   end
 
   class Server < Base
+    API_VERSION = '1'
+
     def initialize opts
       @base_uri = opts[:base_uri]
       @login = opts[:login]
       super
+    end
+
+    def api(path='')
+      "#{@base_uri}/api/v#{API_VERSION}/#{path}"
     end
 
     def type

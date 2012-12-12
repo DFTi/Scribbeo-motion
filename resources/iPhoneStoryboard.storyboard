@@ -12,15 +12,8 @@
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Viewer Controller!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S9n-EM-drI">
-                                <rect key="frame" x="200" y="31" width="136" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b7i-Z1-34Y">
-                                <rect key="frame" x="376" y="20" width="84" height="44"/>
+                                <rect key="frame" x="396" y="256" width="84" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Settings">
@@ -35,15 +28,20 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7Ws-Mh-a7n">
-                                <rect key="frame" x="0.0" y="0.0" width="157" height="300"/>
+                                <rect key="frame" x="0.0" y="0.0" width="157" height="130"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <view contentMode="scaleToFill" id="z7R-MI-8sJ">
-                                <rect key="frame" x="200" y="83" width="240" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <rect key="frame" x="157" y="59" width="323" height="182"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="r1A-cA-AO6">
+                                <rect key="frame" x="0.0" y="170" width="156" height="130"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -51,12 +49,13 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="asset_table" destination="7Ws-Mh-a7n" id="kOE-JO-AoF"/>
+                        <outlet property="note_table" destination="r1A-cA-AO6" id="lWm-xs-55o"/>
                         <outlet property="player_view" destination="z7R-MI-8sJ" id="6iT-CV-i9i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEB-Hd-IyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="112" y="28"/>
+            <point key="canvasLocation" x="112" y="40"/>
         </scene>
         <!--Settings Controller-->
         <scene sceneID="6QN-Vw-kwJ">
@@ -179,9 +178,11 @@
                 <relationship kind="action" name="connected"/>
                 <relationship kind="action" name="connection_failed"/>
                 <relationship kind="action" name="contents_fetched"/>
+                <relationship kind="action" name="notes_fetched"/>
                 <relationship kind="action" name="settings:"/>
                 <relationship kind="action" name="viewDidLoad"/>
                 <relationship kind="outlet" name="asset_table"/>
+                <relationship kind="outlet" name="note_table"/>
                 <relationship kind="outlet" name="player_view"/>
             </relationships>
         </class>

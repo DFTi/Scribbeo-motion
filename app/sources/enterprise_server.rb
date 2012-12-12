@@ -8,8 +8,8 @@ class EnterpriseServer < MediaSource::Server
     return @status if connected? || connecting?
     @status = :connecting
     payload = {email:@login["username"], password:@login["password"]}
-    @url = "#{@base_uri}/api/v1"
-    BW::HTTP.post("#{@url}/session", payload: payload) do |res|
+    url = api 'session'
+    BW::HTTP.post(url, payload: payload) do |res|
       begin
         if res.body
           reply = BW::JSON.parse(res.body.to_str)
@@ -24,9 +24,9 @@ class EnterpriseServer < MediaSource::Server
     end
   rescue => ex
     if ex.class.to_s == 'InvalidURLError'
-      App.alert "Invalid URL: #{@url}!"
+      App.alert "Invalid URL: #{url}!"
     else
-      App.alert "Failed to connect."
+      App.alert MediaSource::Alert::CONNECTION_FAILURE
     end
   ensure
     return self
@@ -34,13 +34,11 @@ class EnterpriseServer < MediaSource::Server
 
   def fetch_contents!
     @contents = []
-    @uri = "#{@base_uri}/api/v1/all_accessible"
-    BW::HTTP.get(@uri, payload: {private_token: $token}) do |res|
+    BW::HTTP.get(api('all_accessible'), payload: {private_token: $token}) do |res|
       reply = BW::JSON.parse(res.body.to_str)
       reply.each do |asset|
         if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
-          # temp = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"
-          @contents << MediaAsset.new(name: asset["name"], uri: asset["location_uri"], ext: ext, mode: @mode, id: asset["id"])
+          @contents << MediaAsset.new asset["name"], asset["location_uri"], asset['id']
         end
       end
       contents_fetched!

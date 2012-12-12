@@ -1,6 +1,7 @@
 class PythonServer < MediaSource::Server
   def initialize opts
     @mode = :python
+    @list_url = "#{@base_uri}/list"
     super(opts)
   end
 
@@ -9,8 +10,7 @@ class PythonServer < MediaSource::Server
     @finder = BonjourFinder.new("_videoTree._tcp.")
     @finder.notify(self) do |ip, port|
       @base_uri = "http://#{ip}:#{port}"
-      @uri = "#{@base_uri}/list"
-      BW::HTTP.get(@uri) do |res|
+      BW::HTTP.get(@list_url) do |res|
         @connected = res.ok?
         connected? ? connected! : connection_failed!
       end
@@ -19,7 +19,7 @@ class PythonServer < MediaSource::Server
 
   def fetch_contents!
     @contents = []
-    BW::HTTP.get(@uri) do |response|
+    BW::HTTP.get(@list_url) do |response|
       if response.ok?
         json = BW::JSON.parse response.body.to_str
         opts = {mode: :python, base_uri: @base_uri}
@@ -33,12 +33,7 @@ class PythonServer < MediaSource::Server
         end
         json["files"].each do |item|
           next unless MediaAsset.supports_extension?(item["ext"].upcase)
-          params = opts.merge({
-            name: item["name"], ext: item["ext"],
-            uri: @base_uri+item["asset_url"],
-            mode: @mode
-          })
-          @contents << MediaAsset.new(params)
+          @contents << MediaAsset.new item["name"], @base_uri+item["asset_url"]
         end
         contents_fetched!
       else

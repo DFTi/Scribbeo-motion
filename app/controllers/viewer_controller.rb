@@ -3,11 +3,14 @@ class ViewerController < ViewController::Landscape
   extend IB
 
   outlet :asset_table
+  outlet :note_table
 
   outlet :player_view
 
   def viewDidLoad
-    $player = BW::Media::Player.new
+    @asset_table.delegate = self
+    @note_table.delegate = self
+
     $source = new_source_from_settings
     if $source.is_a? UIAlertView
       App.switch_to "SettingsController"
@@ -21,14 +24,18 @@ class ViewerController < ViewController::Landscape
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     $current_asset = $source.contents[indexPath.row]
     url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
-    $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)
+    if $media_player
+      $media_player.contentURL = url
+    else
+      $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)
+    end
     $media_player.allowsAirPlay = true
     $media_player.movieSourceType = $source.type
     $media_player.shouldAutoplay = false
     $media_player.useApplicationAudioSession = true
     $media_player.view.frame = @player_view.bounds
     @player_view.addSubview $media_player.view
-    # @notes_table.reloadData -> $current_asset.annotations
+    $current_asset.fetch_notes!
   end
 
   def settings(sender)
@@ -38,18 +45,20 @@ class ViewerController < ViewController::Landscape
   ## MediaSource delegate methods:
 
   def connected
-    NSLog "Connected. Fetching contents now."
     $source.fetch_contents!
   end
 
   def connection_failed
-    App.alert 'Failed to connect. Check settings or network connectivity.'
+    App.alert MediaSource::Alert::CONNECTION_FAILURE
   end
 
   def contents_fetched
-    NSLog "Contents fetched and available in $source.contents. Reloading @asset_table"
     @asset_table.dataSource = $source
-    @asset_table.delegate = self
     @asset_table.reloadData
+  end
+
+  def notes_fetched
+    @note_table.dataSource = $current_asset
+    @note_table.reloadData
   end
 end

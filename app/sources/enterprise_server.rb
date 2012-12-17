@@ -38,7 +38,7 @@ class EnterpriseServer < MediaSource::Server
       reply = BW::JSON.parse(res.body.to_str)
       reply.each do |asset|
         if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
-          @contents << MediaAsset.new asset["name"], asset["location_uri"], asset['id']
+          @contents << MediaAsset.new(asset["name"], asset["location_uri"], asset['id'])
         end
       end
       contents_fetched!

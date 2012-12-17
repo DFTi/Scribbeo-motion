@@ -26,11 +26,8 @@ class AppDelegate
   end
 
   def load_vc(identifier)
-    if Device.iphone?
-      storyboard = UIStoryboard.storyboardWithName("iPhoneStoryboard", bundle: NSBundle.mainBundle)
-    else
-      storyboard = UIStoryboard.storyboardWithName("iPadStoryboard", bundle: NSBundle.mainBundle)
-    end
+    name = "#{Device.iphone? ? 'iPhone' : 'iPad'}Storyboard"
+    storyboard = UIStoryboard.storyboardWithName(name, bundle: NSBundle.mainBundle)
     vc = storyboard.instantiateViewControllerWithIdentifier(identifier)
   end
 

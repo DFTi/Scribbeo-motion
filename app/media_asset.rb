@@ -1,4 +1,5 @@
 class MediaAsset
+  attr_accessor :delegate
   attr_reader :name, :uri, :id, :notes
 
   STILLS = ['.JPG', '.JPEG', '.PNG', '.GIF']
@@ -42,7 +43,7 @@ class MediaAsset
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
     end
-    cell.textLabel.text = @notes[indexPath.row].name
+    cell.textLabel.text = indexPath.row.to_s #@notes[indexPath.row].name
     cell
   end
 

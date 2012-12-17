@@ -33,7 +33,7 @@ class PythonServer < MediaSource::Server
         end
         json["files"].each do |item|
           next unless MediaAsset.supports_extension?(item["ext"].upcase)
-          @contents << MediaAsset.new item["name"], @base_uri+item["asset_url"]
+          @contents << MediaAsset.new(item["name"], @base_uri+item["asset_url"])
         end
         contents_fetched!
       else

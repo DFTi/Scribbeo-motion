@@ -1,4 +1,4 @@
-class ViewerController < ViewController::Landscape
+class ViewerController < ViewController::Base
   include ViewerHelper
   extend IB
 
@@ -23,23 +23,20 @@ class ViewerController < ViewController::Landscape
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     $current_asset = $source.contents[indexPath.row]
+    $current_asset.delegate = self
     url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
     if $media_player
       $media_player.contentURL = url
     else
       $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)
+      $media_player.allowsAirPlay = true
+      $media_player.movieSourceType = $source.type
+      $media_player.shouldAutoplay = false
+      $media_player.useApplicationAudioSession = true
+      $media_player.view.frame = @player_view.bounds
+      @player_view.addSubview $media_player.view
     end
-    $media_player.allowsAirPlay = true
-    $media_player.movieSourceType = $source.type
-    $media_player.shouldAutoplay = false
-    $media_player.useApplicationAudioSession = true
-    $media_player.view.frame = @player_view.bounds
-    @player_view.addSubview $media_player.view
     $current_asset.fetch_notes!
-  end
-
-  def settings(sender)
-    App.switch_to "SettingsController"
   end
 
   ## MediaSource delegate methods:

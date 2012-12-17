@@ -13,7 +13,7 @@ class LocalMedia < MediaSource::Base
     dp = App.documents_path
     App.documents.each do |name|
       if MediaAsset.supports_extension?(ext=File.extname(name)[1..-1].upcase)
-        @contents << MediaAsset.new(name: name, uri: File.join(dp, name), ext: ext, mode: @mode)
+        @contents << MediaAsset.new(name, File.join(dp, name))
       end
       contents_fetched!
     end

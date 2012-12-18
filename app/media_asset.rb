@@ -39,11 +39,11 @@ class MediaAsset
   # Act as tableview dataSource
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
-    @reuseIdentifier ||= "CELL_IDENTIFIER"
+    @reuseIdentifier ||= "NOTE_CELL_IDENTIFIER"
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
     end
-    cell.textLabel.text = indexPath.row.to_s #@notes[indexPath.row].name
+    cell.textLabel.text = 'NOTE HERE' #@notes[indexPath.row].name
     cell
   end
 

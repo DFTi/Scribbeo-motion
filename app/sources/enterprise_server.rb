@@ -35,8 +35,7 @@ class EnterpriseServer < MediaSource::Server
   def fetch_contents!
     @contents = []
     BW::HTTP.get(api('all_accessible'), payload: {private_token: $token}) do |res|
-      reply = BW::JSON.parse(res.body.to_str)
-      reply.each do |asset|
+      BW::JSON.parse(res.body.to_str).each do |asset|
         if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
           @contents << MediaAsset.new(asset["name"], asset["location_uri"], asset['id'])
         end
@@ -49,7 +48,7 @@ class EnterpriseServer < MediaSource::Server
   # Act as tableview dataSource
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
-    @reuseIdentifier ||= "CELL_IDENTIFIER"
+    @reuseIdentifier ||= "ASSET_CELL_IDENTIFIER"
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
     end

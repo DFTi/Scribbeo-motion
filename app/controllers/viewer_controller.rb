@@ -10,14 +10,13 @@ class ViewerController < ViewController::Base
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
-
     $source = new_source_from_settings
     if $source.is_a? UIAlertView
       App.switch_to "SettingsController"
     elsif $source.is_a? EnterpriseServer
       $source.delegate = self
       $source.connect!
-    end
+    end   
   end
 
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
@@ -28,15 +27,22 @@ class ViewerController < ViewController::Base
     if $media_player
       $media_player.contentURL = url
     else
-      $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)
-      $media_player.allowsAirPlay = true
-      $media_player.movieSourceType = $source.type
+      $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)     
       $media_player.shouldAutoplay = false
-      $media_player.useApplicationAudioSession = true
       $media_player.view.frame = @player_view.bounds
       @player_view.addSubview $media_player.view
     end
+    $media_player.prepareToPlay
     $current_asset.fetch_notes!
+  end
+
+  def play_pause(sender)
+    return unless $media_player
+    if $media_player.playbackState == MPMoviePlaybackStatePlaying
+      $media_player.pause
+    else
+      $media_player.play
+    end
   end
 
   ## MediaSource delegate methods:

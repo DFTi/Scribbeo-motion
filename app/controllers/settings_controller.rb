@@ -24,7 +24,6 @@ class SettingsController < ViewController::Base
   def back(sender)
     save_settings
     NSLog "Saved settings, switching back to Viewer"
-    # App.switch_to('ViewerController')
     presentingViewController.dismissViewControllerAnimated(true, completion:nil)
   end
 

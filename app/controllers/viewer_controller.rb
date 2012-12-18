@@ -45,6 +45,15 @@ class ViewerController < ViewController::Base
     end
   end
 
+  def draw(sender)
+    NSLog 'draw hit'
+    # if drawing
+    #   get out of draw view, clear context, etc
+    # else
+    #   create overlay with view frame = to @player_view.bounds
+    #   set up drawing context
+  end
+
   ## MediaSource delegate methods:
 
   def connected

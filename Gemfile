@@ -2,12 +2,7 @@ source :rubygems
 
 gem 'rake'
 gem 'ib'
-gem 'sugarcube', :github => "rubymotion/sugarcube"
-gem 'bubble-wrap', :github => "rubymotion/BubbleWrap", :require=>'bubble-wrap/all'
-
-# To speed up load time of CocoaPods consider compiling the Ruby source files:
-# $ sudo macgem install rubygems-compile
-# $ sudo macgem compile cocoapods
+gem 'bubble-wrap'
 
 # ... for tests
 gem 'listen', '0.4.7'

@@ -24,7 +24,12 @@ class SettingsController < ViewController::Base
   def back(sender)
     save_settings
     NSLog "Saved settings, switching back to Viewer"
-    presentingViewController.dismissViewControllerAnimated(true, completion:nil)
+    $source = new_source_from_settings
+    unless $source.is_a? UIAlertView
+      $source.delegate = presentingViewController
+      $source.connect!
+      presentingViewController.dismissViewControllerAnimated(true, completion:nil)
+    end
   end
 
   private
@@ -54,5 +59,29 @@ class SettingsController < ViewController::Base
     @port.delegate = self
     @username.delegate = self
     @password.delegate = self
+  end
+
+  private
+  def new_source_from_settings
+    if Persistence["networking"]
+      server = Persistence['server'].nil? ? Hash.new : Persistence['server']
+      port_entered = !server['port'].nil? && !server['port'].empty?
+      address_entered = !server['address'].nil? && !server['address'].empty?
+      server_entered = ((port_entered && address_entered) ? true : false)
+      if Persistence["autodiscover"]
+        PythonServer.new autodiscover: true
+      elsif server_entered
+        uri = "http://#{server['address']}:#{server['port']}"
+        if login = Persistence["login"]
+          EnterpriseServer.new base_uri:uri, login: login
+        else
+          PythonServer.new base_uri:uri, autodiscover: false
+        end
+      else
+        App.alert MediaSource::Alert::INVALID_SETTINGS
+      end
+    else
+      LocalMedia.new
+    end
   end
 end

@@ -1,6 +1,8 @@
 module MediaSource
   module Alert
     CONNECTION_FAILURE = 'Failed to connect. Check settings or network connectivity.'
+    INVALID_SETTINGS = "Network mode requires target server address & port, \
+                        Alternatively, use autodiscover or disable networking."
   end
 
   class Base

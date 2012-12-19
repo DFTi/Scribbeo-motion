@@ -1,7 +1,5 @@
 class ViewerController < ViewController::Base
   attr_reader :drawing_overlay
-
-  include ViewerHelper
   extend IB
 
   outlet :asset_table
@@ -13,12 +11,6 @@ class ViewerController < ViewController::Base
   outlet :clear_button
 
   def viewDidLoad
-    $source = new_source_from_settings
-    return if $source.is_a? UIAlertView
-    if $source.is_a? EnterpriseServer
-      $source.delegate = self
-      $source.connect!
-    end
     @asset_table.delegate = self
     @note_table.delegate = self
     @drawing_overlay = DrawView.new

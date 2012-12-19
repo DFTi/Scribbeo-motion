@@ -1,5 +1,7 @@
 .dat**
+*.swp
 vendor/*/build-*
+vendor/*/.build/*
 .DS_Store
 .repl_history
 build

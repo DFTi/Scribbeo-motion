@@ -28,24 +28,30 @@ class ViewerController < ViewController::Base
     update_draw_buttons
   end
 
-  # Asset list
+  # Handle selecting assets and notes
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    $current_asset = $source.contents[indexPath.row]
-    $current_asset.delegate = self
-    url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
-    if $media_player
-      $media_player.contentURL = url
-    else
-      $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)     
-      $media_player.shouldAutoplay = false
-      $media_player.controlStyle = MPMovieControlStyleNone
-      $media_player.view.frame = @player_view.bounds
-      @player_view.addSubview $media_player.view
+    case tableView.dataSource
+    when $source
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+      $current_asset = $source.contents[indexPath.row]
+      $current_asset.delegate = self
+      url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
+      if $media_player
+        $media_player.contentURL = url
+      else
+        $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)     
+        $media_player.shouldAutoplay = false
+        $media_player.controlStyle = MPMovieControlStyleNone
+        $media_player.view.frame = @player_view.bounds
+        @player_view.addSubview $media_player.view
+      end
+      $media_player.prepareToPlay
+      update_draw_buttons
+      $current_asset.fetch_notes!
+    when $current_asset
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+      NSLog("TAPPED ON A NOTE")
     end
-    $media_player.prepareToPlay
-    update_draw_buttons
-    $current_asset.fetch_notes!
   end
 
   # Play button
@@ -90,6 +96,7 @@ class ViewerController < ViewController::Base
   end
 
   def notes_fetched
+    NSLog("NOTES FETCHED RELOAD DATA")
     @note_table.dataSource = $current_asset
     @note_table.reloadData
   end

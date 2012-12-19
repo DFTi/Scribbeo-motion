@@ -3,7 +3,8 @@ class DrawView < UIView
                 :buffer_image, :mid1, :mid2, :cache_brush_size, :previous_point1,
                 :previous_point2, :paths, :path_colors, :current_point
 
-	def initialize
+  def init
+    super
     @brush_size = 5.0
     @brush_color = UIColor.redColor
     @needs_to_redraw = false
@@ -12,13 +13,7 @@ class DrawView < UIView
     @path_colors ||= []
     @buffer_image = UIImage.new
     @cache_brush_size = @brush_size
-    NSLog "Draw view initialized"
-  end
-
-  def init
-   super
-   self.send(:initialize)
-   self
+    self
   end
 
   # Touches

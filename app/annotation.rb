@@ -1,6 +1,5 @@
 class Annotation
-
-  attr_accessor :uuid, :image,  :drawing, :seconds, :timecode, :note, :id
+  attr_accessor :note, :timecode, :seconds, :comments, :author, :image
 
   def initialize(*h)
     if h.length == 1 && h.first.kind_of?(Hash)
@@ -14,5 +13,14 @@ class Annotation
     hash
   end
 
-
+  def cell_for(tableView, reuseIdentifier, index_path)
+    cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) || begin
+      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:reuseIdentifier)
+    end
+    image_url = "#{$source.base_uri}/#{image['image']['url']}"
+    cell.viewWithTag(1).setImageWithURL(NSURL.URLWithString(image_url), placeholderImage:UIImage.new)
+    cell.viewWithTag(2).setText(author['name'])
+    cell.viewWithTag(3).setText(timecode)
+    cell
+  end
 end

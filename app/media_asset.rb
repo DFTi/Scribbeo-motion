@@ -17,8 +17,9 @@ class MediaAsset
     url = $source.api 'annotations'
     BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|
       BW::JSON.parse(res.body.to_str).each {|n| @notes << Annotation.new(n)}
+      delegate.notes_fetched
     end
-    delegate.notes_fetched
+    self
   end
 
   def create_note!(note)
@@ -40,11 +41,7 @@ class MediaAsset
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
     @reuseIdentifier ||= "NOTE_CELL_IDENTIFIER"
-    cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
-      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
-    end
-    cell.textLabel.text = 'NOTE HERE' #@notes[indexPath.row].name
-    cell
+    @notes[indexPath.row].cell_for(tableView, @reuseIdentifier, indexPath)
   end
 
   def tableView(tableView, numberOfRowsInSection: section)

@@ -72,6 +72,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="draw:" destination="SrS-4o-EwC" eventType="touchUpInside" id="vXB-cG-zop"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.14509804546833038" green="0.14509804546833038" blue="0.14509804546833038" alpha="1" colorSpace="deviceRGB"/>
@@ -212,6 +215,7 @@
                 <relationship kind="action" name="connected"/>
                 <relationship kind="action" name="connection_failed"/>
                 <relationship kind="action" name="contents_fetched"/>
+                <relationship kind="action" name="draw:"/>
                 <relationship kind="action" name="notes_fetched"/>
                 <relationship kind="action" name="play_pause:"/>
                 <relationship kind="action" name="viewDidLoad"/>

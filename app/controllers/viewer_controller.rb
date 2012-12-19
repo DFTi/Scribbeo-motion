@@ -8,17 +8,18 @@ class ViewerController < ViewController::Base
   outlet :player_view
 
   def viewDidLoad
-    @asset_table.delegate = self
-    @note_table.delegate = self
     $source = new_source_from_settings
-    if $source.is_a? UIAlertView
-      App.switch_to "SettingsController"
-    elsif $source.is_a? EnterpriseServer
+    return if $source.is_a? UIAlertView
+    if $source.is_a? EnterpriseServer
       $source.delegate = self
       $source.connect!
-    end   
+    end
+    @asset_table.delegate = self
+    @note_table.delegate = self
+    $drawing_overlay = setup_drawing_overlay
   end
 
+  # Asset list
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     $current_asset = $source.contents[indexPath.row]
@@ -36,6 +37,7 @@ class ViewerController < ViewController::Base
     $current_asset.fetch_notes!
   end
 
+  # Play button
   def play_pause(sender)
     return unless $media_player
     if $media_player.playbackState == MPMoviePlaybackStatePlaying
@@ -45,6 +47,7 @@ class ViewerController < ViewController::Base
     end
   end
 
+  # Draw button
   def draw(sender)
     NSLog 'draw hit'
     # if drawing
@@ -52,6 +55,12 @@ class ViewerController < ViewController::Base
     # else
     #   create overlay with view frame = to @player_view.bounds
     #   set up drawing context
+    if $drawing_overlay.superview
+      $drawing_overlay.removeFromSuperview
+    else
+      $drawing_overlay.frame = @player_view.bounds
+      @player_view.addSubview($drawing_overlay)
+    end
   end
 
   ## MediaSource delegate methods:
@@ -72,5 +81,13 @@ class ViewerController < ViewController::Base
   def notes_fetched
     @note_table.dataSource = $current_asset
     @note_table.reloadData
+  end
+
+  private
+  def setup_drawing_overlay
+    dv = DrawView.new
+    dv.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
+    dv.contentMode = UIViewContentModeScaleToFill
+    return dv
   end
 end

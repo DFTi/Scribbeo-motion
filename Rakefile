@@ -7,6 +7,7 @@ Bundler.require
 Motion::Project::App.setup do |app|
   app.redgreen_style = :full
   app.vendor_project 'vendor/SDWebImage', :xcode
+  app.vendor_project 'vendor/Base64', :xcode
   
   app.identifier = "com.digitalfilmtree.ScribbeoMotion"
   app.name = 'Scribbeo Motion'

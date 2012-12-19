@@ -1,7 +1,7 @@
 class DrawView < UIView
   attr_accessor :brush_size, :brush_color, :needs_to_redraw, :has_input,
                 :buffer_image, :mid1, :mid2, :cache_brush_size, :previous_point1,
-                :previous_point2, :paths, :path_colors, :current_point
+                :previous_point2, :paths, :path_colors, :current_point 
 
   def init
     super
@@ -88,6 +88,11 @@ class DrawView < UIView
       @needs_to_redraw = false
     end
     @buffer_image.drawInRect(CGRectMake(0, 0, frame.size.width, frame.size.height))
+  end
+
+  def drawing_base64png
+    data = UIImagePNGRepresentation(@buffer_image);
+    return MF_Base64Codec.base64StringFromData(data)
   end
 
   def svg_representation

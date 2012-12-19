@@ -12,26 +12,41 @@ class ViewerController < ViewController::Landscape
   outlet :note_text
   outlet :note_done_button
 
+  outlet :save_button
+
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
-    @drawing_overlay = DrawView.new
+    $d = @drawing_overlay = DrawView.new
     @drawing_overlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
     @drawing_overlay.contentMode = UIViewContentModeScaleToFill
     @drawing_overlay.backgroundColor = UIColor.clearColor
     update_draw_buttons
-    @note_text.on(:editing_did_begin) {|n| @note_done_button.hidden = false }
+    @note_text.on(:editing_did_begin) {|n|
+      $media_player.pause if $media_player
+      @note_done_button.hidden = false
+    }
     @note_text.on(:editing_did_end) {|n| @note_done_button.hidden = true }
+    @note_text.on(:editing_did_change) do |n|
+      if $current_asset && !drawing?
+        @save_button.hidden = !@note_text.has_text?
+      end
+    end
   end
 
   def done_typing(sender)
     @note_text.resignFirstResponder
   end
 
+  def save(sender)
+    # Annotation.new()
+  end
+
   # Handle selecting assets and notes
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     case tableView.dataSource
     when $source
+      @note_text.resignFirstResponder
       $current_asset = $source.contents[indexPath.row]
       $current_asset.delegate = self
       url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
@@ -64,17 +79,11 @@ class ViewerController < ViewController::Landscape
 
   # Draw button
   def draw(sender)
-    if drawing_overlay.superview
-      drawing_overlay.removeFromSuperview
-    else
-      $media_player.pause
-      drawing_overlay.frame = @player_view.bounds
-      @player_view.addSubview(drawing_overlay)
-    end
+    drawing? ? stop_drawing! : start_drawing!
     update_draw_buttons
   end
 
-  def clear_drawing(sender)
+  def clear(sender)
     drawing_overlay.clear_drawing
   end
 
@@ -104,15 +113,30 @@ class ViewerController < ViewController::Landscape
     if $current_asset
       @draw_button.hidden = false
       if @drawing_overlay && @drawing_overlay.superview
-        @draw_button.setTitle('done', forState:UIControlStateNormal)
-        @clear_button.hidden = false  
+        @draw_button.setTitle('cancel', forState:UIControlStateNormal)
+        @clear_button.hidden = false
+        @save_button.hidden = false
       else
         @draw_button.setTitle('draw', forState:UIControlStateNormal)
         @clear_button.hidden = true
+        @save_button.hidden = true unless @note_text.has_text?
       end
     else
       @draw_button.hidden = true
       @clear_button.hidden = true
+      @save_button.hidden = true
     end
+  end
+  def drawing?
+    drawing_overlay.superview
+  end
+  def stop_drawing!
+    drawing_overlay.removeFromSuperview
+    drawing_overlay.clear_drawing
+  end
+  def start_drawing!
+    $media_player.pause
+    drawing_overlay.frame = @player_view.bounds
+    @player_view.addSubview(drawing_overlay)
   end
 end

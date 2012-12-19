@@ -13,6 +13,10 @@ class Annotation
     hash
   end
 
+  # def drawing=()
+  #   @drawing = 
+  # end
+
   def cell_for(tableView, reuseIdentifier, index_path)
     cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) || begin
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:reuseIdentifier)

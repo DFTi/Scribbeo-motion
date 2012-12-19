@@ -1,14 +1,13 @@
-class ViewerController < ViewController::Base
+class ViewerController < ViewController::Landscape
   attr_reader :drawing_overlay
-  extend IB
-
-  outlet :asset_table
-  outlet :note_table
 
   outlet :player_view
 
   outlet :draw_button
   outlet :clear_button
+
+  outlet :asset_table
+  outlet :note_table
 
   def viewDidLoad
     @asset_table.delegate = self

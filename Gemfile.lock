@@ -1,10 +1,21 @@
+GIT
+  remote: git://github.com/rubymotion/BubbleWrap.git
+  revision: 36062f34db57d3bca1564db8f87b0aa1f046b823
+  specs:
+    bubble-wrap (1.1.4)
+
+GIT
+  remote: git://github.com/rubymotion/sugarcube.git
+  revision: 83d265b09089465c2c2442d154eafc7c434f0f39
+  specs:
+    sugarcube (0.12)
+
 GEM
   remote: http://rubygems.org/
   specs:
     activesupport (3.2.9)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    bubble-wrap (1.1.4)
     coderay (1.0.8)
     colored (1.2)
     ffi (1.1.5)
@@ -50,7 +61,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bubble-wrap
+  bubble-wrap!
   guard
   guard-motion
   ib
@@ -59,4 +70,5 @@ DEPENDENCIES
   motion-redgreen
   rake
   rb-fsevent
+  sugarcube!
   terminal-notifier-guard

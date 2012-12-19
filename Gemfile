@@ -2,7 +2,8 @@ source :rubygems
 
 gem 'rake'
 gem 'ib'
-gem 'bubble-wrap'
+gem 'sugarcube', :github => "rubymotion/sugarcube"
+gem 'bubble-wrap', :github => "rubymotion/BubbleWrap", :require=>'bubble-wrap/all'
 
 # ... for tests
 gem 'listen', '0.4.7'

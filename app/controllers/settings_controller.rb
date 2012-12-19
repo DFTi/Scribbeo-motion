@@ -1,6 +1,4 @@
-class SettingsController < ViewController::Base
-  extend IB
-
+class SettingsController < ViewController::Landscape
   outlet :networking
   outlet :autodiscover
   

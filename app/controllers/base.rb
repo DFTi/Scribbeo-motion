@@ -1,5 +1,8 @@
 module ViewController
   class Base < UIViewController
+    extend IB
+  end
+  class Landscape < Base
     def shouldAutorotateToInterfaceOrientation(o)
       (o == UIInterfaceOrientationLandscapeRight) || (o == UIInterfaceOrientationLandscapeLeft)
     end

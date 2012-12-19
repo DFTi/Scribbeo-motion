@@ -23,4 +23,5 @@ class Annotation
     cell.viewWithTag(3).setText(timecode)
     cell
   end
+
 end

@@ -1,6 +1,10 @@
 module ViewController
   class Base < UIViewController
     extend IB
+    
+    def textFieldShouldReturn(textfield)
+      textfield.resignFirstResponder
+    end
   end
   class Landscape < Base
     def shouldAutorotateToInterfaceOrientation(o)

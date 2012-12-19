@@ -9,6 +9,9 @@ class ViewerController < ViewController::Landscape
   outlet :asset_table
   outlet :note_table
 
+  outlet :note_text
+  outlet :note_done_button
+
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
@@ -17,13 +20,18 @@ class ViewerController < ViewController::Landscape
     @drawing_overlay.contentMode = UIViewContentModeScaleToFill
     @drawing_overlay.backgroundColor = UIColor.clearColor
     update_draw_buttons
+    @note_text.on(:editing_did_begin) {|n| @note_done_button.hidden = false }
+    @note_text.on(:editing_did_end) {|n| @note_done_button.hidden = true }
+  end
+
+  def done_typing(sender)
+    @note_text.resignFirstResponder
   end
 
   # Handle selecting assets and notes
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     case tableView.dataSource
     when $source
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
       $current_asset = $source.contents[indexPath.row]
       $current_asset.delegate = self
       url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
@@ -40,7 +48,6 @@ class ViewerController < ViewController::Landscape
       update_draw_buttons
       $current_asset.fetch_notes!
     when $current_asset
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
       NSLog("TAPPED ON A NOTE")
     end
   end

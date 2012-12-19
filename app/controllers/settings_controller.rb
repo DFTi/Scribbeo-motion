@@ -15,10 +15,6 @@ class SettingsController < ViewController::Landscape
     set_delegates
   end
 
-  def textFieldShouldReturn(textfield)
-    textfield.resignFirstResponder
-  end
-
   def back(sender)
     save_settings
     NSLog "Saved settings, switching back to Viewer"

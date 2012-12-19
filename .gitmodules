@@ -1,3 +1,4 @@
 [submodule "vendor/SDWebImage"]
 	path = vendor/SDWebImage
 	url = git://github.com/rs/SDWebImage.git
+	ignore = dirty

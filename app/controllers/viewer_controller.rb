@@ -1,4 +1,6 @@
 class ViewerController < ViewController::Base
+  attr_reader :drawing_overlay
+
   include ViewerHelper
   extend IB
 
@@ -6,6 +8,9 @@ class ViewerController < ViewController::Base
   outlet :note_table
 
   outlet :player_view
+
+  outlet :draw_button
+  outlet :clear_button
 
   def viewDidLoad
     $source = new_source_from_settings
@@ -16,7 +21,11 @@ class ViewerController < ViewController::Base
     end
     @asset_table.delegate = self
     @note_table.delegate = self
-    $drawing_overlay = setup_drawing_overlay
+    @drawing_overlay = DrawView.new
+    @drawing_overlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
+    @drawing_overlay.contentMode = UIViewContentModeScaleToFill
+    @drawing_overlay.backgroundColor = UIColor.clearColor
+    update_draw_buttons
   end
 
   # Asset list
@@ -30,10 +39,12 @@ class ViewerController < ViewController::Base
     else
       $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)     
       $media_player.shouldAutoplay = false
+      $media_player.controlStyle = MPMovieControlStyleNone
       $media_player.view.frame = @player_view.bounds
       @player_view.addSubview $media_player.view
     end
     $media_player.prepareToPlay
+    update_draw_buttons
     $current_asset.fetch_notes!
   end
 
@@ -49,18 +60,18 @@ class ViewerController < ViewController::Base
 
   # Draw button
   def draw(sender)
-    NSLog 'draw hit'
-    # if drawing
-    #   get out of draw view, clear context, etc
-    # else
-    #   create overlay with view frame = to @player_view.bounds
-    #   set up drawing context
-    if $drawing_overlay.superview
-      $drawing_overlay.removeFromSuperview
+    if drawing_overlay.superview
+      drawing_overlay.removeFromSuperview
     else
-      $drawing_overlay.frame = @player_view.bounds
-      @player_view.addSubview($drawing_overlay)
+      $media_player.pause
+      drawing_overlay.frame = @player_view.bounds
+      @player_view.addSubview(drawing_overlay)
     end
+    update_draw_buttons
+  end
+
+  def clear_drawing(sender)
+    drawing_overlay.clear_drawing
   end
 
   ## MediaSource delegate methods:
@@ -84,10 +95,19 @@ class ViewerController < ViewController::Base
   end
 
   private
-  def setup_drawing_overlay
-    dv = DrawView.new
-    dv.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
-    dv.contentMode = UIViewContentModeScaleToFill
-    return dv
+  def update_draw_buttons
+    if $current_asset
+      @draw_button.hidden = false
+      if @drawing_overlay && @drawing_overlay.superview
+        @draw_button.setTitle('done', forState:UIControlStateNormal)
+        @clear_button.hidden = false  
+      else
+        @draw_button.setTitle('draw', forState:UIControlStateNormal)
+        @clear_button.hidden = true
+      end
+    else
+      @draw_button.hidden = true
+      @clear_button.hidden = true
+    end
   end
 end

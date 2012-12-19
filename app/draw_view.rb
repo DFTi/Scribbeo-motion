@@ -24,6 +24,7 @@ class DrawView < UIView
   # Touches
 
   def touchesBegan(touches, withEvent:event)
+    $media_player.pause
     touch = touches.anyObject
     @previous_point1 = touch.previousLocationInView(self)
     @previous_point2 = touch.previousLocationInView(self)
@@ -60,8 +61,8 @@ class DrawView < UIView
     if needs_to_redraw
       # Render to buffer
       UIGraphicsBeginImageContext(frame.size)
-      @buffer_image.drawInRect(CGRectMake(0, 0, frame.size.width, frame.size.height))
-      @buffer_image = nil
+      @buffer_image.drawInRect(CGRectMake(0, 0, frame.size.width, frame.size.height)) 
+      @buffer_image = UIImage.new
       new_path = UIBezierPath.bezierPath
       new_path.moveToPoint(@mid1)
       new_path.addQuadCurveToPoint(@mid2, controlPoint:@previous_point1)
@@ -91,7 +92,7 @@ class DrawView < UIView
       UIGraphicsEndImageContext()
       @needs_to_redraw = false
     end
-    @buffer_image.drawInRect(CGRectMake(0, 0, frame.size.width, frame.size.height)) if @buffer_image
+    @buffer_image.drawInRect(CGRectMake(0, 0, frame.size.width, frame.size.height))
   end
 
   def svg_representation
@@ -103,9 +104,9 @@ class DrawView < UIView
   end
 
   def clear_drawing
-    @paths = nil
-    @path_colors = nil
-    @buffer_image = nil
+    @paths = []
+    @path_colors = []
+    @buffer_image = UIImage.new
     @has_input = false
     setNeedsDisplay
   end

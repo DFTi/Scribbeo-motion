@@ -13,19 +13,10 @@ class Annotation
     hash
   end
 
-  # def drawing=()
-  #   @drawing = 
-  # end
-
-  def cell_for(tableView, reuseIdentifier, index_path)
-    cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) || begin
-      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:reuseIdentifier)
+  class Cell < UITableViewCell
+    def setSelected(selected, animated:animated)
+      self.layer.borderColor = UIColor.yellowColor.CGColor
+      self.layer.borderWidth = (selected ? 2 : 0).to_f
     end
-    image_url = "#{$source.base_uri}/#{image['image']['url']}"
-    cell.viewWithTag(1).setImageWithURL(NSURL.URLWithString(image_url), placeholderImage:UIImage.new)
-    cell.viewWithTag(2).setText(author['name'])
-    cell.viewWithTag(3).setText(timecode)
-    cell
   end
-
 end

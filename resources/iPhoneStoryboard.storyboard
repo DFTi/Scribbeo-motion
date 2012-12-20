@@ -157,7 +157,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NOTE_CELL_IDENTIFIER" rowHeight="88" id="nIS-dB-h0V" userLabel="Note Cell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="NOTE_CELL_IDENTIFIER" rowHeight="88" id="nIS-dB-h0V" userLabel="Note Cell" customClass="Cell">
                                         <rect key="frame" x="0.0" y="22" width="154" height="88"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -333,6 +333,12 @@
         </scene>
     </scenes>
     <classes>
+        <class className="Cell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/Cell.h"/>
+            <relationships>
+                <relationship kind="action" name="to_hash"/>
+            </relationships>
+        </class>
         <class className="SettingsController" superclassName="ViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsController.h"/>
             <relationships>

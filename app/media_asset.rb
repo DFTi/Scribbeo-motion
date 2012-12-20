@@ -41,7 +41,15 @@ class MediaAsset
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
     @reuseIdentifier ||= "NOTE_CELL_IDENTIFIER"
-    @notes[indexPath.row].cell_for(tableView, @reuseIdentifier, indexPath)
+    cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
+      Annotation::Cell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
+    end
+    note = @notes[indexPath.row]
+    image_url = "#{$source.base_uri}/#{note.image['image']['url']}"
+    cell.viewWithTag(1).setImageWithURL(NSURL.URLWithString(image_url), placeholderImage:UIImage.new)
+    cell.viewWithTag(2).setText(note.author['name'])
+    cell.viewWithTag(3).setText(note.timecode)
+    cell
   end
 
   def tableView(tableView, numberOfRowsInSection: section)

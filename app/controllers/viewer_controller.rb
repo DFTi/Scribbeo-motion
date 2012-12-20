@@ -1,14 +1,30 @@
 class ViewerController < ViewController::Landscape
   include MediaSource::Delegate
-
-  outlet :player_view
-  outlet :draw_button
-  outlet :clear_button
+  
   outlet :asset_table
   outlet :note_table
+  outlet :player_view
   outlet :note_text
+  outlet :draw_button
+  outlet :clear_button
   outlet :note_done_button
   outlet :save_button
+
+  def backward(sender)
+    p 'backward'
+  end
+
+  def forward(sender)
+    p 'forward'
+  end
+
+  def next(sender)
+    p 'next'
+  end
+
+  def previous(sender)
+    p 'previous'
+  end
 
   def viewDidLoad
     @asset_table.delegate = self
@@ -53,7 +69,6 @@ class ViewerController < ViewController::Landscape
       else
         $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)     
         $media_player.shouldAutoplay = false
-        $media_player.controlStyle = MPMovieControlStyleNone
         $media_player.view.frame = @player_view.bounds
         @player_view.addSubview $media_player.view
       end
@@ -69,16 +84,6 @@ class ViewerController < ViewController::Landscape
 
   def present_note(note)
 
-  end
-
-  # Play button
-  def play_pause(sender)
-    return unless $media_player
-    if $media_player.playbackState == MPMoviePlaybackStatePlaying
-      $media_player.pause
-    else
-      $media_player.play
-    end
   end
 
   # Draw button

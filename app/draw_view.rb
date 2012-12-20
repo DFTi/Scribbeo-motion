@@ -90,17 +90,9 @@ class DrawView < UIView
     @buffer_image.drawInRect(CGRectMake(0, 0, frame.size.width, frame.size.height))
   end
 
-  def drawing_base64png
+  def base64png
     data = UIImagePNGRepresentation(@buffer_image);
     return MF_Base64Codec.base64StringFromData(data)
-  end
-
-  def svg_representation
-    #
-  end
-
-  def load_svg_representation
-    #
   end
 
   def clear_drawing

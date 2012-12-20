@@ -1,32 +1,28 @@
 class ViewerController < ViewController::Landscape
-  attr_reader :drawing_overlay
+  include MediaSource::Delegate
 
   outlet :player_view
-
   outlet :draw_button
   outlet :clear_button
-
   outlet :asset_table
   outlet :note_table
-
   outlet :note_text
   outlet :note_done_button
-
   outlet :save_button
 
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
-    $d = @drawing_overlay = DrawView.new
+    @drawing_overlay = DrawView.new
     @drawing_overlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
     @drawing_overlay.contentMode = UIViewContentModeScaleToFill
     @drawing_overlay.backgroundColor = UIColor.clearColor
     update_draw_buttons
     @note_text.on(:editing_did_begin) {|n|
       $media_player.pause if $media_player
-      @note_done_button.hidden = false
+      @note_done_button.show!
     }
-    @note_text.on(:editing_did_end) {|n| @note_done_button.hidden = true }
+    @note_text.on(:editing_did_end) {|n| @note_done_button.hide! }
     @note_text.on(:editing_did_change) do |n|
       if $current_asset && !drawing?
         @save_button.hidden = !@note_text.has_text?
@@ -39,7 +35,9 @@ class ViewerController < ViewController::Landscape
   end
 
   def save(sender)
-    # Annotation.new()
+    note = Annotation.new :timecode=>"", :note=>@note_text.text,
+      :seconds=>$media_player.seconds, :drawing=>@drawing_overlay.base64png
+    $current_asset.create_note! note
   end
 
   # Handle selecting assets and notes
@@ -63,8 +61,14 @@ class ViewerController < ViewController::Landscape
       update_draw_buttons
       $current_asset.fetch_notes!
     when $current_asset
-      NSLog("TAPPED ON A NOTE")
+      present_note $current_asset.notes[indexPath.row]
+      # Seek video to the note seconds
+      # 
     end
+  end
+
+  def present_note(note)
+
   end
 
   # Play button
@@ -84,59 +88,38 @@ class ViewerController < ViewController::Landscape
   end
 
   def clear(sender)
-    drawing_overlay.clear_drawing
-  end
-
-  ## MediaSource delegate methods:
-
-  def connected
-    $source.fetch_contents!
-  end
-
-  def connection_failed
-    App.alert MediaSource::Alert::CONNECTION_FAILURE
-  end
-
-  def contents_fetched
-    @asset_table.dataSource = $source
-    @asset_table.reloadData
-  end
-
-  def notes_fetched
-    NSLog("NOTES FETCHED RELOAD DATA")
-    @note_table.dataSource = $current_asset
-    @note_table.reloadData
+    @drawing_overlay.clear_drawing
   end
 
   private
   def update_draw_buttons
     if $current_asset
-      @draw_button.hidden = false
-      if @drawing_overlay && @drawing_overlay.superview
+      @draw_button.show!
+      if drawing?
         @draw_button.setTitle('cancel', forState:UIControlStateNormal)
-        @clear_button.hidden = false
-        @save_button.hidden = false
+        @clear_button.show!
+        @save_button.show!
       else
         @draw_button.setTitle('draw', forState:UIControlStateNormal)
-        @clear_button.hidden = true
-        @save_button.hidden = true unless @note_text.has_text?
+        @clear_button.hide!
+        @save_button.hide! unless @note_text.has_text?
       end
     else
-      @draw_button.hidden = true
-      @clear_button.hidden = true
-      @save_button.hidden = true
+      @draw_button.hide!
+      @clear_button.hide!
+      @save_button.hide!
     end
   end
   def drawing?
-    drawing_overlay.superview
+    !@drawing_overlay.nil? && @drawing_overlay.superview
   end
   def stop_drawing!
-    drawing_overlay.removeFromSuperview
-    drawing_overlay.clear_drawing
+    @drawing_overlay.removeFromSuperview
+    @drawing_overlay.clear_drawing
   end
   def start_drawing!
     $media_player.pause
-    drawing_overlay.frame = @player_view.bounds
-    @player_view.addSubview(drawing_overlay)
+    @drawing_overlay.frame = @player_view.bounds
+    @player_view.addSubview(@drawing_overlay)
   end
 end

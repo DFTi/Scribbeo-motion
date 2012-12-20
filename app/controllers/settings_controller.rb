@@ -1,12 +1,8 @@
 class SettingsController < ViewController::Landscape
   outlet :networking
   outlet :autodiscover
-  
-  # server
   outlet :address
   outlet :port
-
-  # login
   outlet :username
   outlet :password
 
@@ -17,7 +13,6 @@ class SettingsController < ViewController::Landscape
 
   def back(sender)
     save_settings
-    NSLog "Saved settings, switching back to Viewer"
     $source = new_source_from_settings
     unless $source.is_a? UIAlertView
       $source.delegate = presentingViewController

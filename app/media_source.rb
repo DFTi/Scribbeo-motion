@@ -5,6 +5,27 @@ module MediaSource
                         Alternatively, use autodiscover or disable networking."
   end
 
+  module Delegate
+    def connected
+      $source.fetch_contents!
+    end
+
+    def connection_failed
+      App.alert MediaSource::Alert::CONNECTION_FAILURE
+    end
+
+    def contents_fetched
+      @asset_table.dataSource = $source
+      @asset_table.reloadData
+    end
+
+    def notes_fetched
+      NSLog("NOTES FETCHED RELOAD DATA")
+      @note_table.dataSource = $current_asset
+      @note_table.reloadData
+    end
+  end
+
   class Base
     attr_reader :contents, :mode, :uri, :base_uri, :status
     attr_accessor :delegate

@@ -13,16 +13,13 @@ class AppDelegate
   end
 
   def applicationWillResignActive(application)
-    # Going into the background
-    # Pause the player here
+    $media_player.pause if $media_player
   end
 
   def applicationDidBecomeActive(application)
-    # Resume code, e.g.:
-    # Did any settings change?
-    # If yes, cleanup the player and start from the beginning by reading settings
-    # => and creating a new media source from it
-    # If no, resume where we left off.
+    if $source.nil? && @window.rootViewController.is_a?(ViewerController)
+      @window.rootViewController.performSegueWithIdentifier('toSettings', sender:self)
+    end
   end
 
   def load_vc(identifier)

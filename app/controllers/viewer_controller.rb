@@ -119,11 +119,13 @@ class ViewerController < ViewController::Landscape
     !@drawing_overlay.nil? && @drawing_overlay.superview
   end
   def stop_drawing!
+    $media_player.controlStyle = MPMovieControlStyleDefault
     @drawing_overlay.removeFromSuperview
     @drawing_overlay.clear_drawing
   end
   def start_drawing!
     $media_player.pause
+    $media_player.controlStyle = MPMovieControlStyleNone
     @drawing_overlay.frame = @player_view.bounds
     @player_view.addSubview(@drawing_overlay)
   end

@@ -17,7 +17,7 @@ class AppDelegate
   end
 
   def applicationDidBecomeActive(application)
-    if $source.nil? && @window.rootViewController.is_a?(ViewerController)
+    if @window.rootViewController.is_a?(ViewerController) && $source.nil?
       @window.rootViewController.performSegueWithIdentifier('toSettings', sender:self)
     end
   end

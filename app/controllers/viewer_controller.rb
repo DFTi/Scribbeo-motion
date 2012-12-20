@@ -75,6 +75,7 @@ class ViewerController < ViewController::Landscape
     @note_text.clear!
     case tableView.dataSource
     when $source
+      Crittercism.leaveBreadcrumb("Tapped on an asset")
       @note_text.resignFirstResponder
       $current_asset = $source.contents[indexPath.row]
       $current_asset.delegate = self
@@ -88,6 +89,7 @@ class ViewerController < ViewController::Landscape
         @player_view.addSubview $media_player.view
       end
       $media_player.prepareToPlay
+      Crittercism.leaveBreadcrumb("Off to fetch notes now!")
       $current_asset.fetch_notes!
     when $current_asset
       present_note $current_asset.notes[indexPath.row]

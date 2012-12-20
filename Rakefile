@@ -8,8 +8,10 @@ Motion::Project::App.setup do |app|
   app.redgreen_style = :full
   app.vendor_project 'vendor/SDWebImage', :xcode
   app.vendor_project 'vendor/Base64', :static
-  # app.vendor_project 'vendor/Timecode', :static
-  
+  app.vendor_project 'vendor/CrittercismSDK', :static, :headers_dir => 'vendor/CrittercismSDK'
+  app.frameworks << 'SystemConfiguration'
+  app.frameworks << 'Crittercism'
+
   app.identifier = "com.digitalfilmtree.ScribbeoMotion"
   app.name = 'Scribbeo Motion'
   app.device_family = [:iphone, :ipad]

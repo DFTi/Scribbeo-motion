@@ -32,10 +32,12 @@ class Annotation
     end
 
     def note=(note)
+      Crittercism.leaveBreadcrumb("Annotation::Cell loading with a note")
       image_url = "#{$source.base_uri}/#{note.image['image']['url']}"
       viewWithTag(Tags::IMAGE).setImageWithURL(NSURL.URLWithString(image_url), placeholderImage:UIImage.new)
       viewWithTag(Tags::AUTHOR).setText(note.author['name'])
       viewWithTag(Tags::TIMECODE).setText(note.timecode)
+      Crittercism.leaveBreadcrumb("Annotation::Cell returning from note loading")
     end
   end
 end

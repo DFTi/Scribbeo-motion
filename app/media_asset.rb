@@ -18,8 +18,15 @@ class MediaAsset
     @notes = []
     url = $source.api 'annotations'
     BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|
-      BW::JSON.parse(res.body.to_str).each {|n| @notes << Annotation.new(n)}
-      delegate.notes_fetched
+      Crittercism.leaveBreadcrumb("fetching notes")
+      if res.ok?
+        Crittercism.leaveBreadcrumb("Response was good. Will parse json and fill array")
+        BW::JSON.parse(res.body.to_str).each {|n| @notes << Annotation.new(n)}
+        Crittercism.leaveBreadcrumb("filled @notes array. informing delegate")
+        delegate.notes_fetched
+      else
+        App.alert 'Could not retrieve notes.'
+      end
     end
     self
   end

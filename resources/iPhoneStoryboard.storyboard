@@ -18,7 +18,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" id="z7R-MI-8sJ" userLabel="Player">
                                         <rect key="frame" x="0.0" y="74" width="323" height="182"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OG6-D0-idC" userLabel="Draw Button">
@@ -172,7 +172,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="154" height="87"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" id="ojv-vK-Czy" userLabel="Image">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="colorbars.jpg" id="ojv-vK-Czy" userLabel="Image">
                                                     <rect key="frame" x="0.0" y="0.0" width="154" height="87"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -341,6 +341,9 @@
             <point key="canvasLocation" x="75" y="444"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="colorbars.jpg" width="480" height="270"/>
+    </resources>
     <classes>
         <class className="Cell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/Cell.h"/>

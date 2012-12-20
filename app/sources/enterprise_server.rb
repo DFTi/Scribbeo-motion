@@ -37,7 +37,8 @@ class EnterpriseServer < MediaSource::Server
     BW::HTTP.get(api('all_accessible'), payload: {private_token: $token}) do |res|
       BW::JSON.parse(res.body.to_str).each do |asset|
         if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
-          @contents << MediaAsset.new(asset["name"], asset["location_uri"], asset['id'])
+          @contents << MediaAsset.new(asset["name"], asset["location_uri"], 
+            asset['id'], asset['fps'], asset['start_timecode'])
         end
       end
       contents_fetched!

@@ -30,25 +30,23 @@ class ViewerController < ViewController::Landscape
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
-    @drawing_overlay = DrawView.new
-    @drawing_overlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
-    @drawing_overlay.contentMode = UIViewContentModeScaleToFill
-    @drawing_overlay.backgroundColor = UIColor.clearColor
-    update_draw_buttons
-    @note_text.on(:editing_did_begin) {|n|
+    @note_text.on(:editing_did_begin) do |n|
       $media_player.pause if $media_player
       @note_done_button.show!
-    }
+    end
     @note_text.on(:editing_did_end) {|n| @note_done_button.hide! }
     @note_text.on(:editing_did_change) do |n|
       if $current_asset && !drawing?
         @save_button.hidden = !@note_text.has_text?
       end
     end
+    update_draw_buttons
   end
 
   def viewDidAppear(animated)
-    performSegueWithIdentifier('toSettings', sender:self) if $source.nil?
+    if $source.nil? || !$source.connected?
+      performSegueWithIdentifier('toSettings', sender:self)
+    end
   end
 
   def done_typing(sender)
@@ -56,13 +54,25 @@ class ViewerController < ViewController::Landscape
   end
 
   def save(sender)
-    note = Annotation.new :timecode=>"", :note=>@note_text.text,
-      :seconds=>$media_player.seconds, :drawing=>@drawing_overlay.base64png
-    $current_asset.create_note! note
+    $note = Annotation.new :timecode=>@timecode.text, :note=>@note_text.text,
+      :seconds=>$media_player.seconds, :media_asset_id => $current_asset.id,
+      :drawing=>(drew? ? @drawing_overlay.base64png : nil)
+    $current_asset.create_note!($note) do |user_feedback|
+      if user_feedback[:success]
+        App.alert "Note saved on server.\nA local copy will appear momentarily."
+        stop_drawing!
+        @note_text.clear!
+        $current_asset.fetch_notes!
+      else
+        App.alert "Note could not be saved.\nError:#{user_feedback[:error]}"
+      end
+    end
   end
 
   # Handle selecting assets and notes
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
+    stop_drawing!
+    @note_text.clear!
     case tableView.dataSource
     when $source
       @note_text.resignFirstResponder
@@ -72,19 +82,19 @@ class ViewerController < ViewController::Landscape
       if $media_player
         $media_player.contentURL = url
       else
-        $media_player = MPMoviePlayerController.alloc.initWithContentURL(url)     
+        $media_player = MoviePlayer.alloc.initWithContentURL(url)     
         $media_player.shouldAutoplay = false
         $media_player.view.frame = @player_view.bounds
         @player_view.addSubview $media_player.view
       end
       $media_player.prepareToPlay
-      update_draw_buttons
       $current_asset.fetch_notes!
     when $current_asset
       present_note $current_asset.notes[indexPath.row]
       # Seek video to the note seconds
       # 
     end
+    update_draw_buttons
   end
 
   def present_note(note)
@@ -94,7 +104,6 @@ class ViewerController < ViewController::Landscape
   # Draw button
   def draw(sender)
     drawing? ? stop_drawing! : start_drawing!
-    update_draw_buttons
   end
 
   def clear(sender)
@@ -123,15 +132,28 @@ class ViewerController < ViewController::Landscape
   def drawing?
     !@drawing_overlay.nil? && @drawing_overlay.superview
   end
+  def drew?
+    drawing? && @drawing_overlay.has_input
+  end
   def stop_drawing!
-    $media_player.controlStyle = MPMovieControlStyleDefault
-    @drawing_overlay.removeFromSuperview
-    @drawing_overlay.clear_drawing
+    $media_player.controlStyle = MPMovieControlStyleDefault if $media_player
+    if drawing?
+      @drawing_overlay.removeFromSuperview
+      @drawing_overlay.clear_drawing
+    end
+    update_draw_buttons
   end
   def start_drawing!
     $media_player.pause
     $media_player.controlStyle = MPMovieControlStyleNone
-    @drawing_overlay.frame = @player_view.bounds
-    @player_view.addSubview(@drawing_overlay)
+    if @drawing_overlay.nil?
+      @drawing_overlay = DrawView.new
+      @drawing_overlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
+      @drawing_overlay.contentMode = UIViewContentModeScaleToFill
+      @drawing_overlay.backgroundColor = UIColor.clearColor
+    end
+    @drawing_overlay.frame = $media_player.view.bounds
+    $media_player.view.addSubview(@drawing_overlay)
+    update_draw_buttons
   end
 end

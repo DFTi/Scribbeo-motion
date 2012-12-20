@@ -1,5 +1,5 @@
 class Annotation
-  attr_accessor :note, :timecode, :seconds, :comments, :author, :image
+  attr_accessor :note, :timecode, :seconds, :comments, :author, :image, :drawing, :media_asset_id
 
   def initialize(*h)
     if h.length == 1 && h.first.kind_of?(Hash)
@@ -9,8 +9,14 @@ class Annotation
 
   def to_hash
     hash = {}
-    self.instance_variables.each {|var| hash[var.to_s.delete("@")] = self.instance_variable_get(var) }
+    self.instance_variables.each do |var|
+      hash[var.to_s.delete("@").to_sym] = self.instance_variable_get(var)
+    end
     hash
+  end
+
+  def uncomposited?
+    image['image']['url'].nil?
   end
 
   class Cell < UITableViewCell

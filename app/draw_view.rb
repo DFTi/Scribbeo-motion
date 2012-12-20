@@ -68,21 +68,6 @@ class DrawView < UIView
       # Save
       @paths.addObject(new_path)
       @path_colors.addObject(@brush_color)
-         
-      # CoreGraphics version
-         
-      # CGContextRef context = UIGraphicsGetCurrentContext();
-      
-      # CGContextMoveToPoint(context, self.mid1.x, self.mid1.y);
-      # # Use QuadCurve is the key
-      # CGContextAddQuadCurveToPoint(context, self.previousPoint1.x, self.previousPoint1.y, self.mid2.x, self.mid2.y); 
-        
-      # CGContextSetLineCap(context, kCGLineCapRound);
-      # CGContextSetLineWidth(context, brushSize);
-      # CGContextSetStrokeColorWithColor(context, [brushColor CGColor]);
-      # CGContextSetRGBStrokeColor(context, 1.0, 0.0, 0.0, 1.0);
-      # CGContextStrokePath(context);
-        
       @buffer_image = UIGraphicsGetImageFromCurrentImageContext()
       UIGraphicsEndImageContext()
       @needs_to_redraw = false
@@ -91,8 +76,7 @@ class DrawView < UIView
   end
 
   def base64png
-    data = UIImagePNGRepresentation(@buffer_image);
-    return MF_Base64Codec.base64StringFromData(data)
+    UIImagePNGRepresentation(@buffer_image).base64EncodedString rescue nil
   end
 
   def clear_drawing

@@ -1,15 +1,17 @@
 class MediaAsset
   attr_accessor :delegate
-  attr_reader :name, :uri, :id, :notes
+  attr_reader :name, :uri, :id, :notes, :fps, :start_timecode
 
   STILLS = ['.JPG', '.JPEG', '.PNG', '.GIF']
   MOVIES = ['.MOV', '.MP4', '.M4V', '.M3U8']
 
-  def initialize(name, uri, id=nil)
+  def initialize(name, uri, id=nil, fps=29.97, start_timecode='00:00:00:00')
     @name = name
     @uri = uri
     @id = id
     @notes = []
+    @fps = fps
+    @start_timecode = start_timecode
   end
 
   def fetch_notes!
@@ -22,12 +24,16 @@ class MediaAsset
     self
   end
 
-  def create_note!(note)
+  def create_note!(note, &block)
     payload = {private_token: $token, annotation: note.to_hash}
     url = $source.api 'annotations/new'
     BW::HTTP.post(url, payload: payload) do |res|
-      reply = BW::JSON.parse(res.body.to_str)
-      fetch_notes!
+      user_feedback = if res.ok?
+        {:success => true, :message => "Note saved on server."}
+      else
+        {:success => false, :message => res.error_message}
+      end
+      block.call(user_feedback)
     end
     self
   end

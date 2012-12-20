@@ -16,12 +16,6 @@ class AppDelegate
     $media_player.pause if $media_player
   end
 
-  def applicationDidBecomeActive(application)
-    if @window.rootViewController.is_a?(ViewerController) && $source.nil?
-      @window.rootViewController.performSegueWithIdentifier('toSettings', sender:self)
-    end
-  end
-
   def load_vc(identifier)
     name = "#{Device.iphone? ? 'iPhone' : 'iPad'}Storyboard"
     storyboard = UIStoryboard.storyboardWithName(name, bundle: NSBundle.mainBundle)

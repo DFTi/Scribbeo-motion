@@ -14,9 +14,22 @@ class Annotation
   end
 
   class Cell < UITableViewCell
+    module Tags
+      IMAGE = 1
+      AUTHOR = 2
+      TIMECODE = 3
+    end
+
     def setSelected(selected, animated:animated)
       self.layer.borderColor = UIColor.yellowColor.CGColor
       self.layer.borderWidth = (selected ? 2 : 0).to_f
+    end
+
+    def note=(note)
+      image_url = "#{$source.base_uri}/#{note.image['image']['url']}"
+      viewWithTag(Tags::IMAGE).setImageWithURL(NSURL.URLWithString(image_url), placeholderImage:UIImage.new)
+      viewWithTag(Tags::AUTHOR).setText(note.author['name'])
+      viewWithTag(Tags::TIMECODE).setText(note.timecode)
     end
   end
 end

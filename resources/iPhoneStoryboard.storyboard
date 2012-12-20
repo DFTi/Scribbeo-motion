@@ -149,8 +149,16 @@
                                             <action selector="previous:" destination="SrS-4o-EwC" eventType="touchUpInside" id="8Fl-9w-oJu"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="07u-f8-CIg">
+                                        <rect key="frame" x="97" y="260" width="128" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.85561735733695654" green="0.85561735733695654" blue="0.85561735733695654" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.14509804546833038" green="0.14509804546833038" blue="0.14509804546833038" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="87" sectionHeaderHeight="22" sectionFooterHeight="22" id="r1A-cA-AO6" userLabel="Note Table">
                                 <rect key="frame" x="0.0" y="154" width="154" height="146"/>
@@ -224,6 +232,7 @@
                         <outlet property="note_text" destination="u8h-Ce-Sgi" id="70z-mU-4B7"/>
                         <outlet property="player_view" destination="z7R-MI-8sJ" id="6iT-CV-i9i"/>
                         <outlet property="save_button" destination="ZtK-qS-iNV" id="rZf-0j-mmN"/>
+                        <outlet property="timecode" destination="07u-f8-CIg" id="U9h-ue-dtS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEB-Hd-IyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -369,6 +378,7 @@
                 <relationship kind="action" name="previous:"/>
                 <relationship kind="action" name="save:"/>
                 <relationship kind="action" name="update_draw_buttons"/>
+                <relationship kind="action" name="viewDidAppear:"/>
                 <relationship kind="action" name="viewDidLoad"/>
                 <relationship kind="outlet" name="asset_table"/>
                 <relationship kind="outlet" name="clear_button"/>
@@ -378,6 +388,7 @@
                 <relationship kind="outlet" name="note_text"/>
                 <relationship kind="outlet" name="player_view"/>
                 <relationship kind="outlet" name="save_button"/>
+                <relationship kind="outlet" name="timecode"/>
             </relationships>
         </class>
     </classes>

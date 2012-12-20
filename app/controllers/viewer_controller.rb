@@ -9,6 +9,7 @@ class ViewerController < ViewController::Landscape
   outlet :clear_button
   outlet :note_done_button
   outlet :save_button
+  outlet :timecode
 
   def backward(sender)
     p 'backward'
@@ -44,6 +45,10 @@ class ViewerController < ViewController::Landscape
         @save_button.hidden = !@note_text.has_text?
       end
     end
+  end
+
+  def viewDidAppear(animated)
+    performSegueWithIdentifier('toSettings', sender:self) if $source.nil?
   end
 
   def done_typing(sender)

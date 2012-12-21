@@ -16,7 +16,7 @@ module MoviePlayer
       p 'previous'
     end
   end
-  
+
   class Controller < MPMoviePlayerController
     def seconds
       currentPlaybackTime

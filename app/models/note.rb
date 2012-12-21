@@ -30,4 +30,8 @@ class Note
   def author_name
     @author['name'] rescue 'Unknown'
   end
+
+  def text
+    @note
+  end
 end

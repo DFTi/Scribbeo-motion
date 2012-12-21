@@ -1,6 +1,7 @@
 class ViewerController < ViewController::Landscape
   include MediaSource::Delegate
   include MediaAsset::Delegate
+  include MoviePlayer::Controls
 
   outlet :asset_table
   outlet :note_table
@@ -12,13 +13,11 @@ class ViewerController < ViewController::Landscape
   outlet :save_button
   outlet :timecode
 
-  include MoviePlayer::Controls
-
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
     @note_text.on(:editing_did_begin) do |n|
-      $media_player.pause if $media_player
+      @player.pause if @player.exists?
       @note_done_button.show!
     end
     @note_text.on(:editing_did_end) {|n| @note_done_button.hide! }
@@ -42,7 +41,7 @@ class ViewerController < ViewController::Landscape
 
   def save(sender)
     $note = Note.new :timecode=>@timecode.text, :note=>@note_text.text,
-      :seconds=>$media_player.seconds, :media_asset_id => $current_asset.id,
+      :seconds=>@player.seconds, :media_asset_id => $current_asset.id,
       :drawing=>(drew? ? @drawing_overlay.base64png : nil)
     $current_asset.create_note!($note) do |user_feedback|
       if user_feedback[:success]
@@ -61,22 +60,18 @@ class ViewerController < ViewController::Landscape
     stop_drawing!
     @note_text.clear!
     case tableView.dataSource
-    when $source
+    when $source # Selecting an Asset
       @note_text.resignFirstResponder
       $current_asset = $source.contents[indexPath.row]
       $current_asset.delegate = self
       $current_asset.fetch_notes!
-      @player.load($current_asset)
-    when $current_asset
-      present_note $current_asset.notes[indexPath.row]
-      # Seek video to the note seconds
-      # 
+      @player.load $current_asset
+    when $current_asset # Selecting a Note
+      note = $current_asset.notes[indexPath.row]
+      @note_text.text = note.text
+      @player.display_note note
     end
     update_draw_buttons
-  end
-
-  def present_note(note)
-
   end
 
   # Draw button
@@ -114,7 +109,7 @@ class ViewerController < ViewController::Landscape
     drawing? && @drawing_overlay.has_input
   end
   def stop_drawing!
-    $media_player.controlStyle = MPMovieControlStyleDefault if $media_player
+    @player.show_control_overlay if @player.exists?
     if drawing?
       @drawing_overlay.removeFromSuperview
       @drawing_overlay.clear_drawing
@@ -122,16 +117,15 @@ class ViewerController < ViewController::Landscape
     update_draw_buttons
   end
   def start_drawing!
-    $media_player.pause
-    $media_player.controlStyle = MPMovieControlStyleNone
+    @player.pause
+    @player.hide_control_overlay
     if @drawing_overlay.nil?
       @drawing_overlay = DrawView.new
       @drawing_overlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth
       @drawing_overlay.contentMode = UIViewContentModeScaleToFill
       @drawing_overlay.backgroundColor = UIColor.clearColor
     end
-    @drawing_overlay.frame = $media_player.view.bounds
-    $media_player.view.addSubview(@drawing_overlay)
+    @player.add_overlay(@drawing_overlay)
     update_draw_buttons
   end
 end

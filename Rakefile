@@ -12,6 +12,10 @@ Motion::Project::App.setup do |app|
   app.frameworks << 'SystemConfiguration'
   app.frameworks << 'Crittercism'
 
+  # The follow flag solves SDWebImage's array subscripting problem. More here:
+  # http://spin.atomicobject.com/2012/12/04/linking-against-libarclite-in-ruby-motion/
+  app.libs << "-fobjc-arc"
+
   app.identifier = "com.digitalfilmtree.ScribbeoMotion"
   app.name = 'Scribbeo Motion'
   app.device_family = [:iphone, :ipad]

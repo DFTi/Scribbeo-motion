@@ -1,6 +1,6 @@
 class MediaAsset
-  attr_accessor :delegate
-  attr_reader :name, :uri, :id, :notes, :fps, :start_timecode
+  attr_accessor :delegate, :notes
+  attr_reader :name, :uri, :id, :fps, :start_timecode
 
   STILLS = ['.JPG', '.JPEG', '.PNG', '.GIF']
   MOVIES = ['.MOV', '.MP4', '.M4V', '.M3U8']
@@ -9,9 +9,9 @@ class MediaAsset
     @name = name
     @uri = uri
     @id = id
-    @notes = []
     @fps = fps
     @start_timecode = start_timecode
+    @notes = []
   end
 
   def fetch_notes!
@@ -21,7 +21,7 @@ class MediaAsset
       Crittercism.leaveBreadcrumb("fetching notes")
       if res.ok?
         Crittercism.leaveBreadcrumb("Response was good. Will parse json and fill array")
-        BW::JSON.parse(res.body.to_str).each {|n| @notes << Annotation.new(n)}
+        BW::JSON.parse(res.body.to_str).each {|n| notes << Note.new(n)}
         Crittercism.leaveBreadcrumb("filled @notes array. informing delegate")
         delegate.notes_fetched
       else
@@ -29,6 +29,18 @@ class MediaAsset
       end
     end
     self
+  end
+
+  module Delegate
+    def notes_fetched
+      @note_table.dataSource = $current_asset
+      @note_table.reloadData
+      return unless $current_asset.notes.any?
+      if $current_asset.notes.last.uncomposited?
+        p "Uncomposited note detected. Refetching in #{time = 3} seconds..."
+        App.run_after(time) { $current_asset.fetch_notes! }
+      end
+    end
   end
 
   def create_note!(note, &block)
@@ -51,18 +63,17 @@ class MediaAsset
   end
 
   # Act as tableview dataSource
-
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
     @reuseIdentifier ||= "NOTE_CELL_IDENTIFIER"
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
-      Annotation::Cell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
+      NoteCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
     end
-    cell.note = @notes[indexPath.row]
+    cell.note = notes[indexPath.row]
     cell
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    @notes.count
+    notes.count
   end
 
 end

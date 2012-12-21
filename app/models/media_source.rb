@@ -18,19 +18,6 @@ module MediaSource
       @asset_table.dataSource = $source
       @asset_table.reloadData
     end
-
-    def notes_fetched
-      Crittercism.leaveBreadcrumb("delegate is setting @note_table datasource")
-      @note_table.dataSource = $current_asset
-      Crittercism.leaveBreadcrumb("now calling reloadData!")
-      @note_table.reloadData
-      return unless $current_asset.notes.any?
-      Crittercism.leaveBreadcrumb("checking for uncomposited notes...")
-      if $current_asset.notes.last.uncomposited?
-        p "Uncomposited note detected. Refetching in #{time = 3} seconds..."
-        App.run_after(time) { $current_asset.fetch_notes! }
-      end
-    end
   end
 
   class Base

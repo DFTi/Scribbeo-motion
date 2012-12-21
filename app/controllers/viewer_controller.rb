@@ -1,6 +1,7 @@
 class ViewerController < ViewController::Landscape
   include MediaSource::Delegate
-  
+  include MediaAsset::Delegate
+
   outlet :asset_table
   outlet :note_table
   outlet :player_view
@@ -54,7 +55,7 @@ class ViewerController < ViewController::Landscape
   end
 
   def save(sender)
-    $note = Annotation.new :timecode=>@timecode.text, :note=>@note_text.text,
+    $note = Note.new :timecode=>@timecode.text, :note=>@note_text.text,
       :seconds=>$media_player.seconds, :media_asset_id => $current_asset.id,
       :drawing=>(drew? ? @drawing_overlay.base64png : nil)
     $current_asset.create_note!($note) do |user_feedback|

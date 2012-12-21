@@ -2,11 +2,12 @@ class AppDelegate
   attr_accessor :media_source
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    Crittercism.enableWithAppID("50d334ce8195200ed700001d")
+    Crittercism.enableWithAppID("50d3864489ea74655000000b")
     $source = nil
+    $media_player = nil
+    $current_asset = nil
     UIApplication.sharedApplication.setStatusBarHidden(true, animated:false)
     @window = UIWindow.alloc.initWithFrame UIScreen.mainScreen.bounds
-    Crittercism.leaveBreadcrumb("App finished launching. loading vc")
     switch_to_vc load_vc("ViewerController")
   rescue => ex
     App.alert ex.message

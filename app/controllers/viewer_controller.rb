@@ -12,21 +12,7 @@ class ViewerController < ViewController::Landscape
   outlet :save_button
   outlet :timecode
 
-  def backward(sender)
-    p 'backward'
-  end
-
-  def forward(sender)
-    p 'forward'
-  end
-
-  def next(sender)
-    p 'next'
-  end
-
-  def previous(sender)
-    p 'previous'
-  end
+  include MoviePlayer::Controls
 
   def viewDidLoad
     @asset_table.delegate = self

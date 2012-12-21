@@ -1,4 +1,18 @@
 class MediaAsset
+  ##
+  # Included on ViewControllers that display notes in a UITableView
+  module Delegate
+    def notes_fetched
+      @note_table.dataSource = $current_asset
+      @note_table.reloadData
+      return unless $current_asset.notes.any?
+      if $current_asset.notes.last.uncomposited?
+        p "Uncomposited note detected. Refetching in #{time = 3} seconds..."
+        App.run_after(time) { $current_asset.fetch_notes! }
+      end
+    end
+  end
+
   attr_accessor :delegate, :notes
   attr_reader :name, :uri, :id, :fps, :start_timecode
 
@@ -14,33 +28,22 @@ class MediaAsset
     @notes = []
   end
 
+  def playback_url
+    NSURL.URLWithString "#{uri}?auth_token=#{$token}"
+  end
+
   def fetch_notes!
     @notes = []
-    url = $source.api 'annotations'
+    url = $source.api('annotations')
     BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|
-      Crittercism.leaveBreadcrumb("fetching notes")
       if res.ok?
-        Crittercism.leaveBreadcrumb("Response was good. Will parse json and fill array")
         BW::JSON.parse(res.body.to_str).each {|n| notes << Note.new(n)}
-        Crittercism.leaveBreadcrumb("filled @notes array. informing delegate")
         delegate.notes_fetched
       else
         App.alert 'Could not retrieve notes.'
       end
     end
     self
-  end
-
-  module Delegate
-    def notes_fetched
-      @note_table.dataSource = $current_asset
-      @note_table.reloadData
-      return unless $current_asset.notes.any?
-      if $current_asset.notes.last.uncomposited?
-        p "Uncomposited note detected. Refetching in #{time = 3} seconds..."
-        App.run_after(time) { $current_asset.fetch_notes! }
-      end
-    end
   end
 
   def create_note!(note, &block)

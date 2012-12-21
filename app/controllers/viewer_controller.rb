@@ -4,7 +4,7 @@ class ViewerController < ViewController::Landscape
 
   outlet :asset_table
   outlet :note_table
-  outlet :player_view
+  outlet :player
   outlet :note_text
   outlet :draw_button
   outlet :clear_button
@@ -76,22 +76,11 @@ class ViewerController < ViewController::Landscape
     @note_text.clear!
     case tableView.dataSource
     when $source
-      Crittercism.leaveBreadcrumb("Tapped on an asset")
       @note_text.resignFirstResponder
       $current_asset = $source.contents[indexPath.row]
       $current_asset.delegate = self
-      url = NSURL.URLWithString "#{$current_asset.uri}?auth_token=#{$token}"
-      if $media_player
-        $media_player.contentURL = url
-      else
-        $media_player = MoviePlayer.alloc.initWithContentURL(url)     
-        $media_player.shouldAutoplay = false
-        $media_player.view.frame = @player_view.bounds
-        @player_view.addSubview $media_player.view
-      end
-      $media_player.prepareToPlay
-      Crittercism.leaveBreadcrumb("Off to fetch notes now!")
       $current_asset.fetch_notes!
+      @player.load($current_asset)
     when $current_asset
       present_note $current_asset.notes[indexPath.row]
       # Seek video to the note seconds

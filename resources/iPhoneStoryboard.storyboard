@@ -16,7 +16,7 @@
                                 <rect key="frame" x="155" y="0.0" width="323" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="z7R-MI-8sJ" userLabel="Player">
+                                    <view contentMode="scaleToFill" id="z7R-MI-8sJ" userLabel="Player" customClass="PlayerView">
                                         <rect key="frame" x="0.0" y="74" width="323" height="182"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -230,7 +230,7 @@
                         <outlet property="note_done_button" destination="XVw-Ns-3hW" id="yZx-1E-CHG"/>
                         <outlet property="note_table" destination="r1A-cA-AO6" id="LBH-kH-HMq"/>
                         <outlet property="note_text" destination="u8h-Ce-Sgi" id="70z-mU-4B7"/>
-                        <outlet property="player_view" destination="z7R-MI-8sJ" id="6iT-CV-i9i"/>
+                        <outlet property="player" destination="z7R-MI-8sJ" id="7Nh-lB-qRU"/>
                         <outlet property="save_button" destination="ZtK-qS-iNV" id="rZf-0j-mmN"/>
                         <outlet property="timecode" destination="07u-f8-CIg" id="U9h-ue-dtS"/>
                     </connections>
@@ -348,6 +348,12 @@
         <class className="NoteCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NoteCell.h"/>
         </class>
+        <class className="PlayerView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayerView.h"/>
+            <relationships>
+                <relationship kind="action" name="play:"/>
+            </relationships>
+        </class>
         <class className="SettingsController" superclassName="ViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsController.h"/>
             <relationships>
@@ -386,7 +392,7 @@
                 <relationship kind="outlet" name="note_done_button"/>
                 <relationship kind="outlet" name="note_table"/>
                 <relationship kind="outlet" name="note_text"/>
-                <relationship kind="outlet" name="player_view"/>
+                <relationship kind="outlet" name="player"/>
                 <relationship kind="outlet" name="save_button"/>
                 <relationship kind="outlet" name="timecode"/>
             </relationships>

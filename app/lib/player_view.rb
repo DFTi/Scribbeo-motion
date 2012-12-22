@@ -1,53 +1,43 @@
 class PlayerView < UIView
 
   def load asset
-    if mp
-      mp.contentURL = asset.playback_url
+    if $media_player
+      $media_player.contentURL = asset.playback_url
     else
-      mp = MoviePlayer::Controller.alloc.initWithContentURL asset.playback_url
-      mp.shouldAutoplay = false
-      mp.view.frame = self.bounds
-      self.addSubview mp.view
+      $media_player = MoviePlayer::Controller.alloc.initWithContentURL asset.playback_url
+      $media_player.shouldAutoplay = false
+      $media_player.view.frame = self.bounds
+      self.addSubview $media_player.view
     end
-    mp.prepareToPlay
+    $media_player.prepareToPlay
   end
 
   def seek_to seconds
-    mp
+    $media_player
   end
 
   def exists?
-    !mp.nil?
+    !$media_player.nil?
   end
 
   def pause
-    mp.pause
+    $media_player.pause
   end
 
   def show_control_overlay
-    mp.controlStyle = MPMovieControlStyleDefault
+    $media_player.controlStyle = MPMovieControlStyleDefault
   end
 
   def hide_control_overlay
-    mp.controlStyle = MPMovieControlStyleNone
+    $media_player.controlStyle = MPMovieControlStyleNone
   end
 
   def seconds
-    mp.seconds
+    $media_player.seconds
   end
 
   def add_overlay(overlay)
-    overlay.frame = mp.view.bounds
-    mp.view.addSubview(overlay)
-  end
-
-  private
-  def mp ; $media_player ; end
-  def method_missing(method, *args, &block)  
-    if mp.respond_to? method
-      mp.send(method, *args, &block)
-    else
-      NSLog "MoviePlayer::Controller does not respond to #{method}"
-    end
+    overlay.frame = $media_player.view.bounds
+    $media_player.view.addSubview(overlay)
   end
 end

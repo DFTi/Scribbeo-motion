@@ -29,17 +29,17 @@ class ViewerController < ViewController::Landscape
     update_draw_buttons
   end
 
-  def viewDidAppear(animated)
+  def viewDidAppear animated
     if $source.nil? || !$source.connected?
       performSegueWithIdentifier('toSettings', sender:self)
     end
   end
 
-  def done_typing(sender)
+  def done_typing sender
     @note_text.resignFirstResponder
   end
 
-  def save(sender)
+  def save sender
     $note = Note.new :timecode=>@timecode.text, :note=>@note_text.text,
       :seconds=>@player.seconds, :media_asset_id => $current_asset.id,
       :drawing=>(drew? ? @drawing_overlay.base64png : nil)
@@ -67,19 +67,22 @@ class ViewerController < ViewController::Landscape
       $current_asset.fetch_notes!
       @player.load $current_asset
     when $current_asset # Selecting a Note
-      note = $current_asset.notes[indexPath.row]
-      @note_text.text = note.text
-      @player.display_note note
+      present_note $current_asset.notes[indexPath.row]
     end
     update_draw_buttons
   end
 
+  def present_note note
+    @note_text.text = note.text
+    @player.seek_to note.seconds
+  end
+
   # Draw button
-  def draw(sender)
+  def draw sender
     drawing? ? stop_drawing! : start_drawing!
   end
 
-  def clear(sender)
+  def clear sender
     @drawing_overlay.clear_drawing
   end
 

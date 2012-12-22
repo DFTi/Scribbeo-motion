@@ -351,7 +351,13 @@
         <class className="PlayerView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayerView.h"/>
             <relationships>
-                <relationship kind="action" name="play:"/>
+                <relationship kind="action" name="add_overlay:"/>
+                <relationship kind="action" name="hide_control_overlay"/>
+                <relationship kind="action" name="load_asset:"/>
+                <relationship kind="action" name="load_note"/>
+                <relationship kind="action" name="pause"/>
+                <relationship kind="action" name="seconds"/>
+                <relationship kind="action" name="show_control_overlay"/>
             </relationships>
         </class>
         <class className="SettingsController" superclassName="ViewController">
@@ -374,14 +380,9 @@
         <class className="ViewerController" superclassName="ViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewerController.h"/>
             <relationships>
-                <relationship kind="action" name="backward:"/>
                 <relationship kind="action" name="clear:"/>
                 <relationship kind="action" name="done_typing:"/>
                 <relationship kind="action" name="draw:"/>
-                <relationship kind="action" name="forward:"/>
-                <relationship kind="action" name="next:"/>
-                <relationship kind="action" name="present_note:"/>
-                <relationship kind="action" name="previous:"/>
                 <relationship kind="action" name="save:"/>
                 <relationship kind="action" name="update_draw_buttons"/>
                 <relationship kind="action" name="viewDidAppear:"/>

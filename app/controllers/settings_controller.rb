@@ -1,3 +1,6 @@
+##
+# You must only Segue to this controller, never load it with App#switch_to
+# Reason is that $source.delegate gets set to presentingViewController
 class SettingsController < ViewController::Landscape
   outlet :networking
   outlet :autodiscover
@@ -14,10 +17,15 @@ class SettingsController < ViewController::Landscape
   def back(sender)
     save_settings
     $source = new_source_from_settings
-    unless $source.is_a? UIAlertView
+    if valid_source?
       $source.delegate = presentingViewController
-      $source.connect!
-      presentingViewController.dismissViewControllerAnimated(true, completion:nil)
+      $source.connect! do |status|
+        if status == :connected
+          presentingViewController.dismissViewControllerAnimated(true, completion:nil)
+        else
+          App.alert "Connection failed with status #{status.to_s}"
+        end
+      end
     end
   end
 
@@ -72,5 +80,9 @@ class SettingsController < ViewController::Landscape
     else
       LocalMedia.new
     end
+  end
+
+  def valid_source?
+    !$source.nil? && !$source.is_a?(UIAlertView)
   end
 end

@@ -4,7 +4,7 @@ class EnterpriseServer < MediaSource::Server
     super(opts)
   end
 
-  def connect!
+  def connect!(&block)
     return @status if connected? || connecting?
     @status = :connecting
     payload = {email:@login["username"], password:@login["password"]}
@@ -14,12 +14,18 @@ class EnterpriseServer < MediaSource::Server
         if res.body
           reply = BW::JSON.parse(res.body.to_str)
           $token = reply[:private_token]
-          res.ok? ? connected! : connection_failed!
+          if res.ok?
+            connected!
+          else
+            connection_failed!
+          end
         else
           connection_failed!
         end
       rescue BubbleWrap::JSON::ParserError
         connection_failed!
+      ensure
+        block.call(@status)
       end
     end
   rescue => ex

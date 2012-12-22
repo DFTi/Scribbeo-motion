@@ -7,20 +7,37 @@ class SettingsController < ViewController::Landscape
   outlet :password
 
   def viewDidLoad
+    @address.delegate = self
+    @port.delegate = self
+    @username.delegate = self
+    @password.delegate = self
     load_settings
-    set_delegates
   end
 
-  def connect sender
+  def apply sender
     save_settings
-    $source = MediaSource::Factory.build
-    $source.delegate = presentingViewController
-    $source.connect! {|status| dismiss if status == :connected}
-  rescue MediaSource::InvalidSettingsError
-    App.alert MediaSource::Alert::INVALID_SETTINGS
+    if $source = MediaSource::Builder.build
+      $source.delegate = presentingViewController
+      $source.connect! do |status, reply|
+        case status
+        when :connected; dismiss
+        when :connection_failure
+          case reply['message']
+          when '401 Unauthorized'
+            App.alert "Authentication failed, please try again"
+          when 'NoResponse'
+            App.alert 'Server is not responding. Check address & port or contact an administrator.'
+          when 'BadResponse'
+            App.alert 'Server gave an unexpected response. Please contact an administrator.'
+          end
+        end
+      end
+    else
+      App.alert MediaSource::Alert::INVALID_SETTINGS
+    end
   end
 
-  def back sender
+  def cancel sender
     dismiss
   end
 
@@ -49,13 +66,5 @@ class SettingsController < ViewController::Landscape
     App::Persistence["autodiscover"] = @autodiscover.on?
     App::Persistence["server"] = {address: @address.text, port: @port.text}
     App::Persistence["login"] = {username: @username.text, password: @password.text}
-  end
-
-  # Set delegates such that the keyboard will go away on Done
-  def set_delegates
-    @address.delegate = self
-    @port.delegate = self
-    @username.delegate = self
-    @password.delegate = self
   end
 end

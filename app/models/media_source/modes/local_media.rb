@@ -10,6 +10,11 @@ class LocalMedia < MediaSource::Base
     block.call(:connected)
   end
 
+  def clear_notes!
+    $current_asset = MediaAsset.new '', ''
+    delegate.notes_fetched
+  end
+
   def fetch_contents!
     @contents = []
     dp = App.documents_path

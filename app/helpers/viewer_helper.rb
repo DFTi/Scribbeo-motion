@@ -4,7 +4,7 @@ module ViewerHelper
   end
 
   def connection_failed
-    App.alert MediaSource::Alert::CONNECTION_FAILURE
+    # Nothing needed right now.
   end
 
   def contents_fetched

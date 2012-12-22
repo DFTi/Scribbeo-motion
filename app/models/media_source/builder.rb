@@ -8,7 +8,7 @@ module MediaSource
                         Alternatively, use autodiscover or disable networking."
   end
 
-  module Factory
+  module Builder
     ##
     # Build a new media source object from persistent user settings
     def self.build
@@ -27,7 +27,7 @@ module MediaSource
             PythonServer.new base_uri:uri, autodiscover: false
           end
         else
-          raise InvalidSettingsError
+          nil
         end
       else
         LocalMedia.new

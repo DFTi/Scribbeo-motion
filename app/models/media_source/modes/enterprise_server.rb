@@ -13,6 +13,7 @@ class EnterpriseServer < MediaSource::Server
   def connect!(&block)
     return @status if connected? || connecting?
     @status = :connecting
+    reply = {"message" => "Unknown"}
     payload = {email:@login["username"], password:@login["password"]}
     url = api 'session'
     BW::HTTP.post(url, payload: payload) do |res|
@@ -23,15 +24,19 @@ class EnterpriseServer < MediaSource::Server
           if res.ok?
             connected!
           else
+            reply['message'] = "BadResponse"
             connection_failed!
           end
         else
+          reply['message'] = "NoResponse"
           connection_failed!
         end
       rescue BubbleWrap::JSON::ParserError
+        reply = {"message" => "JSON Parse Error"}
         connection_failed!
       ensure
-        block.call(@status)
+        p reply
+        block.call(@status, reply)
       end
     end
   rescue => ex

@@ -9,3 +9,4 @@
 [submodule "vendor/MBProgressHUD"]
 	path = vendor/MBProgressHUD
 	url = git@github.com:matej/MBProgressHUD.git
+	ignore = dirty

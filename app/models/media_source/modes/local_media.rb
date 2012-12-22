@@ -4,8 +4,10 @@ class LocalMedia < MediaSource::Base
     super
   end
 
-  def connect!
+  def connect!(&block)
+    clear_notes!
     connected!
+    block.call(:connected)
   end
 
   def fetch_contents!
@@ -15,8 +17,8 @@ class LocalMedia < MediaSource::Base
       if MediaAsset.supports_extension?(ext=File.extname(name)[1..-1].upcase)
         @contents << MediaAsset.new(name, File.join(dp, name))
       end
-      contents_fetched!
     end
+    contents_fetched!
     self
   end
 

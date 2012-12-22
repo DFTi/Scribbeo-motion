@@ -1,6 +1,5 @@
 class ViewerController < ViewController::Landscape
-  include MediaSource::Delegate
-  include MediaAsset::Delegate
+  include ViewerHelper
   include MoviePlayer::Controls
 
   outlet :asset_table

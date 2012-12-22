@@ -5,14 +5,19 @@ class PythonServer < MediaSource::Server
     super(opts)
   end
 
-  def connect!
-    return @status if connected? || connecting?
+  def connect!(&block)
+    return block.call(@status) if connected? || connecting?
     @finder = BonjourFinder.new("_videoTree._tcp.")
     @finder.notify(self) do |ip, port|
       @base_uri = "http://#{ip}:#{port}"
       BW::HTTP.get(@list_url) do |res|
         @connected = res.ok?
-        connected? ? connected! : connection_failed!
+        if connected?
+          connected!
+        else
+          connection_failed!
+        end
+        block.call(@status)
       end
     end
   end
@@ -29,6 +34,7 @@ class PythonServer < MediaSource::Server
             uri: @base_uri+item["list_url"],
             mode: @mode
           })
+          raise 'the next line is wrong/old'
           @contents << MediaSource.new(params)
         end
         json["files"].each do |item|

@@ -1,6 +1,3 @@
-##
-# You must only Segue to this controller, never load it with App#switch_to
-# Reason is that $source.delegate gets set to presentingViewController
 class SettingsController < ViewController::Landscape
   outlet :networking
   outlet :autodiscover
@@ -14,22 +11,26 @@ class SettingsController < ViewController::Landscape
     set_delegates
   end
 
-  def back(sender)
+  def connect sender
     save_settings
-    $source = new_source_from_settings
-    if valid_source?
-      $source.delegate = presentingViewController
-      $source.connect! do |status|
-        if status == :connected
-          presentingViewController.dismissViewControllerAnimated(true, completion:nil)
-        else
-          App.alert "Connection failed with status #{status.to_s}"
-        end
-      end
-    end
+    $source = MediaSource::Factory.build
+    $source.delegate = presentingViewController
+    $source.connect! {|status| dismiss if status == :connected}
+  rescue MediaSource::InvalidSettingsError
+    App.alert MediaSource::Alert::INVALID_SETTINGS
+  end
+
+  def back sender
+    dismiss
   end
 
   private
+  def dismiss
+    if presentingViewController
+      presentingViewController.dismissViewControllerAnimated(true, completion:nil)
+    end
+  end
+
   def load_settings
     @networking.on = App::Persistence["networking"]
     @autodiscover.on = App::Persistence["autodiscover"]
@@ -56,33 +57,5 @@ class SettingsController < ViewController::Landscape
     @port.delegate = self
     @username.delegate = self
     @password.delegate = self
-  end
-
-  private
-  def new_source_from_settings
-    if Persistence["networking"]
-      server = Persistence['server'].nil? ? Hash.new : Persistence['server']
-      port_entered = !server['port'].nil? && !server['port'].empty?
-      address_entered = !server['address'].nil? && !server['address'].empty?
-      server_entered = ((port_entered && address_entered) ? true : false)
-      if Persistence["autodiscover"]
-        PythonServer.new autodiscover: true
-      elsif server_entered
-        uri = "http://#{server['address']}:#{server['port']}"
-        if login = Persistence["login"]
-          EnterpriseServer.new base_uri:uri, login: login
-        else
-          PythonServer.new base_uri:uri, autodiscover: false
-        end
-      else
-        App.alert MediaSource::Alert::INVALID_SETTINGS
-      end
-    else
-      LocalMedia.new
-    end
-  end
-
-  def valid_source?
-    !$source.nil? && !$source.is_a?(UIAlertView)
   end
 end

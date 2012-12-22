@@ -1,7 +1,13 @@
 class EnterpriseServer < MediaSource::Server
+  API_VERSION = '1'
+  
   def initialize opts
     @mode = :enterprise
     super(opts)
+  end
+
+  def api(path='')
+    "#{@base_uri}/api/v#{API_VERSION}/#{path}"
   end
 
   def connect!(&block)
@@ -50,21 +56,6 @@ class EnterpriseServer < MediaSource::Server
       contents_fetched!
     end
     self
-  end
-
-  # Act as tableview dataSource
-
-  def tableView(tableView, cellForRowAtIndexPath: indexPath)
-    @reuseIdentifier ||= "ASSET_CELL_IDENTIFIER"
-    cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
-      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
-    end
-    cell.textLabel.text = @contents[indexPath.row].name
-    cell
-  end
-
-  def tableView(tableView, numberOfRowsInSection: section)
-    @contents.count
   end
 
 end

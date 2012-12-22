@@ -1,18 +1,4 @@
 class MediaAsset
-  ##
-  # Included on ViewControllers that display notes in a UITableView
-  module Delegate
-    def notes_fetched
-      @note_table.dataSource = $current_asset
-      @note_table.reloadData
-      return unless $current_asset.notes.any?
-      if $current_asset.notes.last.uncomposited?
-        p "Uncomposited note detected. Refetching in #{time = 3} seconds..."
-        App.run_after(time) { $current_asset.fetch_notes! }
-      end
-    end
-  end
-
   attr_accessor :delegate, :notes
   attr_reader :name, :uri, :id, :fps, :start_timecode
 
@@ -78,5 +64,4 @@ class MediaAsset
   def tableView(tableView, numberOfRowsInSection: section)
     notes.count
   end
-
 end

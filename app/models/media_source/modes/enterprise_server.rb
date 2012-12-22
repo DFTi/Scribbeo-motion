@@ -35,7 +35,6 @@ class EnterpriseServer < MediaSource::Server
         reply = {"message" => "JSON Parse Error"}
         connection_failed!
       ensure
-        p reply
         block.call(@status, reply)
       end
     end

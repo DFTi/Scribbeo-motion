@@ -6,7 +6,3 @@
 	path = vendor/Base64
 	url = https://github.com/keyvanfatehi/Base64
 	ignore = dirty
-[submodule "vendor/MBProgressHUD"]
-	path = vendor/MBProgressHUD
-	url = git@github.com:matej/MBProgressHUD.git
-	ignore = dirty

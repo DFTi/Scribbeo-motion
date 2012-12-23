@@ -1,9 +1,10 @@
 class ViewerController < ViewController::Landscape
   include ViewerHelper
+  attr_reader :player
 
+  outlet :player
   outlet :asset_table
   outlet :note_table
-  outlet :player
   outlet :note_text
   outlet :draw_button
   outlet :clear_button
@@ -12,7 +13,6 @@ class ViewerController < ViewController::Landscape
   outlet :timecode
 
   def viewDidLoad
-    $player = @player # Globalize the player
     @asset_table.delegate = self
     @note_table.delegate = self
     @note_text.on(:editing_did_begin) do |n|

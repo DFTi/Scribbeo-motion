@@ -42,6 +42,10 @@ class PlayerView < UIView
     !player.nil?
   end
 
+  def play
+    player.play
+  end
+
   def pause
     player.pause
   end

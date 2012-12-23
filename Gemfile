@@ -3,13 +3,13 @@ source :rubygems
 gem 'rake'
 gem 'ib'
 gem 'sugarcube', :github => "rubymotion/sugarcube"
-gem 'bubble-wrap', :github => "rubymotion/BubbleWrap", :require=>'bubble-wrap/all'
+gem 'bubble-wrap', :github => "rubymotion/BubbleWrap"
 
 # ... for tests
-gem 'listen', '0.4.7'
-gem 'rb-fsevent'
-gem 'motion-redgreen'
-gem 'motion-fixtures'
-gem 'terminal-notifier-guard'
-gem 'guard'
-gem 'guard-motion', :require=>'guard/motion'
+# gem 'listen', '0.4.7'
+# gem 'rb-fsevent'
+# gem 'motion-redgreen'
+# gem 'motion-fixtures'
+# gem 'terminal-notifier-guard'
+# gem 'guard'
+# gem 'guard-motion', :require=>'guard/motion'

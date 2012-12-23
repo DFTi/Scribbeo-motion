@@ -1,6 +1,5 @@
 class ViewerController < ViewController::Landscape
   include ViewerHelper
-  include MoviePlayer::Controls
 
   outlet :asset_table
   outlet :note_table
@@ -13,6 +12,7 @@ class ViewerController < ViewController::Landscape
   outlet :timecode
 
   def viewDidLoad
+    $player = @player
     @asset_table.delegate = self
     @note_table.delegate = self
     @note_text.on(:editing_did_begin) do |n|
@@ -83,6 +83,22 @@ class ViewerController < ViewController::Landscape
 
   def clear sender
     @drawing_overlay.clear_drawing
+  end
+
+  def backward(sender)
+    p 'backward'
+  end
+
+  def forward(sender)
+    p 'forward'
+  end
+
+  def next(sender)
+    p 'next'
+  end
+
+  def previous(sender)
+    p 'previous'
   end
 
   private

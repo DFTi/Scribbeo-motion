@@ -14,7 +14,7 @@ class MediaAsset
     @notes = []
   end
 
-  def playback_url
+  def url
     NSURL.URLWithString "#{uri}?auth_token=#{$token}"
   end
 

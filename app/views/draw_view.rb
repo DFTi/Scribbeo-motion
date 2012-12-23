@@ -19,7 +19,7 @@ class DrawView < UIView
   # Touches
 
   def touchesBegan(touches, withEvent:event)
-    $media_player.pause
+    $player.pause
     touch = touches.anyObject
     @previous_point1 = touch.previousLocationInView(self)
     @previous_point2 = touch.previousLocationInView(self)

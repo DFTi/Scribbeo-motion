@@ -12,7 +12,7 @@ class ViewerController < ViewController::Landscape
   outlet :timecode
 
   def viewDidLoad
-    $player = @player
+    $player = @player # Globalize the player
     @asset_table.delegate = self
     @note_table.delegate = self
     @note_text.on(:editing_did_begin) do |n|
@@ -127,7 +127,6 @@ class ViewerController < ViewController::Landscape
     drawing? && @drawing_overlay.has_input
   end
   def stop_drawing!
-    @player.show_control_overlay if @player.exists?
     if drawing?
       @drawing_overlay.removeFromSuperview
       @drawing_overlay.clear_drawing
@@ -136,7 +135,6 @@ class ViewerController < ViewController::Landscape
   end
   def start_drawing!
     @player.pause
-    @player.hide_control_overlay
     if @drawing_overlay.nil?
       @drawing_overlay = DrawView.new
       @drawing_overlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth

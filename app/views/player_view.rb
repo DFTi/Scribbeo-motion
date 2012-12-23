@@ -10,11 +10,10 @@ class PlayerView < UIView
   def load asset
     url_asset = AVURLAsset.URLAssetWithURL(asset.url, options:OPTIONS)
     player_item = AVPlayerItem.playerItemWithAsset(url_asset)
-    if $media_player
-      $media_player.replaceCurrentItemWithPlayerItem(player_item)
+    if player
+      player.replaceCurrentItemWithPlayerItem(player_item)
     else
-      $media_player = AVPlayer.playerWithPlayerItem(player_item)
-      layer.setPlayer $media_player
+      layer.setPlayer AVPlayer.playerWithPlayerItem(player_item)
     end
   end
 
@@ -40,19 +39,11 @@ class PlayerView < UIView
   end
 
   def exists?
-    !$media_player.nil?
+    !player.nil?
   end
 
   def pause
-    $media_player.pause
-  end
-
-  def show_control_overlay
-    # $media_player.controlStyle = MPMovieControlStyleDefault
-  end
-
-  def hide_control_overlay
-    # $media_player.controlStyle = MPMovieControlStyleNone
+    player.pause
   end
 
   def seconds

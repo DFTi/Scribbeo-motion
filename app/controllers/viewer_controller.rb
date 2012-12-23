@@ -25,6 +25,9 @@ class ViewerController < ViewController::Landscape
         @save_button.hidden = !@note_text.has_text?
       end
     end
+    @presented_drawing = UIImageView.alloc.init
+    @player.add_overlay @presented_drawing
+    @presented_drawing.hide!
     update_draw_buttons
   end
 
@@ -57,23 +60,32 @@ class ViewerController < ViewController::Landscape
   # Handle selecting assets and notes
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     stop_drawing!
+    @presented_drawing.hide!
+    @note_text.resignFirstResponder
     @note_text.clear!
     case tableView.dataSource
     when $source # Selecting an Asset
-      @note_text.resignFirstResponder
-      $current_asset = $source.contents[indexPath.row]
-      $current_asset.delegate = self
-      $current_asset.fetch_notes!
-      @player.load $current_asset
+      present_asset $source.contents[indexPath.row]
     when $current_asset # Selecting a Note
       present_note $current_asset.notes[indexPath.row]
     end
     update_draw_buttons
   end
 
+  def present_asset asset
+    $current_asset = asset
+    $current_asset.delegate = self
+    $current_asset.fetch_notes!
+    @player.load $current_asset
+  end
+
   def present_note note
     @note_text.text = note.text
     @player.seek_to note.seconds
+    if note.has_drawing?
+      @presented_drawing.setImageWithURL(note.drawing_url, placeholderImage:UIImage.new)
+      @presented_drawing.show!
+    end
   end
 
   # Draw button
@@ -121,7 +133,7 @@ class ViewerController < ViewController::Landscape
     end
   end
   def drawing?
-    !@drawing_overlay.nil? && @drawing_overlay.superview
+    !@drawing_overlay.nil? && !!@drawing_overlay.superview
   end
   def drew?
     drawing? && @drawing_overlay.has_input

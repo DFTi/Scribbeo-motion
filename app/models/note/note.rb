@@ -19,8 +19,20 @@ class Note
     image['image']['url'].nil? rescue false
   end
 
+  def has_image?
+    !image['image']['url'].nil?
+  end
+
+  def has_drawing?
+    !drawing['drawing']['url'].nil?
+  end
+
   def image_url
-    NSURL.URLWithString("#{$source.base_uri}/#{@image['image']['url']}") rescue ''
+    NSURL.URLWithString("#{$source.base_uri}/#{image['image']['url']}")
+  end
+
+  def drawing_url
+    NSURL.URLWithString("#{$source.base_uri}/#{drawing['drawing']['url']}")
   end
 
   def placeholder_image

@@ -13,7 +13,7 @@ class PlayerView < UIView
   end
 
   def seek_to seconds
-    $media_player
+    $media_player.currentPlaybackTime = seconds
   end
 
   def exists?

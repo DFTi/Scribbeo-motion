@@ -1,4 +1,5 @@
 class PlayerView < UIView
+
   def self.layerClass
     AVPlayerLayer
   end
@@ -7,7 +8,7 @@ class PlayerView < UIView
     AVURLAssetPreferPreciseDurationAndTimingKey => NSNumber.numberWithBool(true)
   }
 
-  def load asset
+  def load(asset, &block)
     url_asset = AVURLAsset.URLAssetWithURL(asset.url, options:OPTIONS)
     player_item = AVPlayerItem.playerItemWithAsset(url_asset)
     if player
@@ -15,22 +16,38 @@ class PlayerView < UIView
     else
       layer.setPlayer AVPlayer.playerWithPlayerItem(player_item)
     end
+    block.call(player_item)
   end
 
   def player
     self.layer.player
   end
 
+  def observe_time(&block)
+    player.removeTimeObserver(@observer) if @observer
+    @observer = player.addPeriodicTimeObserverForInterval(
+      CMTimeMakeWithSeconds(1.0/framerate, timescale),
+      queue:nil, usingBlock:block)
+  end
+
   def setVideoFillMode fillMode
     self.layer.videoGravity = fillMode
   end
 
+  def item
+    player.currentItem
+  end
+
   def video_track
-    player.currentItem.asset.tracksWithMediaType(AVMediaTypeVideo).lastObject
+    item.asset.tracksWithMediaType(AVMediaTypeVideo).lastObject
   end
 
   def timescale
     video_track.naturalTimeScale
+  end
+
+  def framerate
+    video_track.nominalFrameRate
   end
 
   def seek_to seconds

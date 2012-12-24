@@ -1,6 +1,7 @@
 class ViewerController < ViewController::Landscape
   include ViewerHelper
-  attr_reader :player
+  attr_accessor :player_time_observer
+  include BW::KVO
 
   outlet :player
   outlet :asset_table
@@ -76,8 +77,27 @@ class ViewerController < ViewController::Landscape
     $current_asset = asset
     $current_asset.delegate = self
     $current_asset.fetch_notes!
-    @player.load $current_asset
+    player.load($current_asset) do |item|
+      observe(item, :status) do |old_value, new_value|
+        case new_value
+        when AVPlayerItemStatusFailed
+          App.alert 'Failed to load media. Check network / ensure file is not corrupt.'
+        when AVPlayerItemStatusReadyToPlay
+          @player.observe_time do |time|
+            p 'time change observed'
+            p time.inspect
+            # self.currentTimecode = getAssetPlayerTimecode(self.player);
+            # self.scrubber.value = CMTimeGetSeconds(self.player.currentTime) / CMTimeGetSeconds(self.currentTrack.timeRange.duration);
+          end
+          unobserve(item, :status)
+        end
+      end
+    end
   end
+
+  # def observeValueForKeyPath(keyPath, ofObject:object, change:change, context:context)
+  #   p "Change at keypath #{keyPath} of #{object.class}: #{change.inspect}"
+  # end
 
   def present_note note
     @note_text.text = note.text

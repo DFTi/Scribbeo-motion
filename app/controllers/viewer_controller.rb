@@ -77,7 +77,6 @@ class ViewerController < ViewController::Landscape
   def present_asset asset
     $current_asset = asset
     $current_asset.delegate = self
-    $current_asset.fetch_notes!
     $timecode_agent = TimecodeAgent.new($current_asset.fps, $current_asset.start_timecode)
     @timecode.text = TimecodeAgent::ZEROS
     player.load($current_asset) do |item|
@@ -87,7 +86,11 @@ class ViewerController < ViewController::Landscape
           App.alert 'Failed to load media. Check network / ensure file is not corrupt.'
           # When the value of this property is AVPlayerStatusFailed, you can no longer use the player for playback and you need to create a new instance to replace it. If this happens, you can check the value of the error property to determine the nature of the failure.
         when AVPlayerItemStatusReadyToPlay
+          @player.pause
+          $current_asset.ready_to_play = true
+          $current_asset.fetch_notes!
           @timecode.text = $timecode_agent.timecode(@player.seconds)
+          update_draw_buttons
           @player.observe_time do |time|
             @timecode.text = $timecode_agent.timecode(CMTimeGetSeconds(time))
             # self.scrubber.value = CMTimeGetSeconds(self.player.currentTime) / CMTimeGetSeconds(self.currentTrack.timeRange.duration);
@@ -147,7 +150,7 @@ class ViewerController < ViewController::Landscape
   private
   def update_draw_buttons
     if $current_asset
-      @draw_button.show
+      @draw_button.show if $current_asset.ready_to_play
       if drawing?
         @draw_button.setTitle('cancel', forState:UIControlStateNormal)
         @clear_button.show

@@ -1,5 +1,5 @@
 class MediaAsset
-  attr_accessor :delegate, :notes
+  attr_accessor :delegate, :notes, :ready_to_play
   attr_reader :name, :uri, :id, :fps, :start_timecode
 
   STILLS = ['.JPG', '.JPEG', '.PNG', '.GIF']
@@ -12,6 +12,7 @@ class MediaAsset
     @fps = fps
     @start_timecode = start_timecode
     @notes = []
+    @ready_to_play = false
   end
 
   def url

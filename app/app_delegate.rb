@@ -2,7 +2,7 @@ class AppDelegate
   attr_accessor :media_source
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    # Crittercism.enableWithAppID("50d3864489ea74655000000b")
+    Crittercism.enableWithAppID("50d3864489ea74655000000b")
     $source = nil
     $current_asset = nil
     UIApplication.sharedApplication.setStatusBarHidden(true, animated:false)

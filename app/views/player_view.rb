@@ -15,6 +15,7 @@ class PlayerView < UIView
       player.replaceCurrentItemWithPlayerItem(player_item)
     else
       layer.setPlayer AVPlayer.playerWithPlayerItem(player_item)
+      player.allowsExternalPlayback = true
     end
     block.call(player_item)
   end

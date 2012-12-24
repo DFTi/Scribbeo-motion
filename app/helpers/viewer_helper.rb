@@ -1,4 +1,6 @@
 module ViewerHelper
+  class DrawPresentation < UIImageView ; end
+
   def connected
     $source.fetch_contents!
   end

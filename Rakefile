@@ -6,12 +6,13 @@ Bundler.require
 
 Motion::Project::App.setup do |app|
   # app.redgreen_style = :full
+  app.frameworks << 'AVFoundation'
   app.vendor_project 'vendor/SDWebImage', :xcode
   app.vendor_project 'vendor/Base64', :static
-  # app.vendor_project 'vendor/CrittercismSDK', :static, :headers_dir => 'vendor/CrittercismSDK'
-  # app.frameworks << 'SystemConfiguration'
-  # app.frameworks << 'Crittercism'
-  app.frameworks << 'AVFoundation'
+  
+  app.vendor_project 'vendor/CrittercismSDK', :static, :headers_dir => 'vendor/CrittercismSDK'
+  app.frameworks << 'SystemConfiguration'
+  app.frameworks << 'Crittercism'
 
   # The follow flag solves SDWebImage's array subscripting problem. More here:
   # http://spin.atomicobject.com/2012/12/04/linking-against-libarclite-in-ruby-motion/

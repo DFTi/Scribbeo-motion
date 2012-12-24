@@ -25,7 +25,8 @@ class ViewerController < ViewController::Landscape
         @save_button.hidden = !@note_text.has_text?
       end
     end
-    @presented_drawing = UIImageView.alloc.init
+    @presenting_note = false
+    @presented_drawing = DrawPresentation.alloc.init
     @player.add_overlay @presented_drawing
     @presented_drawing.hide
     update_draw_buttons
@@ -42,10 +43,11 @@ class ViewerController < ViewController::Landscape
   end
 
   def save sender
-    $note = Note.new :timecode=>@timecode.text, :note=>@note_text.text,
+    $current_asset.create_note!(Note.new({
+      :timecode=>@timecode.text, :note=>@note_text.text,
       :seconds=>@player.seconds, :media_asset_id => $current_asset.id,
       :drawing=>(drew? ? @drawing_overlay.base64png : nil)
-    $current_asset.create_note!($note) do |user_feedback|
+    })) do |user_feedback|
       if user_feedback[:success]
         App.alert "Note saved on server.\nA local copy will appear momentarily."
         stop_drawing!
@@ -98,10 +100,22 @@ class ViewerController < ViewController::Landscape
 
   def present_note note
     @note_text.text = note.text
-    @player.seek_to note.seconds
+    player.pause
+    player.seek_to note.seconds
     if note.has_drawing?
       @presented_drawing.setImageWithURL(note.drawing_url, placeholderImage:UIImage.new)
       @presented_drawing.show
+      @presenting_note = true
+    end
+  end
+
+  def stop_presenting_note
+    if @presenting_note
+      @presented_drawing.hide
+      @presented_drawing.setImage(UIImage.new)
+      @presenting_note = false
+      @note_text.text = ''
+      @note_table.reloadData # deselect
     end
   end
 
@@ -163,6 +177,7 @@ class ViewerController < ViewController::Landscape
     update_draw_buttons
   end
   def start_drawing!
+    stop_presenting_note
     @player.pause
     if @drawing_overlay.nil?
       @drawing_overlay = DrawView.new

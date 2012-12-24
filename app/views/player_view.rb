@@ -64,6 +64,7 @@ class PlayerView < UIView
   end
 
   def play
+    $viewer.stop_presenting_note
     player.play
   end
 

@@ -1,4 +1,4 @@
-class DrawView < UIView
+class DrawView < UIView  
   attr_accessor :brush_size, :brush_color, :needs_to_redraw, :has_input,
                 :buffer_image, :mid1, :mid2, :cache_brush_size, :previous_point1,
                 :previous_point2, :paths, :path_colors, :current_point 

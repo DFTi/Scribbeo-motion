@@ -19,6 +19,14 @@ class PlayerView < UIView
     block.call(player_item)
   end
 
+  def paused?
+    player.rate == 0.0
+  end
+
+  def touchesBegan(touches, withEvent:event)
+    (paused? ? play : pause) if exists?
+  end
+
   def player
     self.layer.player
   end
@@ -34,12 +42,8 @@ class PlayerView < UIView
     self.layer.videoGravity = fillMode
   end
 
-  def item
-    player.currentItem
-  end
-
   def video_track
-    item.asset.tracksWithMediaType(AVMediaTypeVideo).lastObject
+    player.currentItem.asset.tracksWithMediaType(AVMediaTypeVideo).lastObject
   end
 
   def timescale

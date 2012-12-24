@@ -1,9 +1,9 @@
 class TimecodeAgent
+  ZEROS = '00:00:00:00'
   Timecode = Struct.new(:hours, :minutes, :seconds, :frames)
 
-  def initialize(timescale, fps, start_tc=nil)
-    @timescale = timescale
-    @fps = fps
+  def initialize(fps, start_tc=nil)
+    @fps = fps.to_f
     @start_tc = start_tc
     if @start_tc
       @start_tc = parse_timecode(@start_tc)
@@ -23,20 +23,16 @@ class TimecodeAgent
   end
 
   def parse_timecode(timecode)
-    hours = timecode[0..1]
-    minutes = timecode[3..4]
-    seconds = timecode[6..7]
-    frames = timecode[9..11]
+    hours = timecode[0..1].to_i
+    minutes = timecode[3..4].to_i
+    seconds = timecode[6..7].to_i
+    frames = timecode[9..11].to_i
     Timecode.new hours, minutes, seconds, frames
   end
 
-  def units_to_seconds(time_units)
-    time_units / @timescale
-  end
-
-  def timecode(time_units)
+  def timecode(seconds)
     # Get input in seconds
-    seconds = units_to_seconds(time_units)
+    # seconds = units_to_seconds(time_units)
     realSeconds = seconds
 
     # Round up

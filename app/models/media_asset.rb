@@ -20,10 +20,10 @@ class MediaAsset
   end
 
   def fetch_notes!
-    @notes = []
     url = $source.api('annotations')
     BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|
       if res.ok?
+        @notes = []
         BW::JSON.parse(res.body.to_str).each {|n| notes << Note.new(n)}
         delegate.notes_fetched
       else

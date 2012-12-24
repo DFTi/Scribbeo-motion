@@ -1,6 +1,10 @@
 module ViewerHelper
   class DrawPresentation < UIImageView ; end
 
+  def presenting_note?
+    !!@presenting_note
+  end
+
   def connected
     $source.fetch_contents!
   end

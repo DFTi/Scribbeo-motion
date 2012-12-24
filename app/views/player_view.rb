@@ -32,11 +32,18 @@ class PlayerView < UIView
     self.layer.player
   end
 
-  def observe_time(&block)
-    player.removeTimeObserver(@observer) if @observer
+  def observe_time(block)
+    stop_observing_time
     @observer = player.addPeriodicTimeObserverForInterval(
       CMTimeMakeWithSeconds(1.0/framerate, timescale),
       queue:nil, usingBlock:block)
+  end
+
+  def stop_observing_time
+    if @observer
+      player.removeTimeObserver(@observer) 
+      @observer = false
+    end
   end
 
   def setVideoFillMode fillMode
@@ -66,7 +73,7 @@ class PlayerView < UIView
 
   def play
     $viewer.stop_presenting_note
-    player.play
+    player.play if seconds <= duration
   end
 
   def pause
@@ -75,6 +82,14 @@ class PlayerView < UIView
 
   def seconds
     CMTimeGetSeconds(player.currentTime)
+  end
+
+  def duration
+    CMTimeGetSeconds(video_track.timeRange.duration)
+  end
+
+  def rate=(rate)
+    player.setRate(rate)
   end
 
   def add_overlay overlay

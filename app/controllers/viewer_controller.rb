@@ -11,25 +11,38 @@ class ViewerController < ViewController::Landscape
   outlet :note_done_button
   outlet :save_button
   outlet :timecode
+  outlet :playback_scrubber
 
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
+    
     @note_text.on(:editing_did_begin) do |n|
       @player.pause if @player.exists?
       @note_done_button.show
     end
-    @note_text.on(:editing_did_end) {|n| @note_done_button.hide }
     @note_text.on(:editing_did_change) do |n|
       if $current_asset && !drawing?
         @save_button.hidden = !@note_text.has_text?
       end
     end
+    @note_text.on(:editing_did_end) {|n| @note_done_button.hide }
+
     @presenting_note = false
     @presented_drawing = DrawPresentation.alloc.init
     @player.add_overlay @presented_drawing
     @presented_drawing.hide
     update_draw_buttons
+
+    @time_observer = lambda {|time|
+      seconds = CMTimeGetSeconds(time)
+      duration = @player.duration
+      if seconds <= duration
+        @timecode.text = $timecode_agent.timecode(seconds)
+        @playback_scrubber.value = seconds / duration
+        @cached_scrubber_position = @playback_scrubber.value
+      end
+    }
   end
 
   def viewDidAppear animated
@@ -86,19 +99,36 @@ class ViewerController < ViewController::Landscape
           App.alert 'Failed to load media. Check network / ensure file is not corrupt.'
           # When the value of this property is AVPlayerStatusFailed, you can no longer use the player for playback and you need to create a new instance to replace it. If this happens, you can check the value of the error property to determine the nature of the failure.
         when AVPlayerItemStatusReadyToPlay
+          @playback_scrubber.value = 0
           @player.pause
           $current_asset.ready_to_play = true
           $current_asset.fetch_notes!
           @timecode.text = $timecode_agent.timecode(@player.seconds)
           update_draw_buttons
-          @player.observe_time do |time|
-            @timecode.text = $timecode_agent.timecode(CMTimeGetSeconds(time))
-            # self.scrubber.value = CMTimeGetSeconds(self.player.currentTime) / CMTimeGetSeconds(self.currentTrack.timeRange.duration);
+          @player.observe_time @time_observer
+          @playback_scrubber.on(:value_changed) do |e|
+            if can_scrub?
+              stop_presenting_note
+              @player.stop_observing_time
+              @player.rate = 0.0
+              @player.pause
+              seconds = @playback_scrubber.value * @player.duration
+              @player.seek_to(seconds)
+              @timecode.text = $timecode_agent.timecode(seconds)
+              @player.observe_time @time_observer
+              @cached_scrubber_position = @playback_scrubber.value
+            else
+              @playback_scrubber.value = (@cached_scrubber_position||=0)
+            end
           end
           unobserve(item, :status)
         end
       end
     end
+  end
+
+  def can_scrub?
+    $current_asset && $current_asset.ready_to_play && !drawing?
   end
 
   def present_note note
@@ -113,7 +143,7 @@ class ViewerController < ViewController::Landscape
   end
 
   def stop_presenting_note
-    if @presenting_note
+    if presenting_note?
       @presented_drawing.hide
       @presented_drawing.setImage(UIImage.new)
       @presenting_note = false

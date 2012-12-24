@@ -90,7 +90,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zmd-WD-gkc">
-                                        <rect key="frame" x="233" y="260" width="42" height="37"/>
+                                        <rect key="frame" x="233" y="272" width="42" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title=">>">
@@ -105,7 +105,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wY1-HI-mlJ">
-                                        <rect key="frame" x="278" y="260" width="42" height="37"/>
+                                        <rect key="frame" x="278" y="272" width="42" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title=">|">
@@ -120,7 +120,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VL8-lH-GyK">
-                                        <rect key="frame" x="47" y="260" width="42" height="37"/>
+                                        <rect key="frame" x="47" y="272" width="42" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="&lt;&lt;">
@@ -135,7 +135,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3An-3N-UGc">
-                                        <rect key="frame" x="3" y="260" width="42" height="37"/>
+                                        <rect key="frame" x="3" y="272" width="42" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="|&lt;">
@@ -150,7 +150,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="07u-f8-CIg">
-                                        <rect key="frame" x="97" y="260" width="128" height="36"/>
+                                        <rect key="frame" x="97" y="272" width="128" height="26"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -159,7 +159,7 @@
                                     </label>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XVw-Ns-3hW" userLabel="Done Typing">
                                         <rect key="frame" x="247" y="3" width="73" height="69"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -172,6 +172,10 @@
                                             <action selector="done_typing:" destination="SrS-4o-EwC" eventType="touchUpInside" id="SkF-Lf-K0V"/>
                                         </connections>
                                     </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="7cT-pq-GK6" userLabel="Playback Scrubber">
+                                        <rect key="frame" x="1" y="253" width="320" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </slider>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -230,6 +234,7 @@
                         <outlet property="note_done_button" destination="XVw-Ns-3hW" id="yZx-1E-CHG"/>
                         <outlet property="note_table" destination="r1A-cA-AO6" id="LBH-kH-HMq"/>
                         <outlet property="note_text" destination="u8h-Ce-Sgi" id="70z-mU-4B7"/>
+                        <outlet property="playback_scrubber" destination="7cT-pq-GK6" id="JAb-ms-OAO"/>
                         <outlet property="player" destination="z7R-MI-8sJ" id="7Nh-lB-qRU"/>
                         <outlet property="save_button" destination="ZtK-qS-iNV" id="rZf-0j-mmN"/>
                         <outlet property="timecode" destination="07u-f8-CIg" id="U9h-ue-dtS"/>
@@ -367,13 +372,15 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayerView.h"/>
             <relationships>
                 <relationship kind="action" name="add_overlay:"/>
-                <relationship kind="action" name="load:"/>
+                <relationship kind="action" name="duration"/>
+                <relationship kind="action" name="framerate"/>
                 <relationship kind="action" name="pause"/>
                 <relationship kind="action" name="play"/>
                 <relationship kind="action" name="player"/>
                 <relationship kind="action" name="seconds"/>
                 <relationship kind="action" name="seek_to:"/>
                 <relationship kind="action" name="setVideoFillMode:"/>
+                <relationship kind="action" name="stop_observing_time"/>
                 <relationship kind="action" name="timescale"/>
                 <relationship kind="action" name="video_track"/>
             </relationships>
@@ -399,6 +406,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewerController.h"/>
             <relationships>
                 <relationship kind="action" name="backward:"/>
+                <relationship kind="action" name="begin_scrubbing:"/>
                 <relationship kind="action" name="clear:"/>
                 <relationship kind="action" name="done_typing:"/>
                 <relationship kind="action" name="draw:"/>
@@ -408,6 +416,7 @@
                 <relationship kind="action" name="present_note:"/>
                 <relationship kind="action" name="previous:"/>
                 <relationship kind="action" name="save:"/>
+                <relationship kind="action" name="stop_presenting_note"/>
                 <relationship kind="action" name="update_draw_buttons"/>
                 <relationship kind="action" name="viewDidAppear:"/>
                 <relationship kind="action" name="viewDidLoad"/>
@@ -417,6 +426,7 @@
                 <relationship kind="outlet" name="note_done_button"/>
                 <relationship kind="outlet" name="note_table"/>
                 <relationship kind="outlet" name="note_text"/>
+                <relationship kind="outlet" name="playback_scrubber"/>
                 <relationship kind="outlet" name="player"/>
                 <relationship kind="outlet" name="save_button"/>
                 <relationship kind="outlet" name="timecode"/>

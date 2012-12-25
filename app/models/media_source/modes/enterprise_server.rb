@@ -23,6 +23,8 @@ class EnterpriseServer < MediaSource::Server
           $token = reply[:private_token]
           if res.ok?
             connected!
+          elsif reply['message'] == '401 Unauthorized'
+            connection_failed!
           else
             reply['message'] = "BadResponse"
             connection_failed!

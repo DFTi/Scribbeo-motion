@@ -48,6 +48,8 @@ class ViewerController < ViewController::Landscape
   def viewDidAppear animated
     if $source.nil? || !$source.connected?
       performSegueWithIdentifier('toSettings', sender:self)
+    else
+      UIApplication.sharedApplication.setStatusBarHidden(true, animated:true)
     end
   end
 

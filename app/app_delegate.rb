@@ -5,7 +5,6 @@ class AppDelegate
     Crittercism.enableWithAppID("50d3864489ea74655000000b")
     $source = nil
     $current_asset = nil
-    UIApplication.sharedApplication.setStatusBarHidden(true, animated:false)
     @window = UIWindow.alloc.initWithFrame UIScreen.mainScreen.bounds
     $viewer = load_vc("ViewerController")
     switch_to_vc $viewer

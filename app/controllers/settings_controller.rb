@@ -1,4 +1,4 @@
-class SettingsController < ViewController::Landscape
+class SettingsController < ViewController::Base
   outlet :networking
   outlet :autodiscover
   outlet :address
@@ -7,6 +7,7 @@ class SettingsController < ViewController::Landscape
   outlet :password
 
   def viewDidLoad
+    UIApplication.sharedApplication.setStatusBarHidden(false, animated:true)
     @address.delegate = self
     @port.delegate = self
     @username.delegate = self
@@ -24,7 +25,7 @@ class SettingsController < ViewController::Landscape
         when :connection_failure
           case reply['message']
           when '401 Unauthorized'
-            App.alert "Authentication failed, please try again"
+            App.alert "Authentication failed. Check username & password."
           when 'NoResponse'
             App.alert 'Server is not responding. Check address & port or contact an administrator.'
           when 'BadResponse'

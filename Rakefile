@@ -11,6 +11,7 @@ Motion::Project::App.setup do |app|
   # app.redgreen_style = :full
   app.pods { pod 'AFNetworking' }
   app.frameworks << 'AVFoundation'
+  app.frameworks << 'MediaPlayer'
   app.frameworks << 'SystemConfiguration'
   app.frameworks << 'Crittercism'
   app.vendor_project 'vendor/CrittercismSDK', :static, :headers_dir => 'vendor/CrittercismSDK'

@@ -32,6 +32,10 @@ class ReviewCell < UITableViewCell
     viewWithTag(ReviewCell::Tags::STATUS_LABEL)
   end
 
+  def set_status(str)
+    status_label.text = str
+  end
+
   def clip_view_image
     viewWithTag(ReviewCell::Tags::CLIP_VIEW_IMAGE)
   end
@@ -40,32 +44,69 @@ class ReviewCell < UITableViewCell
     viewWithTag(ReviewCell::Tags::SAVE_REMARKS_BUTTON)
   end
 
+  def started_editing
+    done_button.show
+    cell_size = self.frame.size
+    table_view.contentInset=UIEdgeInsetsMake(0,0,200,0);
+    table_view.setContentOffset(CGPointMake(0, 200), animated:true)
+  end
+
+  def stopped_editing
+    done_button.hide
+    table_view.contentInset=UIEdgeInsetsMake(0,0,0,0);
+    table_view.scrollToRowAtIndexPath(NSIndexPath.indexPathForRow(0,inSection:0), 
+      atScrollPosition:UITableViewScrollPositionTop, animated:true)
+  end
+
+  def table_view
+    superview
+  end
+
+  def preview
+    # clip_view = clip_view_image.superview
+    # mpc = MPMoviePlayerController.alloc.initWithContentURL @stream_url
+    # mpc.view.frame = clip_view.bounds
+    # clip_view.addSubview mpc.view
+    # mpc.controlStyle = MPMovieControlStyleEmbedded
+    # mpc.prepareToPlay
+    mpvc = MPMoviePlayerViewController.alloc.initWithContentURL @stream_url
+    $reviews_controller.presentMoviePlayerViewControllerAnimated(mpvc)
+  end
+
   def review=(r)
+    @stream_url = "#{r.stream_url}?auth_token=#{$token}".nsurl # save for later :)
     clip_view_image.setImageWithURL r.image_url.nsurl
     status_label.text = r.status
-    text_field.on(:editing_did_begin) {|n| done_button.show }
-    text_field.on(:editing_did_end) {|n| done_button.hide }
+    text_field.on(:editing_did_begin) {|n| started_editing }
+    text_field.on(:editing_did_end) {|n| stopped_editing }
     done_button.on(:touch_up_inside) {|n| text_field.resignFirstResponder }
 
     save_remarks_button.on(:touch_up_inside) do |n|
-      update Review.new({ remarks: text_field, id: r.id })
+      update(r.id, remarks: text_field.text) if text_field.text.size > 0
     end
 
     approve_button.on(:touch_up_inside) do |n|
-      update Review.new({ approve: true, id: r.id })
+      update(r.id, approve: true) { set_status 'Approved'}
     end
 
     unapprove_button.on(:touch_up_inside) do |n|
-      update Review.new({ approve: false, id: r.id })
+      update(r.id, approve: false) { set_status 'Unapproved'}
     end
+
+    single_tap = UITapGestureRecognizer.alloc.initWithTarget(self, action: :preview)
+    single_tap.numberOfTapsRequired = 1;
+    single_tap.numberOfTouchesRequired = 1;
+    clip_view_image.addGestureRecognizer(single_tap)
+    clip_view_image.setUserInteractionEnabled(true)
   end
 
-  def update review
+  def update(review_id, params, &block)
+    review = Review.new({id:review_id}.merge(params))
     $source.reviews.update_review!(review) do |user_feedback|
       if user_feedback[:success]
-        App.alert "Review action updated on server."
+        block.call unless block.nil?
       else
-        App.alert "Review action could not be saved.\nError:#{user_feedback[:error]}"
+        App.alert user_feedback[:message]
       end
     end
   end

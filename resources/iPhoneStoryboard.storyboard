@@ -386,7 +386,7 @@
                                                     <rect key="frame" x="6" y="5" width="151" height="85"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" tag="200" contentMode="scaleToFill" image="colorbars.jpg" id="j0s-ef-GXS" userLabel="ClipImage">
+                                                        <imageView userInteractionEnabled="NO" tag="200" contentMode="scaleToFill" image="colorbars.jpg" id="j0s-ef-GXS" userLabel="ClipImage" customClass="ReviewClipImage">
                                                             <rect key="frame" x="0.0" y="0.0" width="151" height="85"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -597,11 +597,15 @@
                 <relationship kind="action" name="approve_button"/>
                 <relationship kind="action" name="clip_view_image"/>
                 <relationship kind="action" name="done_button"/>
+                <relationship kind="action" name="preview"/>
                 <relationship kind="action" name="save_remarks_button"/>
+                <relationship kind="action" name="set_status:"/>
+                <relationship kind="action" name="started_editing"/>
                 <relationship kind="action" name="status_label"/>
+                <relationship kind="action" name="stopped_editing"/>
+                <relationship kind="action" name="table_view"/>
                 <relationship kind="action" name="text_field"/>
                 <relationship kind="action" name="unapprove_button"/>
-                <relationship kind="action" name="update:"/>
             </relationships>
         </class>
         <class className="ReviewClipView" superclassName="UIView">
@@ -612,10 +616,10 @@
             <relationships>
                 <relationship kind="action" name="approve:"/>
                 <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="reviews"/>
                 <relationship kind="action" name="save_remarks:"/>
                 <relationship kind="action" name="unapprove:"/>
                 <relationship kind="action" name="viewDidLoad"/>
-                <relationship kind="outlet" name="remarks_done_button"/>
                 <relationship kind="outlet" name="reviews_table"/>
             </relationships>
         </class>

@@ -9,7 +9,7 @@ class Reviews
     @reviews
   end
   
-  def fetch_reviews!
+  def fetch_reviews!(&block)
     @reviews = []
     url = $source.api('reviews')
     BW::HTTP.get(url, payload: {private_token: $token}) do |res|
@@ -17,19 +17,21 @@ class Reviews
         BW::JSON.parse(res.body.to_str).each do |r|
           @reviews << Review.new(r)
         end
+        block.call unless block.nil?
       end
     end
     self
   end
 
   def update_review!(review, &block)
-    payload = {private_token: $token, annotation: review.to_hash}
+    payload = {private_token: $token, review: review.to_hash}
     url = $source.api "reviews/#{review.id}"
-    BW::HTTP.post(url, payload: payload) do |res|
+    BW::HTTP.put(url, payload: payload) do |res|
       user_feedback = if res.ok?
         {:success => true, :message => "Review updated on server."}
       else
-        {:success => false, :message => res.error_message}
+        msg = "Review action could not be saved.\nError:#{res.error_message}"
+        {:success => false, :message => msg }
       end
       block.call(user_feedback)
     end

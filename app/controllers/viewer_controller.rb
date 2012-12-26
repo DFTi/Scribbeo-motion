@@ -53,6 +53,10 @@ class ViewerController < ViewController::Landscape
     end
   end
 
+  def viewWillDisappear(animated)
+    @player.pause if @player.exists?
+  end
+
   def done_typing sender
     @note_text.resignFirstResponder
   end

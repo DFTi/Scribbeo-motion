@@ -24,7 +24,6 @@ class EnterpriseServer < MediaSource::Server
           reply = BW::JSON.parse(res.body.to_str)
           $token = reply[:private_token]
           if res.ok?
-            @reviews.fetch_reviews!
             connected!
           elsif reply['message'] == '401 Unauthorized'
             connection_failed!

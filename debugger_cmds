@@ -1,4 +1,5 @@
-# Set breakpoints here like so:
+# Set breakpoints here in the following format:
 # break filename.rb:line_no
+#
 # More information here:
 # http://www.rubymotion.com/developer-center/articles/debugging/

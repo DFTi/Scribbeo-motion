@@ -1,9 +1,13 @@
 source :rubygems
 
-gem 'rake'
+gem 'rake', '~> 0.9.4'
+gem 'cocoapods'
+gem 'motion-cocoapods'
+gem 'afmotion'
 gem 'ib'
 gem 'sugarcube', :github => "rubymotion/sugarcube"
 gem 'bubble-wrap', :github => "rubymotion/BubbleWrap"
+
 
 # ... for tests
 # gem 'listen', '0.4.7'

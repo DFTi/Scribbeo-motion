@@ -2,6 +2,7 @@
 *.swp
 vendor/*/build-*
 vendor/*/.build/*
+vendor/Pods/*
 .DS_Store
 .repl_history
 build

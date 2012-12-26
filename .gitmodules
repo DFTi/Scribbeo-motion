@@ -1,8 +1,0 @@
-[submodule "vendor/SDWebImage"]
-	path = vendor/SDWebImage
-	url = git://github.com/rs/SDWebImage.git
-	ignore = dirty
-[submodule "vendor/Base64"]
-	path = vendor/Base64
-	url = git@github.com:keyvanfatehi/Base64
-	ignore = dirty

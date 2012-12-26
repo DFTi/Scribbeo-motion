@@ -25,3 +25,11 @@ Motion::Project::App.setup do |app|
 
   app.deployment_target = "5.0" 
 end
+
+# On-device Debugging task
+# http://www.rubymotion.com/developer-center/articles/debugging/
+task :debug do
+  system('rake device debug=1')
+  # Use below to break before starting app
+  # system('rake debug=1 no_continue=1')
+end

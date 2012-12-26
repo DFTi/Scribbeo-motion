@@ -374,6 +374,7 @@
                 <relationship kind="action" name="add_overlay:"/>
                 <relationship kind="action" name="duration"/>
                 <relationship kind="action" name="framerate"/>
+                <relationship kind="action" name="observe_time:"/>
                 <relationship kind="action" name="pause"/>
                 <relationship kind="action" name="play"/>
                 <relationship kind="action" name="player"/>
@@ -406,7 +407,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewerController.h"/>
             <relationships>
                 <relationship kind="action" name="backward:"/>
-                <relationship kind="action" name="begin_scrubbing:"/>
                 <relationship kind="action" name="clear:"/>
                 <relationship kind="action" name="done_typing:"/>
                 <relationship kind="action" name="draw:"/>

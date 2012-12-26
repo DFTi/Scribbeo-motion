@@ -9,9 +9,21 @@ class NoteCell < UITableViewCell
     self.layer.borderWidth = (selected ? 2 : 0).to_f
   end
 
+  def image
+    viewWithTag(NoteCell::Tags::IMAGE)
+  end
+
+  def author
+    viewWithTag(NoteCell::Tags::AUTHOR)
+  end
+
+  def timecode
+    viewWithTag(NoteCell::Tags::TIMECODE)
+  end
+
   def note=(note)
-    viewWithTag(NoteCell::Tags::IMAGE).setImageWithURL(note.image_url, placeholderImage:note.placeholder_image)
-    viewWithTag(NoteCell::Tags::AUTHOR).setText(note.author_name)
-    viewWithTag(NoteCell::Tags::TIMECODE).setText(note.timecode)
+    image.setImageWithURL(note.image_url, placeholderImage:note.placeholder_image)
+    author.setText(note.author_name)
+    timecode.setText(note.timecode)
   end
 end

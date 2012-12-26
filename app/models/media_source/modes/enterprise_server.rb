@@ -1,8 +1,10 @@
 class EnterpriseServer < MediaSource::Server
   API_VERSION = '1'
-  
+  attr_reader :reviews
+
   def initialize opts
     @mode = :enterprise
+    @reviews = Reviews.new
     super(opts)
   end
 
@@ -22,6 +24,7 @@ class EnterpriseServer < MediaSource::Server
           reply = BW::JSON.parse(res.body.to_str)
           $token = reply[:private_token]
           if res.ok?
+            @reviews.fetch_reviews!
             connected!
           elsif reply['message'] == '401 Unauthorized'
             connection_failed!
@@ -53,13 +56,17 @@ class EnterpriseServer < MediaSource::Server
   def fetch_contents!
     @contents = []
     BW::HTTP.get(api('all_accessible'), payload: {private_token: $token}) do |res|
-      BW::JSON.parse(res.body.to_str).each do |asset|
-        if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
-          @contents << MediaAsset.new(asset["name"], asset["location_uri"], 
-            asset['id'], asset['fps'], asset['start_timecode'])
+      if res.ok?
+        BW::JSON.parse(res.body.to_str).each do |asset|
+          if MediaAsset.supports_extension?(ext = File.extname(asset["name"]).upcase)
+            @contents << MediaAsset.new(asset["name"], asset["location_uri"], 
+              asset['id'], asset['fps'], asset['start_timecode'])
+          end
         end
+        contents_fetched!
+      else
+        App.alert "Failed to fetch assets due to network instability."
       end
-      contents_fetched!
     end
     self
   end

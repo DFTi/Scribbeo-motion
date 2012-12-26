@@ -1,4 +1,6 @@
 class SettingsController < ViewController::Base
+  include Dismissable
+
   outlet :networking
   outlet :autodiscover
   outlet :address
@@ -43,12 +45,6 @@ class SettingsController < ViewController::Base
   end
 
   private
-  def dismiss
-    if presentingViewController
-      presentingViewController.dismissViewControllerAnimated(true, completion:nil)
-    end
-  end
-
   def load_settings
     @networking.on = App::Persistence["networking"]
     @autodiscover.on = App::Persistence["autodiscover"]

@@ -19,7 +19,7 @@ Motion::Project::App.setup do |app|
   
   app.identifier = "com.digitalfilmtree.ScribbeoMotion"
   app.name = 'Scribbeo Pro'
-  app.device_family = [:iphone, :ipad]
+  app.device_family = [:ipad, :iphone]
   app.interface_orientations << :portrait_upside_down
 
   app.deployment_target = "5.0" 

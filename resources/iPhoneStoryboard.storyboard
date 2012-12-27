@@ -656,6 +656,7 @@
                 <relationship kind="action" name="update_draw_buttons"/>
                 <relationship kind="action" name="viewDidAppear:"/>
                 <relationship kind="action" name="viewDidLoad"/>
+                <relationship kind="action" name="viewWillDisappear:"/>
                 <relationship kind="outlet" name="asset_table"/>
                 <relationship kind="outlet" name="clear_button"/>
                 <relationship kind="outlet" name="draw_button"/>

@@ -9,6 +9,7 @@ class ReviewsController < ViewController::Landscape
       @reviews_table.dataSource = $source.reviews
       @reviews_table.reloadData
     end
+    super
   end
 
   def reviews

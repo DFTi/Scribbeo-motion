@@ -19,14 +19,14 @@ class ViewerController < ViewController::Landscape
     
     @note_text.on(:editing_did_begin) do |n|
       @player.pause if @player.exists?
-      @note_done_button.show
+      note_done_button.show
     end
     @note_text.on(:editing_did_change) do |n|
       if $current_asset && !drawing?
         @save_button.hidden = !@note_text.has_text?
       end
     end
-    @note_text.on(:editing_did_end) {|n| @note_done_button.hide }
+    @note_text.on(:editing_did_end) {|n| note_done_button.hide }
 
     @presenting_note = false
     @presented_drawing = DrawPresentation.alloc.init
@@ -43,18 +43,21 @@ class ViewerController < ViewController::Landscape
         @cached_scrubber_position = @playback_scrubber.value
       end
     }
+    super
   end
 
   def viewDidAppear animated
     if $source.nil? || !$source.connected?
       performSegueWithIdentifier('toSettings', sender:self)
-    else
+    elsif Device.iphone?
       UIApplication.sharedApplication.setStatusBarHidden(true, animated:true)
     end
+    super
   end
 
   def viewWillDisappear(animated)
     @player.pause if @player.exists?
+    super
   end
 
   def done_typing sender

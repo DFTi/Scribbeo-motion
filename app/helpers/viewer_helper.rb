@@ -1,6 +1,10 @@
 module ViewerHelper
   class DrawPresentation < UIImageView ; end
 
+  def note_done_button
+    Device.ipad? ? Blackhole : @note_done_button
+  end
+
   def presenting_note?
     !!@presenting_note
   end

@@ -15,6 +15,7 @@ class SettingsController < ViewController::Base
     @username.delegate = self
     @password.delegate = self
     load_settings
+    super
   end
 
   def apply sender

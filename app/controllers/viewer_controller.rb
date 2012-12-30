@@ -12,10 +12,13 @@ class ViewerController < ViewController::Landscape
   outlet :save_button
   outlet :timecode
   outlet :playback_scrubber
+  outlet :comments_button
 
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
+    
+    @comments_button.hide unless $current_asset
     
     @note_text.on(:editing_did_begin) do |n|
       @player.pause if @player.exists?
@@ -134,6 +137,7 @@ class ViewerController < ViewController::Landscape
         end
       end
     end
+    @comments_button.show
   end
 
   def can_scrub?

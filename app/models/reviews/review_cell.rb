@@ -2,7 +2,6 @@ class ReviewCell < UITableViewCell
   attr_accessor :id
 
   module Tags
-    CLIP_VIEW = 20
     CLIP_VIEW_IMAGE = 200
     TEXT_FIELD = 21
     APPROVE_BUTTON = 22
@@ -63,12 +62,6 @@ class ReviewCell < UITableViewCell
   end
 
   def preview
-    # clip_view = clip_view_image.superview
-    # mpc = MPMoviePlayerController.alloc.initWithContentURL @stream_url
-    # mpc.view.frame = clip_view.bounds
-    # clip_view.addSubview mpc.view
-    # mpc.controlStyle = MPMovieControlStyleEmbedded
-    # mpc.prepareToPlay
     mpvc = MPMoviePlayerViewController.alloc.initWithContentURL @stream_url
     $reviews_controller.presentMoviePlayerViewControllerAnimated(mpvc)
   end

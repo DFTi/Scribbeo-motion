@@ -1,5 +1,6 @@
 class TimecodeAgent
   ZEROS = '00:00:00:00'
+  attr_accessor :fps
   Timecode = Struct.new(:hours, :minutes, :seconds, :frames)
 
   def initialize(fps, start_tc=nil)

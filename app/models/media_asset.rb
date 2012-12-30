@@ -13,6 +13,7 @@ class MediaAsset
     @start_timecode = start_timecode
     @notes = []
     @ready_to_play = false
+    @comments = Comments.new
   end
 
   def url

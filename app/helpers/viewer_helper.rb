@@ -25,7 +25,6 @@ module ViewerHelper
   def notes_fetched
     @note_table.dataSource = $current_asset
     @note_table.reloadData
-    @comments_button.show
     return unless $current_asset.notes.any?
     if $current_asset.notes.last.uncomposited?
       p "Uncomposited note detected. Refetching in #{time = 3} seconds..."

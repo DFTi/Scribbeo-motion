@@ -1,27 +1,13 @@
 class Comments
-  attr_reader :comments
+  attr_accessor :items
 
-  def initialize
-    @comments = []
-  end
-
-  def << comment
-    p 'adding a comment'
-    @comments << comment
-  end
-
-  def fetch_comments!(&block)
-    # @comments = []
-    # url = $source.api('comments')
-    # BW::HTTP.get(url, payload: {private_token: $token}) do |res|
-    #   if res.ok?
-    #     BW::JSON.parse(res.body.to_str).each do |r|
-    #       @comments << Comment.new(r)
-    #     end
-    #     block.call unless block.nil?
-    #   end
-    # end
-    # self
+  def initialize(comments_ary)
+    @items = []
+    if !comments_ary.nil?
+      comments_ary.each do |c|
+        @items << Comment.new(c)
+      end
+    end
   end
 
   # Act as tableview dataSource
@@ -30,11 +16,11 @@ class Comments
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
       CommentCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifier)
     end
-    cell.comment = comments[indexPath.row]
+    cell.comment = items[indexPath.row]
     cell
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    comments.count
+    items.count
   end
 end

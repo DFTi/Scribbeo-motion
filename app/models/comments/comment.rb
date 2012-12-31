@@ -1,17 +1,12 @@
 class Comment < Hashable
-  attr_accessor :text, :image_url
+  attr_accessor :id, :name, :body, :when, :replies, :gravatar
+  
+  # Extras to be removed these from the API entity if not needed:
+  attr_accessor :user_id, :annotation_id, :created_at, :parent_id, :updated_at
 
-  def fetch_replies!(&block)
-    # @comments = []
-    # url = $source.api('comments')
-    # BW::HTTP.get(url, payload: {private_token: $token}) do |res|
-    #   if res.ok?
-    #     BW::JSON.parse(res.body.to_str).each do |r|
-    #       @comments << Comment.new(r)
-    #     end
-    #     block.call unless block.nil?
-    #   end
-    # end
-    # self
+  def initialize(*args)
+    super(*args)
+    # what is the value of replies, it should be an array,not nil
+    @replies = Comments.new(@replies)
   end
 end

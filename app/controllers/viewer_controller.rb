@@ -15,6 +15,7 @@ class ViewerController < ViewController::Landscape
   outlet :comments_button
 
   def viewDidLoad
+    @comments_button.hide if $current_note.nil?
     @asset_table.delegate = self
     @note_table.delegate = self
         
@@ -98,7 +99,7 @@ class ViewerController < ViewController::Landscape
   end
 
   def present_asset asset
-    @comments_button.hide # it will reappear when notes are fetched
+    @comments_button.hide
     $current_asset = asset
     $current_asset.delegate = self
     $timecode_agent = TimecodeAgent.new($current_asset.fps, $current_asset.start_timecode)
@@ -143,6 +144,8 @@ class ViewerController < ViewController::Landscape
   end
 
   def present_note note
+    $current_note = note
+    @comments_button.show
     @note_text.text = note.text
     player.pause
     player.seek_to note.seconds
@@ -155,6 +158,7 @@ class ViewerController < ViewController::Landscape
 
   def stop_presenting_note
     if presenting_note?
+      $current_note = nil
       @presented_drawing.hide
       @presented_drawing.setImage(UIImage.new)
       @presenting_note = false

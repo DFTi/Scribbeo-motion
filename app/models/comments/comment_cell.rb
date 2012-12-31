@@ -1,21 +1,36 @@
 class CommentCell < UITableViewCell
   module Tags
-    EXPAND_LABEL = 33
-    EXPAND_TOGGLE = 30
-    TEXT = 31 
-    IMAGE = 32
-  end
-  
-  def image
-    viewWithTag(CommentCell::Tags::IMAGE)
+    AVATAR = 30
+    BODY = 31 
+    NAME = 32
+    DATE = 33
   end
 
-  def text
-    viewWithTag(CommentCell::Tags::TEXT)
+  def setSelected(selected, animated:animated)
+    self.layer.borderColor = UIColor.yellowColor.CGColor
+    self.layer.borderWidth = (selected ? 2 : 0).to_f
+  end
+  
+  def avatar
+    viewWithTag(CommentCell::Tags::AVATAR)
+  end
+
+  def body
+    viewWithTag(CommentCell::Tags::BODY)
+  end
+
+  def name
+    viewWithTag(CommentCell::Tags::NAME)
+  end
+
+  def date
+    viewWithTag(CommentCell::Tags::DATE)
   end
 
   def comment=(c)
-    image.setImageWithURL(c.image_url) unless c.image_url.nil?
-    text.setText c.text
+    avatar.setImageWithURL(c.gravatar.nsurl)
+    body.setText c.body
+    name.setText c.name
+    date.setText c.when
   end
 end

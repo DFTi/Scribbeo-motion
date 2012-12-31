@@ -13,7 +13,6 @@ class MediaAsset
     @start_timecode = start_timecode
     @notes = []
     @ready_to_play = false
-    @comments = Comments.new
   end
 
   def url
@@ -26,9 +25,7 @@ class MediaAsset
       if res.ok?
         @notes = []
         BW::JSON.parse(res.body.to_str).each do |n|
-          note = Note.new(n)
-          notes << note
-          comments << Comment.new({ text: note.note, image_url: note.image_url })
+          notes << Note.new(n)
         end
         delegate.notes_fetched
       else

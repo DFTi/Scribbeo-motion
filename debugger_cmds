@@ -3,3 +3,4 @@
 #
 # More information here:
 # http://www.rubymotion.com/developer-center/articles/debugging/
+break comment.rb:6

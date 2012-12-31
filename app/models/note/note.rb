@@ -1,5 +1,12 @@
 class Note < Hashable
-  attr_accessor :note, :timecode, :seconds, :comments, :author, :image, :drawing, :media_asset_id
+  attr_accessor :note, :timecode, :seconds, :comments, :author, :image, :drawing, :media_asset_id, :when
+
+  def initialize(*args)
+    super(*args)
+    if @comments && @comments.is_a?(Array)
+      @comments = Comments.new(@comments)
+    end
+  end
 
   def self.colorbars
     UIImage.imageNamed('colorbars.jpg')

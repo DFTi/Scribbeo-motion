@@ -17,9 +17,7 @@ class ViewerController < ViewController::Landscape
   def viewDidLoad
     @asset_table.delegate = self
     @note_table.delegate = self
-    
-    @comments_button.hide unless $current_asset
-    
+        
     @note_text.on(:editing_did_begin) do |n|
       @player.pause if @player.exists?
       note_done_button.show
@@ -100,6 +98,7 @@ class ViewerController < ViewController::Landscape
   end
 
   def present_asset asset
+    @comments_button.hide # it will reappear when notes are fetched
     $current_asset = asset
     $current_asset.delegate = self
     $timecode_agent = TimecodeAgent.new($current_asset.fps, $current_asset.start_timecode)
@@ -137,7 +136,6 @@ class ViewerController < ViewController::Landscape
         end
       end
     end
-    @comments_button.show
   end
 
   def can_scrub?

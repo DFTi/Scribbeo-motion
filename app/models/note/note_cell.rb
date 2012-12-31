@@ -22,7 +22,7 @@ class NoteCell < UITableViewCell
   end
 
   def note=(note)
-    image.setImageWithURL(note.image_url, placeholderImage:note.placeholder_image)
+    image.setImageWithURL(note.image_url, placeholderImage:Note.colorbars)
     author.setText(note.author_name)
     timecode.setText(note.timecode)
   end

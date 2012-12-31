@@ -5,6 +5,11 @@ class Comments
     @comments = []
   end
 
+  def << comment
+    p 'adding a comment'
+    @comments << comment
+  end
+
   def fetch_comments!(&block)
     # @comments = []
     # url = $source.api('comments')

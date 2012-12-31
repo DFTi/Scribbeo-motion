@@ -1,5 +1,5 @@
 class MediaAsset
-  attr_accessor :delegate, :notes, :ready_to_play
+  attr_accessor :delegate, :notes, :comments, :ready_to_play
   attr_reader :name, :uri, :id, :fps, :start_timecode
 
   STILLS = ['.JPG', '.JPEG', '.PNG', '.GIF']
@@ -25,7 +25,11 @@ class MediaAsset
     BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|
       if res.ok?
         @notes = []
-        BW::JSON.parse(res.body.to_str).each {|n| notes << Note.new(n)}
+        BW::JSON.parse(res.body.to_str).each do |n|
+          note = Note.new(n)
+          notes << note
+          comments << Comment.new({ text: note.note, image_url: note.image_url })
+        end
         delegate.notes_fetched
       else
         App.alert 'Could not retrieve notes.'

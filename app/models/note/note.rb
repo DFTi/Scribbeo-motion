@@ -1,9 +1,15 @@
 class Note < Hashable
-  attr_accessor :note, :timecode, :seconds, :comments, :author, :image, :drawing, :media_asset_id, :when
+  attr_accessor :note, :timecode, :seconds, :discussion, :author, :image, :drawing, :media_asset_id, :when, :comments
 
   def initialize(*args)
     super(*args)
-    @comments = Comments.new(@comments)
+    if @discussion
+      @comments = Comments.new(top_level_comments)
+    end
+  end
+
+  def top_level_comments
+    @discussion.first['replies']
   end
 
   def self.colorbars

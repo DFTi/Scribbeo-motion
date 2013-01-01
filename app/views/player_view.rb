@@ -68,7 +68,7 @@ class PlayerView < UIView
   end
 
   def exists?
-    !player.nil?
+    player.nil? ? false : !player.currentItem.nil?
   end
 
   def play

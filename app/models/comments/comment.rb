@@ -6,7 +6,6 @@ class Comment < Hashable
 
   def initialize(*args)
     super(*args)
-    # what is the value of replies, it should be an array,not nil
     @replies = Comments.new(@replies)
   end
 end

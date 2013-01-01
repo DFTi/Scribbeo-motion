@@ -54,11 +54,19 @@ class ViewerController < ViewController::Landscape
     elsif Device.iphone?
       UIApplication.sharedApplication.setStatusBarHidden(true, animated:true)
     end
+    # The following would be nice:
+    # if $source.changed?
+    #   @player.unload
+    #   @notes.clear
+    # end
     super
   end
 
   def viewWillDisappear(animated)
-    @player.pause if @player.exists?
+    if @player.exists?
+      @player.pause
+      @player.stop_observing_time
+    end
     super
   end
 

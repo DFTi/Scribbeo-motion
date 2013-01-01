@@ -3,9 +3,7 @@ class Note < Hashable
 
   def initialize(*args)
     super(*args)
-    if @comments && @comments.is_a?(Array)
-      @comments = Comments.new(@comments)
-    end
+    @comments = Comments.new(@comments)
   end
 
   def self.colorbars

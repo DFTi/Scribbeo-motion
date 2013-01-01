@@ -3,10 +3,8 @@ class Comments
 
   def initialize(comments_ary)
     @items = []
-    if !comments_ary.nil?
-      comments_ary.each do |c|
-        @items << Comment.new(c)
-      end
+    comments_ary.each do |c|
+      @items << Comment.new(c)
     end
   end
 

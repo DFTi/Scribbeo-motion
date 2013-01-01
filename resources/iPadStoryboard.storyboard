@@ -450,6 +450,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="address" destination="0vu-h2-ChJ" id="1wS-9Z-CuE"/>
+                        <outlet property="apply_button" destination="Flv-yO-2Zl" id="U13-Ov-gw3"/>
                         <outlet property="autodiscover" destination="MY6-j4-vAq" id="b4E-CS-GRR"/>
                         <outlet property="networking" destination="oph-vN-BsX" id="Uro-65-NqY"/>
                         <outlet property="password" destination="lo3-HF-5Zi" id="del-WU-DVP"/>
@@ -466,6 +467,9 @@
         <image name="colorbars.jpg" width="480" height="270"/>
     </resources>
     <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
         <class className="NoteCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NoteCell.h"/>
             <relationships>
@@ -501,6 +505,7 @@
                 <relationship kind="action" name="save_settings"/>
                 <relationship kind="action" name="viewDidLoad"/>
                 <relationship kind="outlet" name="address"/>
+                <relationship kind="outlet" name="apply_button"/>
                 <relationship kind="outlet" name="autodiscover"/>
                 <relationship kind="outlet" name="networking"/>
                 <relationship kind="outlet" name="password"/>
@@ -528,6 +533,7 @@
                 <relationship kind="action" name="viewWillDisappear:"/>
                 <relationship kind="outlet" name="asset_table"/>
                 <relationship kind="outlet" name="clear_button"/>
+                <relationship kind="outlet" name="comments_button"/>
                 <relationship kind="outlet" name="draw_button"/>
                 <relationship kind="outlet" name="note_done_button"/>
                 <relationship kind="outlet" name="note_table"/>

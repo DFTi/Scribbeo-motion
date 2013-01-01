@@ -620,6 +620,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="address" destination="9O4-xK-QgB" id="241-Rc-asN"/>
+                        <outlet property="apply_button" destination="Akh-Ht-5ZE" id="gzn-DC-hKN"/>
                         <outlet property="autodiscover" destination="Eyv-jy-KzA" id="XsS-o5-Skq"/>
                         <outlet property="networking" destination="vtk-IG-mtk" id="87t-QX-7wK"/>
                         <outlet property="password" destination="A0y-IE-qjv" id="c7j-bi-ker"/>
@@ -719,6 +720,7 @@
                 <relationship kind="action" name="save_settings"/>
                 <relationship kind="action" name="viewDidLoad"/>
                 <relationship kind="outlet" name="address"/>
+                <relationship kind="outlet" name="apply_button"/>
                 <relationship kind="outlet" name="autodiscover"/>
                 <relationship kind="outlet" name="networking"/>
                 <relationship kind="outlet" name="password"/>

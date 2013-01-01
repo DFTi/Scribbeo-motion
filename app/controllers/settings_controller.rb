@@ -7,6 +7,7 @@ class SettingsController < ViewController::Base
   outlet :port
   outlet :username
   outlet :password
+  outlet :apply_button
 
   def viewDidLoad
     UIApplication.sharedApplication.setStatusBarHidden(false, animated:true)
@@ -19,10 +20,12 @@ class SettingsController < ViewController::Base
   end
 
   def apply sender
+    @apply_button.hide
     save_settings
     if $source = MediaSource::Builder.build
       $source.delegate = presentingViewController
       $source.connect! do |status, reply|
+        @apply_button.show
         case status
         when :connected; dismiss
         when :connection_failure

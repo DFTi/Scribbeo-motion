@@ -62,6 +62,12 @@ class ViewerController < ViewController::Landscape
     super
   end
 
+  def viewWillAppear(animated)
+    if @player.exists? && $current_asset.ready_to_play?
+      @player.observe_time @time_observer
+    end
+  end
+
   def viewWillDisappear(animated)
     if @player.exists?
       @player.pause
@@ -121,7 +127,7 @@ class ViewerController < ViewController::Landscape
         when AVPlayerItemStatusReadyToPlay
           @playback_scrubber.value = 0
           @player.pause
-          $current_asset.ready_to_play = true
+          $current_asset.ready_to_play!
           $current_asset.fetch_notes!
           @timecode.text = $timecode_agent.timecode(@player.seconds)
           update_draw_buttons
@@ -148,7 +154,7 @@ class ViewerController < ViewController::Landscape
   end
 
   def can_scrub?
-    $current_asset && $current_asset.ready_to_play && !drawing?
+    $current_asset && $current_asset.ready_to_play? && !drawing?
   end
 
   def present_note note
@@ -167,6 +173,7 @@ class ViewerController < ViewController::Landscape
   def stop_presenting_note
     if presenting_note?
       $current_note = nil
+      @comments_button.hide
       @presented_drawing.hide
       @presented_drawing.setImage(UIImage.new)
       @presenting_note = false
@@ -203,7 +210,7 @@ class ViewerController < ViewController::Landscape
   private
   def update_draw_buttons
     if $current_asset
-      @draw_button.show if $current_asset.ready_to_play
+      @draw_button.show if $current_asset.ready_to_play?
       if drawing?
         @draw_button.setTitle('cancel', forState:UIControlStateNormal)
         @clear_button.show

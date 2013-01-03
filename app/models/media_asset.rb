@@ -19,6 +19,14 @@ class MediaAsset
     NSURL.URLWithString "#{uri}?auth_token=#{$token}"
   end
 
+  def ready_to_play!
+    @ready_to_play = true
+  end
+
+  def ready_to_play?
+    !!@ready_to_play
+  end
+
   def fetch_notes!
     url = $source.api('annotations')
     BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|

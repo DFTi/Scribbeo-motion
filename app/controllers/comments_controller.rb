@@ -21,11 +21,11 @@ class CommentsController < ViewController::Landscape
   end
 
   def refresh sender
-    
+    p "#{self.class}#refresh pending https://github.com/keyvanfatehi/caps/issues/118"
   end
 
   def add_comment sender
-    # bring up same vc as #reply would
+    p "#{self.class}#add_comment pending"
   end
 
   def reply sender

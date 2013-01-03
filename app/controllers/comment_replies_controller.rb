@@ -10,16 +10,17 @@ class CommentRepliesController < ViewController::Landscape
   end
 
   def refresh sender
-
+    p "#{self.class}#refresh pending https://github.com/keyvanfatehi/caps/issues/118"
   end
 
   def return_to_viewer sender
-
+    dismiss_from $viewer
   end
 
   def reply sender
     #comment = sender.superview.superview.comment
     #comment.reply
+    p "#{self.class}#reply pending"
   end
 
   def prepareForSegue(segue, sender:sender)

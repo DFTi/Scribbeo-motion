@@ -1,32 +1,10 @@
 class CommentCell < UITableViewCell
   attr_reader :comment
-  
-  module Tags
-    AVATAR = 30
-    BODY = 31 
-    NAME = 32
-    DATE = 33
-  end
+  Tags(avatar:30, body:31, name:32, date:33)
 
   def setSelected(selected, animated:animated)
     self.layer.borderColor = UIColor.yellowColor.CGColor
     self.layer.borderWidth = (selected ? 2 : 0).to_f
-  end
-  
-  def avatar
-    viewWithTag(CommentCell::Tags::AVATAR)
-  end
-
-  def body
-    viewWithTag(CommentCell::Tags::BODY)
-  end
-
-  def name
-    viewWithTag(CommentCell::Tags::NAME)
-  end
-
-  def date
-    viewWithTag(CommentCell::Tags::DATE)
   end
 
   def comment=(c)

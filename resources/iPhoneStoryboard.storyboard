@@ -358,7 +358,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Comments" id="8Jq-s9-Q33">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="I3I-5N-OZM">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="I3I-5N-OZM" userLabel="Back">
                                             <connections>
                                                 <action selector="back:" destination="DHQ-Sq-3ST" id="uaK-dp-1uk"/>
                                             </connections>
@@ -428,7 +428,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Comment Replies" id="4wL-kO-ZMe">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="kPw-Mi-nuj">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="kPw-Mi-nuj" userLabel="Back">
                                             <connections>
                                                 <action selector="back:" destination="y2E-2A-23s" id="WHe-3I-MRN"/>
                                             </connections>

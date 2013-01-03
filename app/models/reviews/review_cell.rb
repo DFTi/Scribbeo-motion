@@ -1,46 +1,11 @@
 class ReviewCell < UITableViewCell
   attr_accessor :id
 
-  module Tags
-    CLIP_VIEW_IMAGE = 200
-    TEXT_FIELD = 21
-    APPROVE_BUTTON = 22
-    UNAPPROVE_BUTTON = 23
-    STATUS_LABEL = 24
-    DONE_BUTTON = 25
-    SAVE_REMARKS_BUTTON = 26
-  end
+  Tags(clip_view_image:200, text_field:21, status_label:24, approve_button:22,
+    unapprove_button:23, done_button:25, save_remarks_button:26)
   
-  def approve_button
-    viewWithTag(ReviewCell::Tags::APPROVE_BUTTON)
-  end
-
-  def unapprove_button
-    viewWithTag(ReviewCell::Tags::UNAPPROVE_BUTTON)
-  end
-
-  def done_button
-    viewWithTag(ReviewCell::Tags::DONE_BUTTON)
-  end
-
-  def text_field
-    viewWithTag(ReviewCell::Tags::TEXT_FIELD)
-  end
-
-  def status_label
-    viewWithTag(ReviewCell::Tags::STATUS_LABEL)
-  end
-
   def set_status(str)
     status_label.text = str
-  end
-
-  def clip_view_image
-    viewWithTag(ReviewCell::Tags::CLIP_VIEW_IMAGE)
-  end
-
-  def save_remarks_button
-    viewWithTag(ReviewCell::Tags::SAVE_REMARKS_BUTTON)
   end
 
   def started_editing

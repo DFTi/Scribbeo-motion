@@ -414,7 +414,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="1Ao-ij-j4y" userLabel="Spacer"/>
-                                    <barButtonItem title="Refresh" id="eWw-TQ-9SK" userLabel="Refresh"/>
+                                    <barButtonItem title="Refresh" id="eWw-TQ-9SK" userLabel="Refresh">
+                                        <connections>
+                                            <action selector="refresh:" destination="DHQ-Sq-3ST" id="JZG-3C-jo0"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -521,9 +525,17 @@
                                             <action selector="back:" destination="y2E-2A-23s" id="Hq7-Ko-lFJ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Return to Viewer" id="dlQ-RG-og9" userLabel="Home"/>
+                                    <barButtonItem title="Return to Viewer" id="dlQ-RG-og9" userLabel="Home">
+                                        <connections>
+                                            <action selector="return_to_viewer:" destination="y2E-2A-23s" id="8dA-SC-R3y"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LCQ-6I-StH" userLabel="Spacer"/>
-                                    <barButtonItem title="Refresh" id="JFG-a4-lXt" userLabel="Refresh"/>
+                                    <barButtonItem title="Refresh" id="JFG-a4-lXt" userLabel="Refresh">
+                                        <connections>
+                                            <action selector="refresh:" destination="y2E-2A-23s" id="Jzp-KO-mRn"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

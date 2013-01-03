@@ -20,6 +20,12 @@ class CommentsController < ViewController::Landscape
     super
   end
 
+  def prepareForSegue(segue, sender:sender)
+    p "PREP FOR SEGUE!"
+    p sender.superview.superview.comment.class
+    $current_comment = sender.superview.superview.comment
+  end
+
   def back sender
     dismiss
   end

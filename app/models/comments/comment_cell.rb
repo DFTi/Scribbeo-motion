@@ -1,4 +1,6 @@
 class CommentCell < UITableViewCell
+  attr_reader :comment
+  
   module Tags
     AVATAR = 30
     BODY = 31 
@@ -28,6 +30,7 @@ class CommentCell < UITableViewCell
   end
 
   def comment=(c)
+    @comment = c
     avatar.setImageWithURL(c.gravatar.nsurl)
     body.setText c.body
     name.setText c.name

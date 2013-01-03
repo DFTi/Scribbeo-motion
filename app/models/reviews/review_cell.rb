@@ -1,6 +1,4 @@
 class ReviewCell < UITableViewCell
-  attr_accessor :id
-
   Tags(clip_view_image:200, text_field:21, status_label:24, approve_button:22,
     unapprove_button:23, done_button:25, save_remarks_button:26)
   

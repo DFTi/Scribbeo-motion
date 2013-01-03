@@ -20,9 +20,20 @@ class CommentsController < ViewController::Landscape
     super
   end
 
+  def refresh sender
+    
+  end
+
+  def add_comment sender
+    # bring up same vc as #reply would
+  end
+
+  def reply sender
+    #comment = sender.superview.superview.comment
+    #comment.reply
+  end
+
   def prepareForSegue(segue, sender:sender)
-    p "PREP FOR SEGUE!"
-    p sender.superview.superview.comment.class
     $current_comment = sender.superview.superview.comment
   end
 

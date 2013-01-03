@@ -1,6 +1,6 @@
 class CommentCell < UITableViewCell
   attr_reader :comment
-  Tags(avatar:30, body:31, name:32, date:33)
+  Tags(avatar:30, body:31, name:32, date:33, replies_button:34)
 
   def setSelected(selected, animated:animated)
     self.layer.borderColor = UIColor.yellowColor.CGColor
@@ -13,5 +13,6 @@ class CommentCell < UITableViewCell
     body.setText c.body
     name.setText c.name
     date.setText c.when
+    replies_button.hidden = !c.replies.any?
   end
 end

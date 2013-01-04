@@ -33,7 +33,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="draw:" destination="SrS-4o-EwC" eventType="touchUpInside" id="vXB-cG-zop"/>
+                                            <action selector="draw:" destination="SrS-4o-EwC" eventType="touchUpInside" id="veA-zQ-zbB"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gU8-OJ-LF2" userLabel="Clear Button">
@@ -176,21 +176,6 @@
                                             <segue destination="DHQ-Sq-3ST" kind="modal" id="xCx-Wz-IcP"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XVw-Ns-3hW" userLabel="Done Typing">
-                                        <rect key="frame" x="247" y="3" width="73" height="69"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="done_typing:" destination="SrS-4o-EwC" eventType="touchUpInside" id="SkF-Lf-K0V"/>
-                                        </connections>
-                                    </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZtK-qS-iNV" userLabel="Save">
                                         <rect key="frame" x="247" y="38" width="72" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -204,6 +189,21 @@
                                         </state>
                                         <connections>
                                             <action selector="save:" destination="SrS-4o-EwC" eventType="touchUpInside" id="nD6-ai-zBh"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XVw-Ns-3hW" userLabel="Done Typing">
+                                        <rect key="frame" x="247" y="3" width="73" height="69"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="done_typing:" destination="SrS-4o-EwC" eventType="touchUpInside" id="SkF-Lf-K0V"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -283,7 +283,7 @@
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="82" sectionHeaderHeight="22" sectionFooterHeight="22" id="r4F-iZ-2k9">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="82" sectionHeaderHeight="22" sectionFooterHeight="22" id="r4F-iZ-2k9" userLabel="Comments">
                                 <rect key="frame" x="0.0" y="99" width="480" height="157"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -320,9 +320,24 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XsV-Ne-naF">
+                                                    <rect key="frame" x="302" y="42" width="80" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Reply">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="reply:" destination="DHQ-Sq-3ST" eventType="touchUpInside" id="qca-V4-u4s"/>
+                                                    </connections>
+                                                </button>
                                                 <button hidden="YES" opaque="NO" tag="34" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="n2t-ns-TxQ">
-                                                    <rect key="frame" x="390" y="42" width="80" height="33"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="390" y="42" width="80" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Replies">
                                                         <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -335,25 +350,13 @@
                                                         <segue destination="y2E-2A-23s" kind="modal" id="mNZ-NO-ziX"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XsV-Ne-naF">
-                                                    <rect key="frame" x="302" y="42" width="80" height="32"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <state key="normal" title="Reply">
-                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" id="1ax-l7-aLJ">
+                            <view contentMode="scaleToFill" id="1ax-l7-aLJ" userLabel="Note Details">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="91"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -393,13 +396,16 @@
                                         <rect key="frame" x="348" y="20" width="127" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Add Comment">
+                                        <state key="normal" title="New Comment">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="new_comment:" destination="DHQ-Sq-3ST" eventType="touchUpInside" id="hF3-he-xeF"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -446,8 +452,8 @@
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="82" sectionHeaderHeight="22" sectionFooterHeight="22" id="Kb4-np-9xA">
-                                <rect key="frame" x="0.0" y="66" width="480" height="190"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="82" sectionHeaderHeight="22" sectionFooterHeight="22" id="Kb4-np-9xA" userLabel="Comment Replies">
+                                <rect key="frame" x="0.0" y="80" width="480" height="176"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -484,8 +490,8 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button hidden="YES" opaque="NO" tag="34" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Mbp-rM-NXO">
-                                                    <rect key="frame" x="390" y="43" width="80" height="32"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="390" y="42" width="80" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Replies">
                                                         <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -499,8 +505,8 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WNR-Td-H86">
-                                                    <rect key="frame" x="302" y="43" width="80" height="32"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="302" y="42" width="80" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Reply">
                                                         <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -509,6 +515,9 @@
                                                     <state key="highlighted">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="reply:" destination="y2E-2A-23s" eventType="touchUpInside" id="DbO-bM-Iw1"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -538,11 +547,62 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <view contentMode="scaleToFill" id="bvB-cC-bt9" userLabel="Parent Comment Details">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="31" contentMode="scaleToFill" editable="NO" id="dlC-4D-RDz" userLabel="Body">
+                                        <rect key="frame" x="81" y="26" width="240" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <imageView userInteractionEnabled="NO" tag="30" contentMode="scaleToFill" id="bRV-SV-CCx" userLabel="Avatar">
+                                        <rect key="frame" x="19" y="16" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="32" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S2d-5d-fAa" userLabel="Name">
+                                        <rect key="frame" x="81" y="3" width="139" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="33" contentMode="left" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Svk-iE-xzi" userLabel="Date">
+                                        <rect key="frame" x="246" y="3" width="214" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="huC-lo-2Nf">
+                                        <rect key="frame" x="329" y="24" width="131" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="New Reply">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="new_reply:" destination="y2E-2A-23s" eventType="touchUpInside" id="jN5-jX-Hmu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <connections>
+                        <outlet property="avatar" destination="bRV-SV-CCx" id="xjf-lI-FgJ"/>
+                        <outlet property="body" destination="dlC-4D-RDz" id="emW-k2-XeN"/>
+                        <outlet property="date" destination="Svk-iE-xzi" id="jkb-Le-Edf"/>
+                        <outlet property="name" destination="S2d-5d-fAa" id="9MH-T0-U5V"/>
                         <outlet property="replies_table" destination="Kb4-np-9xA" id="t6c-jm-k2H"/>
                     </connections>
                 </viewController>
@@ -806,18 +866,23 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CommentRepliesController.h"/>
             <relationships>
                 <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="new_reply:"/>
                 <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="reply:"/>
                 <relationship kind="action" name="return_to_viewer:"/>
                 <relationship kind="action" name="viewDidLoad"/>
+                <relationship kind="outlet" name="avatar"/>
+                <relationship kind="outlet" name="body"/>
+                <relationship kind="outlet" name="date"/>
+                <relationship kind="outlet" name="name"/>
                 <relationship kind="outlet" name="replies_table"/>
             </relationships>
         </class>
         <class className="CommentsController" superclassName="ViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CommentsController.h"/>
             <relationships>
-                <relationship kind="action" name="add_comment:"/>
                 <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="new_comment:"/>
                 <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="reply:"/>
                 <relationship kind="action" name="viewDidLoad"/>

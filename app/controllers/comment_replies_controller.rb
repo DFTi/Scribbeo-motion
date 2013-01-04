@@ -1,9 +1,17 @@
 class CommentRepliesController < ViewController::Landscape
   include Dismissable
-
+  
+  outlet :name
+  outlet :date
+  outlet :avatar
+  outlet :body
   outlet :replies_table
   
   def viewDidLoad
+    @name.setText $current_comment.name
+    @date.setText $current_comment.when
+    @body.setText $current_comment.body
+    @avatar.setImageWithURL $current_comment.gravatar.nsurl
     @replies_table.dataSource = $current_comment.replies
     @replies_table.reloadData
     super
@@ -15,6 +23,10 @@ class CommentRepliesController < ViewController::Landscape
 
   def return_to_viewer sender
     dismiss_from $viewer
+  end
+
+  def new_reply sender
+    presentingViewController.new_comment self
   end
 
   def reply sender

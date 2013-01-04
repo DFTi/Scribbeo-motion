@@ -24,13 +24,14 @@ class CommentsController < ViewController::Landscape
     p "#{self.class}#refresh pending https://github.com/keyvanfatehi/caps/issues/118"
   end
 
-  def add_comment sender
-    p "#{self.class}#add_comment pending"
+  def new_comment sender
+    p "#{self.class}#new_comment pending"
   end
 
   def reply sender
     #comment = sender.superview.superview.comment
     #comment.reply
+    p "#{self.class}#reply pending"
   end
 
   def prepareForSegue(segue, sender:sender)

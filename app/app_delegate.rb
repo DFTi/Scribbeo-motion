@@ -6,7 +6,7 @@ class AppDelegate
     $source = nil
     $current_asset = nil
     @window = UIWindow.alloc.initWithFrame UIScreen.mainScreen.bounds
-    $viewer = load_vc("ViewerController")
+    $viewer = load_vc("AssetBrowserController")
     switch_to_vc $viewer
   rescue => ex
     App.alert ex.message

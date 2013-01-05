@@ -48,20 +48,6 @@ class ViewerController < ViewController::Landscape
     super
   end
 
-  def viewDidAppear animated
-    if $source.nil? || !$source.connected?
-      performSegueWithIdentifier('toSettings', sender:self)
-    elsif Device.iphone?
-      UIApplication.sharedApplication.setStatusBarHidden(true, animated:true)
-    end
-    # The following would be nice:
-    # if $source.changed?
-    #   @player.unload
-    #   @notes.clear
-    # end
-    super
-  end
-
   def viewWillAppear(animated)
     if @player.exists? && $current_asset.ready_to_play?
       @player.observe_time @time_observer

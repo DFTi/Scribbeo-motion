@@ -1,18 +1,14 @@
-class CommentCell < UITableViewCell
-  attr_reader :comment
-  Tags(avatar:30, body:31, name:32, date:33, replies_button:34)
+class AssetBrowserCell < UITableViewCell
+  attr_reader :asset
+  Tags(name:40, date_modified:41, created_by:42, date_created:43)
 
-  def setSelected(selected, animated:animated)
-    self.layer.borderColor = UIColor.yellowColor.CGColor
-    self.layer.borderWidth = (selected ? 2 : 0).to_f
-  end
-
-  def comment=(c)
-    @comment = c
-    avatar.setImageWithURL(c.gravatar.nsurl)
-    body.setText c.body
-    name.setText c.name
-    date.setText c.when
-    replies_button.hidden = !c.replies.any?
+  def asset=(a)
+    if a.is_container?
+      # treat it as such
+      # it is likely a media source, folder, group, catalog, etc
+    else
+      # treat it as a leaf
+      # it is likely a media asset, clip, etc
+    end
   end
 end

@@ -332,7 +332,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="reply:" destination="DHQ-Sq-3ST" eventType="touchUpInside" id="qca-V4-u4s"/>
+                                                        <segue destination="PRE-Gf-J7U" kind="modal" id="8eO-0B-pq1"/>
                                                     </connections>
                                                 </button>
                                                 <button hidden="YES" opaque="NO" tag="34" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="n2t-ns-TxQ">
@@ -444,6 +444,66 @@
             </objects>
             <point key="canvasLocation" x="827" y="201"/>
         </scene>
+        <!--New Comment Controller-->
+        <scene sceneID="QLt-GF-4iQ">
+            <objects>
+                <viewController storyboardIdentifier="NewCommentController" id="PRE-Gf-J7U" customClass="NewCommentController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xV2-iS-M7L">
+                        <rect key="frame" x="0.0" y="20" width="480" height="300"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="xlb-Gh-0gs">
+                                <rect key="frame" x="20" y="44" width="440" height="80"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="f0D-XZ-bHZ">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Cancel" id="tpp-4y-BHI">
+                                        <connections>
+                                            <action selector="cancel:" destination="PRE-Gf-J7U" id="K9O-FI-6tv"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ufp-R2-xoe"/>
+                                    <barButtonItem title="Save" id="4mh-jj-LxM">
+                                        <connections>
+                                            <action selector="save:" destination="PRE-Gf-J7U" id="1uP-qf-Qxn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="[ORIGINAL NOTE]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="45J-PB-GzB">
+                                <rect key="frame" x="20" y="139" width="180" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="[PARENT COMMENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EX4-mP-HyU">
+                                <rect key="frame" x="223" y="139" width="237" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <connections>
+                        <outlet property="body" destination="xlb-Gh-0gs" id="z59-7W-t33"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S5x-g4-JJZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1480" y="743"/>
+        </scene>
         <!--Comment Replies Controller-->
         <scene sceneID="pdl-Hd-Jok">
             <objects>
@@ -516,7 +576,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="reply:" destination="y2E-2A-23s" eventType="touchUpInside" id="DbO-bM-Iw1"/>
+                                                        <segue destination="PRE-Gf-J7U" kind="modal" id="rKg-tk-eLr"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -608,7 +668,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKy-KY-qAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1600" y="201"/>
+            <point key="canvasLocation" x="1480" y="201"/>
         </scene>
         <!--Reviews Controller-->
         <scene sceneID="uK8-zR-KEI">
@@ -852,7 +912,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z75-ri-l5m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="821" y="-301"/>
+            <point key="canvasLocation" x="821" y="-319"/>
         </scene>
     </scenes>
     <resources>
@@ -892,6 +952,14 @@
                 <relationship kind="outlet" name="note_image"/>
                 <relationship kind="outlet" name="note_text"/>
                 <relationship kind="outlet" name="note_timecode"/>
+            </relationships>
+        </class>
+        <class className="NewCommentController" superclassName="ViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewCommentController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="save:"/>
+                <relationship kind="outlet" name="body"/>
             </relationships>
         </class>
         <class className="NoteCell" superclassName="UITableViewCell">
@@ -991,5 +1059,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="mNZ-NO-ziX"/>
+        <segue reference="rKg-tk-eLr"/>
     </inferredMetricsTieBreakers>
 </document>

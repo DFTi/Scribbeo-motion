@@ -1,8 +1,12 @@
 class Hashable
-  def initialize(*h)
+  def load(*h)
     if h.length == 1 && h.first.kind_of?(Hash)
       h.first.each { |k,v| send("#{k}=",v) }
     end
+  end
+
+  def initialize(*h)
+    load(*h)
   end
 
   def to_hash

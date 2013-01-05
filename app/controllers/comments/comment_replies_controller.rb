@@ -18,7 +18,7 @@ class CommentRepliesController < ViewController::Landscape
   end
 
   def refresh sender
-    p "#{self.class}#refresh pending https://github.com/keyvanfatehi/caps/issues/118"
+    presentingViewController.refresh $current_comment
   end
 
   def return_to_viewer sender
@@ -26,6 +26,9 @@ class CommentRepliesController < ViewController::Landscape
   end
 
   def new_reply sender
+    # present new comment view controller 
+    # when it loads it will use $current_comment.id as the parent_id
+    # and $current_note.id as the annotation_id
     presentingViewController.new_comment self
   end
 

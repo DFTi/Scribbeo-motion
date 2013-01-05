@@ -1,8 +1,40 @@
 class Note < Hashable
-  attr_accessor :note, :timecode, :seconds, :discussion, :author, :image, :drawing, :media_asset_id, :when, :comments
+  attr_accessor :id, :note, :timecode, :seconds, :discussion, :author, :image, :drawing, :media_asset_id, :when, :comments
 
   def initialize(*args)
     super(*args)
+    initialize_discussion
+  end
+
+  def refresh!(&block)
+    url = $source.api("annotations/#{id}")
+    BW::HTTP.get(url, payload: {private_token: $token, id: id}) do |res|
+      if res.ok?
+        load BW::JSON.parse(res.body.to_str)
+        initialize_discussion
+        block.call
+      else
+        App.alert 'Could not refresh note data.'
+      end
+    end
+    self
+  end
+
+  def create_comment!(comment, &block)
+    payload = {private_token: $token, annotation: comment.to_hash}
+    url = $source.api "annotations/#{id}/comment"
+    BW::HTTP.put(url, payload: payload) do |res|
+      user_feedback = if res.ok?
+        {:success => true, :message => "Comment saved on server."}
+      else
+        {:success => false, :message => res.error_message}
+      end
+      block.call(user_feedback)
+    end
+    self
+  end
+
+  def initialize_discussion
     if @discussion
       @comments = Comments.new(top_level_comments)
     end

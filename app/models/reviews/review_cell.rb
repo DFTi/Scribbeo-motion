@@ -50,8 +50,8 @@ class ReviewCell < UITableViewCell
     end
 
     single_tap = UITapGestureRecognizer.alloc.initWithTarget(self, action: :preview)
-    single_tap.numberOfTapsRequired = 1;
-    single_tap.numberOfTouchesRequired = 1;
+    single_tap.numberOfTapsRequired = 1
+    single_tap.numberOfTouchesRequired = 1
     clip_view_image.addGestureRecognizer(single_tap)
     clip_view_image.setUserInteractionEnabled(true)
   end

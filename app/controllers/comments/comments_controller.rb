@@ -10,18 +10,21 @@ class CommentsController < ViewController::Landscape
   outlet :comments_table
   
   def viewDidLoad
-    @note_image.setImageWithURL($current_note.image_url, placeholderImage:Note.colorbars)
-    @note_text.setText($current_note.note)
-    @note_date.setText($current_note.when)
-    @note_author.setText($current_note.author_name)
-    @note_timecode.setText($current_note.timecode)
-    @comments_table.dataSource = $current_note.comments
-    @comments_table.reloadData
+    refresh self
     super
   end
 
   def refresh sender
-    p "#{self.class}#refresh pending https://github.com/keyvanfatehi/caps/issues/118"
+    $current_note.refresh! do
+      @note_image.setImageWithURL($current_note.image_url, placeholderImage:Note.colorbars)
+      @note_text.setText($current_note.note)
+      @note_date.setText($current_note.when)
+      @note_author.setText($current_note.author_name)
+      @note_timecode.setText($current_note.timecode)
+      @comments_table.dataSource = $current_note.comments
+      @comments_table.reloadData
+      dismiss_from(self) if sender.is_a? Comment
+    end
   end
 
   def new_comment sender

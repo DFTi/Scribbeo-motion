@@ -404,7 +404,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="new_comment:" destination="DHQ-Sq-3ST" eventType="touchUpInside" id="hF3-he-xeF"/>
+                                            <segue destination="PRE-Gf-J7U" kind="modal" id="leW-LR-SYp"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -447,7 +447,7 @@
         <!--New Comment Controller-->
         <scene sceneID="QLt-GF-4iQ">
             <objects>
-                <viewController storyboardIdentifier="NewCommentController" id="PRE-Gf-J7U" customClass="NewCommentController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewCommentController" modalTransitionStyle="flipHorizontal" id="PRE-Gf-J7U" customClass="NewCommentController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xV2-iS-M7L">
                         <rect key="frame" x="0.0" y="20" width="480" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -456,42 +456,31 @@
                                 <rect key="frame" x="20" y="44" width="440" height="80"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" selected="YES"/>
+                                </accessibility>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="f0D-XZ-bHZ">
+                            <navigationBar contentMode="scaleToFill" id="Xcj-nJ-O8k">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <barButtonItem title="Cancel" id="tpp-4y-BHI">
-                                        <connections>
-                                            <action selector="cancel:" destination="PRE-Gf-J7U" id="K9O-FI-6tv"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ufp-R2-xoe"/>
-                                    <barButtonItem title="Save" id="4mh-jj-LxM">
-                                        <connections>
-                                            <action selector="save:" destination="PRE-Gf-J7U" id="1uP-qf-Qxn"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <navigationItem title="New Comment" id="52o-hE-TAz">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="AjX-V2-a8M">
+                                            <connections>
+                                                <action selector="cancel:" destination="PRE-Gf-J7U" id="Mkg-Qq-UFF"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="1i9-Q9-HiR">
+                                            <connections>
+                                                <action selector="save:" destination="PRE-Gf-J7U" id="Wno-Dj-vkx"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
-                            </toolbar>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="[ORIGINAL NOTE]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="45J-PB-GzB">
-                                <rect key="frame" x="20" y="139" width="180" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="[PARENT COMMENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EX4-mP-HyU">
-                                <rect key="frame" x="223" y="139" width="237" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -502,7 +491,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5x-g4-JJZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1480" y="743"/>
+            <point key="canvasLocation" x="1480" y="-319"/>
         </scene>
         <!--Comment Replies Controller-->
         <scene sceneID="pdl-Hd-Jok">
@@ -648,7 +637,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="new_reply:" destination="y2E-2A-23s" eventType="touchUpInside" id="jN5-jX-Hmu"/>
+                                            <segue destination="PRE-Gf-J7U" kind="modal" id="GjJ-TS-Tkm"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -926,9 +915,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CommentRepliesController.h"/>
             <relationships>
                 <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="new_reply:"/>
                 <relationship kind="action" name="refresh:"/>
-                <relationship kind="action" name="reply:"/>
                 <relationship kind="action" name="return_to_viewer:"/>
                 <relationship kind="action" name="viewDidLoad"/>
                 <relationship kind="outlet" name="avatar"/>
@@ -942,10 +929,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CommentsController.h"/>
             <relationships>
                 <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="new_comment:"/>
                 <relationship kind="action" name="refresh:"/>
-                <relationship kind="action" name="reply:"/>
-                <relationship kind="action" name="viewDidLoad"/>
                 <relationship kind="outlet" name="comments_table"/>
                 <relationship kind="outlet" name="note_author"/>
                 <relationship kind="outlet" name="note_date"/>
@@ -1059,6 +1043,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="mNZ-NO-ziX"/>
-        <segue reference="rKg-tk-eLr"/>
+        <segue reference="leW-LR-SYp"/>
     </inferredMetricsTieBreakers>
 </document>

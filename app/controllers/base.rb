@@ -1,6 +1,7 @@
 module ViewController
   class Base < UIViewController
     extend IB
+    include Dismissable
     
     def masks
       [UIInterfaceOrientationMaskAll]

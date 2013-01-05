@@ -6,6 +6,6 @@ class Comment < Hashable
 
   def initialize(*args)
     super(*args)
-    @replies = Comments.new(@replies)
+    @replies = Comments.new(@replies) if @replies
   end
 end

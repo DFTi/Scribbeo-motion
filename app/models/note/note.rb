@@ -21,11 +21,11 @@ class Note < Hashable
   end
 
   def create_comment!(comment, &block)
-    payload = {private_token: $token, annotation: comment.to_hash}
+    payload = {private_token: $token, comment: comment.to_hash}
     url = $source.api "annotations/#{id}/comment"
     BW::HTTP.put(url, payload: payload) do |res|
       user_feedback = if res.ok?
-        {:success => true, :message => "Comment saved on server."}
+        {:success => true, :message => "Comment saved on server.", :comment => BW::JSON.parse(res.body.to_str)}
       else
         {:success => false, :message => res.error_message}
       end

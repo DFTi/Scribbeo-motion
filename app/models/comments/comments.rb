@@ -12,6 +12,10 @@ class Comments
     @items.any?
   end
 
+  def <<(comment)
+    @items << comment
+  end
+
   # Act as tableview dataSource
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
     @reuseIdentifier ||= "COMMENT_CELL_IDENTIFIER"

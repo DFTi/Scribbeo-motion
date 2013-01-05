@@ -1,5 +1,4 @@
 class CommentRepliesController < ViewController::Landscape
-  include Dismissable
   
   outlet :name
   outlet :date
@@ -13,8 +12,11 @@ class CommentRepliesController < ViewController::Landscape
     @body.setText $current_comment.body
     @avatar.setImageWithURL $current_comment.gravatar.nsurl
     @replies_table.dataSource = $current_comment.replies
-    @replies_table.reloadData
     super
+  end
+
+  def viewDidAppear animated
+    @replies_table.reloadData
   end
 
   def refresh sender
@@ -25,22 +27,11 @@ class CommentRepliesController < ViewController::Landscape
     dismiss_from $viewer
   end
 
-  def new_reply sender
-    # present new comment view controller 
-    # when it loads it will use $current_comment.id as the parent_id
-    # and $current_note.id as the annotation_id
-    presentingViewController.new_comment self
-  end
-
-  def reply sender
-    #comment = sender.superview.superview.comment
-    #comment.reply
-    p "#{self.class}#reply pending"
-  end
-
   def prepareForSegue(segue, sender:sender)
-    $previous_comment = $current_comment
-    $current_comment = sender.superview.superview.comment
+    unless sender.titleLabel.text == 'New Reply'
+      $previous_comment = $current_comment
+      $current_comment = sender.superview.superview.comment
+    end
   end
 
   def back sender

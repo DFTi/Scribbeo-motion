@@ -1,5 +1,4 @@
 class SettingsController < ViewController::Base
-  include Dismissable
 
   outlet :networking
   outlet :autodiscover

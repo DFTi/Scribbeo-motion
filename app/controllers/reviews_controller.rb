@@ -1,5 +1,4 @@
 class ReviewsController < ViewController::Landscape
-  include Dismissable
 
   outlet :reviews_table
 

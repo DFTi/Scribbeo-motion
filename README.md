@@ -1,4 +1,6 @@
 ## Instructions
 
-1. Initialize Dependencies `git submodule init && git submodule update`
+1. Install RubyMotion
+2. Clone Project
 2. Bundle
+2. Rake

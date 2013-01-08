@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SBAnnotation.h"
+#import "../Models/SBAnnotation.h"
 
 
 // Move these strings into properties, Globals are bad.

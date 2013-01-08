@@ -10,7 +10,7 @@
 
 @interface SBAssetAnnotationCell ()
 
-@property (nonatomic, weak) UIImage*  selectedImage;
+@property (nonatomic, strong) UIImage*  selectedImage;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UILabel *timecodeLabel;
 

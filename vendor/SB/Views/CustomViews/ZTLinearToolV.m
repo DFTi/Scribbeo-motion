@@ -7,7 +7,7 @@
 //
 
 #import "ZTLinearToolV.h"
-#import "ZTHelpers.h"
+#import "../Tools/ZTHelpers.h"
 
 #define Extension ()
 

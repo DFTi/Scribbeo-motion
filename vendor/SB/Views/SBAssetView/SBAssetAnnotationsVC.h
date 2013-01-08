@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #import "SBAssetPlayerVC.h"
-#import "RHHorizontalTableView.h"
+#import "../CustomViews/RHHorizontalTableView.h"
 
 @interface SBAssetAnnotationsVC : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 
-@property (nonatomic, weak) IBOutlet SBAssetPlayerVC* assetPlayerVC;
+@property (nonatomic, strong) IBOutlet SBAssetPlayerVC* assetPlayerVC;
 @property (nonatomic, assign) IBOutlet RHHorizontalTableView *annotationsTableView;
-@property (nonatomic, weak) NSArray* annotations;
+@property (nonatomic, strong) NSArray* annotations;
 
 @end

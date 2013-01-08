@@ -10,9 +10,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CoreMedia.h>
 
-#import "CoreMedia_Timecodes.h"
+#import "../Tools/CoreMedia_Timecodes.h"
 
-#import "SBAnnotation.h"
+#import "../Models/SBAnnotation.h"
 
 @interface SBAssetPlayerVC : UIViewController
 

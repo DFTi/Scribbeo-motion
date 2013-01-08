@@ -8,12 +8,12 @@
 
 #import "SBAssetNavigatorVC.h"
 
-#import "SBVideoAssetVC.h"
-#import "SBAssetNavigatorCell.h"
-#import "SBNavigationDetailV.h"
+#import "SBAssetView/SBVideoAssetVC.h"
+#import "CustomViews/SBAssetNavigatorCell.h"
+#import "CustomViews/SBNavigationDetailV.h"
 
-#import "UIImage_AutoResizing.h"
-#import "ZTTVCTemplateLibrary.h"
+#import "../Tools/UIImage_AutoResizing.h"
+#import "../Tools/ZTTVCTemplateLibrary.h"
 
 @interface SBAssetNavigatorVC ()
 

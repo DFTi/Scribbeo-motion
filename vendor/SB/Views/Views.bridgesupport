@@ -1,0 +1,327 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<enum value='1' name='RHHorizontalTableViewScrollIndicatorPositionBottom'/>
+<enum value='0' name='RHHorizontalTableViewScrollIndicatorPositionTop'/>
+<enum value='4' name='SBVideoAssetVCFlagAudio'/>
+<enum value='1' name='SBVideoAssetVCFlagDrawing'/>
+<enum value='0' name='SBVideoAssetVCFlagNone'/>
+<enum value='2' name='SBVideoAssetVCFlagText'/>
+<enum value='8' name='SBVideoAssetVCFlagUpdated'/>
+<enum value='0' name='ZTEast'/>
+<enum value='90' name='ZTNorth'/>
+<enum value='45' name='ZTNorthEast'/>
+<enum value='135' name='ZTNorthWest'/>
+<enum value='-135' name='ZTSoutWest'/>
+<enum value='-90' name='ZTSouth'/>
+<enum value='-45' name='ZTSouthEast'/>
+<enum value='180' name='ZTWest'/>
+<class name='NSObject'>
+<method selector='willDismisslinearTool:'>
+<arg index='0' type='@' name='linearTool' declared_type='ZTLinearToolV*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='willPresentlinearTool:'>
+<arg index='0' type='@' name='linearTool' declared_type='ZTLinearToolV*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='RHHorizontalTableView'>
+<method selector='indicatorPosition'>
+<retval type='i' declared_type='RHHorizontalTableViewScrollIndicatorPosition'/>
+</method>
+<method selector='setIndicatorPosition:'>
+<arg index='0' type='i' name='indicatorPosition' declared_type='RHHorizontalTableViewScrollIndicatorPosition'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='SBAssetAnnotationCell'>
+<method selector='categoryColor'>
+<retval type='@' declared_type='UIColor*'/>
+</method>
+<method selector='frameThumbnail'>
+<retval type='@' declared_type='UIImage*'/>
+</method>
+<method selector='setCategoryColor:'>
+<arg index='0' type='@' name='categoryColor' declared_type='UIColor*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setFrameThumbnail:'>
+<arg index='0' type='@' name='frameThumbnail' declared_type='UIImage*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setTimecode:'>
+<arg index='0' type='@' name='timecode' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setTimecodeFont:'>
+<arg index='0' type='@' name='timecodeFont' declared_type='UIFont*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='timecode'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='timecodeFont'>
+<retval type='@' declared_type='UIFont*'/>
+</method>
+</class>
+<class name='SBAssetAnnotationsVC'>
+<method selector='annotations'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method selector='annotationsTableView'>
+<retval type='@' declared_type='RHHorizontalTableView*'/>
+</method>
+<method selector='assetPlayerVC'>
+<retval type='@' declared_type='SBAssetPlayerVC*'/>
+</method>
+<method selector='setAnnotations:'>
+<arg index='0' type='@' name='annotations' declared_type='NSArray*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAnnotationsTableView:'>
+<arg index='0' type='@' name='annotationsTableView' declared_type='RHHorizontalTableView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAssetPlayerVC:'>
+<arg index='0' type='@' name='assetPlayerVC' declared_type='SBAssetPlayerVC*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='SBAssetNavigatorVC'>
+<method selector='asset'>
+<retval type='@' declared_type='SBAsset*'/>
+</method>
+<method selector='assetNavigatorWithAsset:' class_method='true'>
+<arg index='0' type='@' name='anAsset' declared_type='SBAsset*'/>
+<retval type='@' declared_type='SBAssetNavigatorVC*'/>
+</method>
+<method selector='setAsset:'>
+<arg index='0' type='@' name='asset' declared_type='SBAsset*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='SBAssetPlayerTimecodeV'>
+<method selector='setTimecode:'>
+<arg index='0' type='@' name='timecode' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='timecode'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='SBAssetPlayerV'>
+<method selector='player'>
+<retval type='@' declared_type='AVPlayer*'/>
+</method>
+<method selector='setPlayer:'>
+<arg index='0' type='@' name='aplayer' declared_type='AVPlayer*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='SBAssetPlayerVC'>
+<method selector='assetPlayerVC' class_method='true'>
+<retval type='@' declared_type='SBAssetPlayerVC*'/>
+</method>
+<method selector='assetURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='captureFrame'>
+<retval type='@' declared_type='UIImage*'/>
+</method>
+<method selector='controlsDisabled'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='currentTimecode'>
+<retval type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+</method>
+<method selector='framerate'>
+<retval type='f' declared_type='CGFloat'/>
+</method>
+<method selector='jumpToAnnotation:'>
+<arg index='0' type='@' name='annotation' declared_type='SBAnnotation*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='pause'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='scrubber'>
+<retval type='@' declared_type='UISlider*'/>
+</method>
+<method selector='setAssetURL:'>
+<arg index='0' type='@' name='assetURL' declared_type='NSURL*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setControlsDisabled:'>
+<arg index='0' type='B' name='controlsDisabled' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setScrubber:'>
+<arg index='0' type='@' name='scrubber' declared_type='UISlider*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setStartTimecode:'>
+<arg index='0' type='{_CMTimecode=Iiiif}' name='startTimecode' declared_type='CMTimecode'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='startTimecode'>
+<retval type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+</method>
+</class>
+<class name='SBHoldGestureRecognizer'>
+<method selector='requiredHoldDelay'>
+<retval type='d' declared_type='NSTimeInterval'/>
+</method>
+<method selector='requiredNumberOfTouches'>
+<retval type='I' declared_type='NSUInteger'/>
+</method>
+<method selector='reset'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setRequiredHoldDelay:'>
+<arg index='0' type='d' name='requiredHoldDelay' declared_type='NSTimeInterval'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setRequiredNumberOfTouches:'>
+<arg index='0' type='I' name='requiredNumberOfTouches' declared_type='NSUInteger'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='touchesBegan:withEvent:'>
+<arg index='0' type='@' name='touches' declared_type='NSSet*'/>
+<arg index='1' type='@' name='event' declared_type='UIEvent*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='touchesCancelled:withEvent:'>
+<arg index='0' type='@' name='touches' declared_type='NSSet*'/>
+<arg index='1' type='@' name='event' declared_type='UIEvent*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='touchesEnded:withEvent:'>
+<arg index='0' type='@' name='touches' declared_type='NSSet*'/>
+<arg index='1' type='@' name='event' declared_type='UIEvent*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='touchesMoved:withEvent:'>
+<arg index='0' type='@' name='touches' declared_type='NSSet*'/>
+<arg index='1' type='@' name='event' declared_type='UIEvent*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='SBNavigationDetailV'>
+<method selector='asset'>
+<retval type='@' declared_type='SBAsset*'/>
+</method>
+<method selector='setAsset:'>
+<arg index='0' type='@' name='asset' declared_type='SBAsset*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='SBVideoAssetVC'>
+<method selector='asset'>
+<retval type='@' declared_type='SBAsset*'/>
+</method>
+<method selector='assetAnnotationsVC'>
+<retval type='@' declared_type='SBAssetAnnotationsVC*'/>
+</method>
+<method selector='assetPlayerVC'>
+<retval type='@' declared_type='SBAssetPlayerVC*'/>
+</method>
+<method selector='assetToolbar'>
+<retval type='@' declared_type='UIToolbar*'/>
+</method>
+<method selector='editingMode'>
+<retval type='i' declared_type='SBVideoAssetVCFlags'/>
+</method>
+<method selector='setAsset:'>
+<arg index='0' type='@' name='asset' declared_type='SBAsset*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAssetAnnotationsVC:'>
+<arg index='0' type='@' name='assetAnnotationsVC' declared_type='SBAssetAnnotationsVC*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAssetPlayerVC:'>
+<arg index='0' type='@' name='assetPlayerVC' declared_type='SBAssetPlayerVC*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAssetToolbar:'>
+<arg index='0' type='@' name='assetToolbar' declared_type='UIToolbar*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setCurrentAnnotation:'>
+<arg index='0' type='@' name='annotation' declared_type='SBAnnotation*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='videoAssetVC' class_method='true'>
+<retval type='@' declared_type='SBVideoAssetVC*'/>
+</method>
+</class>
+<class name='UIBezierPath'>
+<method selector='toSVGString'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='ZTDrawView'>
+<method selector='SVGRepresentation'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='brushColor'>
+<retval type='@' declared_type='UIColor*'/>
+</method>
+<method selector='brushSize'>
+<retval type='f' declared_type='CGFloat'/>
+</method>
+<method selector='clearDrawing'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='hasInput'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='loadSVGRepresentation'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setBrushColor:'>
+<arg index='0' type='@' name='brushColor' declared_type='UIColor*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setBrushSize:'>
+<arg index='0' type='f' name='brushSize' declared_type='CGFloat'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='ZTLinearToolV'>
+<method selector='delegate'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='direction'>
+<retval type='i' declared_type='ZTCardinalDirection'/>
+</method>
+<method selector='displayed'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='setDelegate:'>
+<arg index='0' type='@' name='delegate' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setDirection:'>
+<arg index='0' type='i' name='direction' declared_type='ZTCardinalDirection'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setToggleButton:'>
+<arg index='0' type='@' name='toggleButton' declared_type='UIButton*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='toggleButton'>
+<retval type='@' declared_type='UIButton*'/>
+</method>
+</class>
+<informal_protocol name='ZTLinearToolVDelegate'>
+<method selector='willDismisslinearTool:' type='v12@0:4@8'>
+<arg index='0' type='@' name='linearTool' declared_type='ZTLinearToolV*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='willPresentlinearTool:' type='v12@0:4@8'>
+<arg index='0' type='@' name='linearTool' declared_type='ZTLinearToolV*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</informal_protocol>
+</signatures>

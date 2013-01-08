@@ -1,0 +1,60 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<constant name='assetManagerAnnotationRoute' type='@' const='true' declared_type='NSString*'/>
+<constant name='assetManagerAnnotationsRoute' type='@' const='true' declared_type='NSString*'/>
+<constant name='assetManagerClipRoute' type='@' const='true' declared_type='NSString*'/>
+<constant name='assetManagerFilesRoute' type='@' const='true' declared_type='NSString*'/>
+<class name='SBAssetManager'>
+<method selector='apiBaseURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='postAnnotation:forClip:completion:'>
+<arg name='annotation' index='0' type='@' declared_type='SBAnnotation*'/>
+<arg name='clipPrimaryKey' index='1' type='@' declared_type='NSString*'/>
+<arg name='completionBlock' function_pointer='true' index='2' type='@?' declared_type='SBAnnotationPostCompletion'>
+<arg type='@' declared_type='SBAnnotation*'/>
+<arg type='@' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</arg>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='requestAnnotationForPrimaryKey:inClip:completion:'>
+<arg name='primaryKey' index='0' type='@' declared_type='NSString*'/>
+<arg name='clipPrimaryKey' index='1' type='@' declared_type='NSString*'/>
+<arg name='completionBlock' function_pointer='true' index='2' type='@?' declared_type='SBAnnotationRequestCompletion'>
+<arg type='@' declared_type='SBAnnotation*'/>
+<retval type='v' declared_type='void'/>
+</arg>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='requestAnnotationsForClip:completion:'>
+<arg name='clipPrimaryKey' index='0' type='@' declared_type='NSString*'/>
+<arg name='completionBlock' function_pointer='true' index='1' type='@?' declared_type='SBAnnotationListRequestCompletion'>
+<arg type='@' declared_type='NSArray*'/>
+<retval type='v' declared_type='void'/>
+</arg>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='requestAnnotationsRange:inCLip:completion:'>
+<arg name='annotationRange' index='0' type='{_NSRange=II}' declared_type='NSRange'/>
+<arg name='clipPrimaryKey' index='1' type='@' declared_type='NSString*'/>
+<arg name='completionBlock' function_pointer='true' index='2' type='@?' declared_type='SBAnnotationRangeRequestCompletion'>
+<arg type='@' declared_type='NSArray*'/>
+<retval type='v' declared_type='void'/>
+</arg>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='requestFilesForPath:completion:'>
+<arg name='path' index='0' type='@' declared_type='NSString*'/>
+<arg name='completionBlock' function_pointer='true' index='1' type='@?' declared_type='SBFileRequestCompletion'>
+<arg type='@' declared_type='NSArray*'/>
+<retval type='v' declared_type='void'/>
+</arg>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setApiBaseURL:'>
+<arg name='apiBaseURL' index='0' type='@' declared_type='NSURL*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+</signatures>

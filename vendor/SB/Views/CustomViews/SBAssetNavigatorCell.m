@@ -8,7 +8,7 @@
 
 #import "SBAssetNavigatorCell.h"
 
-#import "UIImage_AutoResizing.h"
+// #import "UIImage_AutoResizing.h"
 
 @implementation SBAssetNavigatorCell
 

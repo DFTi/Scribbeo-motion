@@ -10,9 +10,9 @@
 
 #import "SBAssetPlayerVC.h"
 #import "SBAssetAnnotationsVC.h"
-#import "SBAsset.h"
-#import "InfColorPickerController.h"
-#import "ZTLinearToolV.h"
+#import "../Models/SBAsset.h"
+#import "../Tools/InfColorPickerController.h"
+#import "CustomViews/ZTLinearToolV.h"
 
 
 typedef enum {
@@ -31,7 +31,7 @@ typedef enum {
 
 @property (nonatomic, assign) IBOutlet UIToolbar* assetToolbar;
 
-@property (nonatomic, weak) SBAsset* asset;
+@property (nonatomic, strong) SBAsset* asset;
 
 @property (nonatomic, readonly) SBVideoAssetVCFlags editingMode;
 

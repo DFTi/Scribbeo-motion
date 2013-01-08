@@ -7,6 +7,7 @@
 //
 
 #import "SBAssetManager.h"
+#import "../Models/SBFileEntry.h"
 
 NSString * const assetManagerFilesRoute = @"files";
 NSString * const assetManagerClipRoute = @"clip";

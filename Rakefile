@@ -8,6 +8,10 @@ require 'rubygems'
 require 'motion-cocoapods'
 
 Motion::Project::App.setup do |app|
+  # Welcome Back Zach!
+  # The next line allows you to link everything you'd done before
+  # %w[Tools Models Controllers Views].map{|i| app.vendor_project "vendor/SB/#{i}", :static }
+
   # app.redgreen_style = :full
   app.pods { pod 'AFNetworking' }
   app.frameworks << 'AVFoundation'
@@ -16,11 +20,6 @@ Motion::Project::App.setup do |app|
   app.frameworks << 'Crittercism'
   app.vendor_project 'vendor/CrittercismSDK', :static, :headers_dir => 'vendor/CrittercismSDK'
   app.vendor_project 'vendor/Base64', :static
-
-  app.vendor_project 'vendor/SB/Tools', :static
-  app.vendor_project 'vendor/SB/Models', :static
-  # app.vendor_project 'vendor/SB/Controllers', :static
-  # app.vendor_project 'vendor/SB/Views', :static
   
   app.identifier = "com.digitalfilmtree.ScribbeoMotion"
   app.name = 'Scribbeo Pro'
@@ -43,7 +42,7 @@ Motion::Project::App.setup do |app|
   end
 end
 
-# On-device Debugging task
+# Device Debugger (GDB)
 # See file 'debugger_cmds' for more info
 task :debug do
   system('rake device debug=1')

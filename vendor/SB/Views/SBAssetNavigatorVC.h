@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SBAsset.h"
+#import "../Models/SBAsset.h"
 
 @interface SBAssetNavigatorVC : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SBAsset.h"
+#import "../Models/SBAsset.h"
 
 @interface SBNavigationDetailV : UIView
 
-@property (nonatomic, weak) SBAsset* asset;
+@property (nonatomic, strong) SBAsset* asset;
 
 @end

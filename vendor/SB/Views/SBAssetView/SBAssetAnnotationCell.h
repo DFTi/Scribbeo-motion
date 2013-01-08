@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) UIColor*  categoryColor;
 @property (nonatomic, strong) UIImage*  frameThumbnail;
-@property (nonatomic, weak)   UIFont*   timecodeFont;
+@property (nonatomic, strong)   UIFont*   timecodeFont;
 @property (nonatomic, strong) NSString* timecode;
 
 @end

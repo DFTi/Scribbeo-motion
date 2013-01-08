@@ -9,10 +9,10 @@
 #import "SBAssetAnnotationsVC.h"
 
 #import "SBVideoAssetVC.h"
-#import "ZTTVCTemplateLibrary.h"
+#import "../Tools/ZTTVCTemplateLibrary.h"
 #import "SBAssetAnnotationCell.h"
 
-#import "SBAnnotation.h"
+#import "../Models/SBAnnotation.h"
 
 
 #pragma mark Class Extension

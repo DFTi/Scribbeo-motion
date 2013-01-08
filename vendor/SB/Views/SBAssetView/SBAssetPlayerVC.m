@@ -7,10 +7,10 @@
 //
 
 #import "SBAssetPlayerVC.h"
-#import "SBAssetPlayerV.h"
+#import "CustomViews/SBAssetPlayerV.h"
 #import "SBAssetPlayerScrubberVC.h"
 
-#import "UIView+Rendering.h"
+#import "../Tools/UIView+Rendering.h"
 
 #import <QuartzCore/QuartzCore.h>
 

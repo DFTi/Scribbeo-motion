@@ -9,7 +9,7 @@
 #import "ZTDrawView.h"
 
 #import "UIBezierPath+SVG.h"
-#import "SvgToBezier.h"
+#import "../Tools/SvgToBezier.h"
 
 @interface ZTDrawView ()
 {

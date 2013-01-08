@@ -7,7 +7,7 @@
 //
 
 #import "SBAssetPlayerTimecodeV.h"
-#import "UIImage_AutoResizing.h"
+// #import "UIImage_AutoResizing.h"
 
 @interface SBAssetPlayerTimecodeV ()
 

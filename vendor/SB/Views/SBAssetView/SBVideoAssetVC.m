@@ -8,17 +8,17 @@
 
 #import "SBVideoAssetVC.h"
 
-#import "SBAssetPlayerTimecodeV.h"
+#import "CustomViews/SBAssetPlayerTimecodeV.h"
 
-#import "UIView+Additions.h"
-#import "UIToolbar+Items.h"
-#import "UIImage_AutoResizing.h"
-#import "UIView+Rendering.h"
-#import "CoreMedia_Timecodes.h"
+#import "../Tools/UIView+Additions.h"
+#import "../Tools/UIToolbar+Items.h"
+#import "../Tools/UIImage_AutoResizing.h"
+#import "../Tools/UIView+Rendering.h"
+#import "../Tools/CoreMedia_Timecodes.h"
 
-#import "SBAnnotation.h"
+#import "../Models/SBAnnotation.h"
 
-#import "ZTDrawView.h"
+#import "CustomViews/ZTDrawView.h"
 
 #import <QuartzCore/QuartzCore.h>
 

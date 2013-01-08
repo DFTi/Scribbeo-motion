@@ -1,0 +1,19 @@
+{
+    "metadata":{
+        "key":"primaryKey",
+        "creationDate":"Yesterday",
+        "type":2,
+        "name":"Silent Witness.mov",
+        "owner":false, 
+        "locked":false,
+        "final":false,
+        
+        "lastEditDate":"<getDateLastEdited()>",
+        "lastEditor":"<getLastEditor()>",
+        "description":"Silent witness test video",
+        "preview":null,
+        "url":""
+    },
+    
+    "annotations":[]
+}

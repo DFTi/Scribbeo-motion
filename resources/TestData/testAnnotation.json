@@ -1,0 +1,15 @@
+{
+    "metadata":{
+        "key":"primaryKey",
+        "author":"authorUserName",
+        "categories":["category1","category2"],
+        "timecode":"<getCurrentTimecode()>",
+        "frame":"<getCurrentFrameOfVideo().png>"
+    },
+    "data":
+    {
+        "text":"<getWrittenNotes()>",
+        "drawing":"<getSVGOfDrawing()>",
+        "audio":"<getAudioNotes()>"
+    } 
+}

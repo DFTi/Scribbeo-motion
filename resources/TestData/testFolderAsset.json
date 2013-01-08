@@ -1,0 +1,219 @@
+{
+    "metadata": {
+        "key": "primaryKey",
+        "creationDate": "<getCreationDate()>",
+        "type": 1,
+        "name": "Awesome Test Folder",
+        "owner": true,
+        "locked": false,
+        "final": false,
+        "lastEditDate": "<getDateLastEdited()>",
+        "lastEditor": "<getLastEditor()>",
+        "description": "",
+        "preview": null
+    },
+    "data": [
+             {
+             "metadata": {
+             "key": "a",
+             "creationDate": "3 Years ago",
+             "type": 2,
+             "name": "Oldies footage",
+             "owner": true,
+             "locked": false,
+             "final": false,
+             "lastEditDate": "1 week ago",
+             "lastEditor": "Me",
+             "description": "Some old footage that I really enjoy, but needs some fixing up.",
+             "preview": null
+             },
+             "annotations": [
+                             {
+                             "metadata": {
+                             "key": "a",
+                             "author": "SomeGuy",
+                             "categories": [
+                                            "category1",
+                                            "category2"
+                                            ],
+                             "timecode": "01:00:05:00",
+                             "frame": null
+                             },
+                             "data": {
+                             "text": "HAHAHAAH! WOO!",
+                             "drawing": "<getSVGOfDrawing()>",
+                             "audio": null
+                             }
+                             },
+                             {
+                             "metadata": {
+                             "key": "b",
+                             "author": "SomeGuy",
+                             "categories": [
+                                            "category1",
+                                            "category2"
+                                            ],
+                             "timecode": "01:00:45:12",
+                             "frame": null
+                             },
+                             "data": {
+                             "text": "I AM A BANANA!",
+                             "drawing": "<getSVGOfDrawing()>",
+                             "audio": null
+                             }
+                             },
+                             {
+                             "metadata": {
+                             "key": "c",
+                             "author": "Joe",
+                             "categories": [
+                                            "category1",
+                                            "category2"
+                                            ],
+                             "timecode": "01:00:30:00",
+                             "frame": null
+                             },
+                             "data": {
+                             "text": "Geesh, this guy is crazy.",
+                             "drawing": "<getSVGOfDrawing()>",
+                             "audio": null
+                             }
+                             }
+                             ]
+             },
+             {
+             "metadata": {
+             "key": "b",
+             "creationDate": "Yesterday",
+             "type": 2,
+             "name": "Cool stuff",
+             "owner": true,
+             "locked": false,
+             "final": false,
+             "lastEditDate": "Today",
+             "lastEditor": "Me",
+             "description": "I found some awesome stuff the otherday, and had some ideas how it could be used for X Y and Z",
+             "preview": null
+             },"annotations": [
+                               {
+                               "metadata": {
+                               "key": "a",
+                               "author": "SomeGuy",
+                               "categories": [
+                                              "category1",
+                                              "category2"
+                                              ],
+                               "timecode": "01:00:05:00",
+                               "frame": null
+                               },
+                               "data": {
+                               "text": "HAHAHAAH! WOO!",
+                               "drawing": "<getSVGOfDrawing()>",
+                               "audio": null
+                               }
+                               },
+                               {
+                               "metadata": {
+                               "key": "b",
+                               "author": "SomeGuy",
+                               "categories": [
+                                              "category1",
+                                              "category2"
+                                              ],
+                               "timecode": "01:00:45:12",
+                               "frame": null
+                               },
+                               "data": {
+                               "text": "I AM A BANANA!",
+                               "drawing": "<getSVGOfDrawing()>",
+                               "audio": null
+                               }
+                               },
+                               {
+                               "metadata": {
+                               "key": "c",
+                               "author": "Joe",
+                               "categories": [
+                                              "category1",
+                                              "category2"
+                                              ],
+                               "timecode": "01:01:10:00",
+                               "frame": null
+                               },
+                               "data": {
+                               "text": "Geesh, this guy is crazy.",
+                               "drawing": "<getSVGOfDrawing()>",
+                               "audio": null
+                               }
+                               }
+                               ]
+             },
+             {
+             "metadata": {
+             "key": "c",
+             "creationDate": "1 week ago",
+             "type": 2,
+             "name": "Memories",
+             "owner": true,
+             "locked": false,
+             "final": false,
+             "lastEditDate": "3 days ago",
+             "lastEditor": "Me",
+             "description": "This is some footage that needs to get edited for my friends birthday, good times.",
+             "preview": null
+             },"annotations": [
+                               {
+                               "metadata": {
+                               "key": "a",
+                               "author": "SomeGuy",
+                               "categories": [
+                                              "category1",
+                                              "category2"
+                                              ],
+                               "timecode": "01:01:00:00",
+                               "frame": null
+                               },
+                               "data": {
+                               "text": "HAHAHAAH! WOO!",
+                               "drawing": "<getSVGOfDrawing()>",
+                               "audio": null
+                               }
+                               },
+                               {
+                               "metadata": {
+                               "key": "b",
+                               "author": "SomeGuy",
+                               "categories": [
+                                              "category1",
+                                              "category2"
+                                              ],
+                               "timecode": "01:00:45:12",
+                               "frame": null
+                               },
+                               "data": {
+                               "text": "I AM A BANANA!",
+                               "drawing": "<getSVGOfDrawing()>",
+                               "audio": null
+                               }
+                               },
+                               {
+                               "metadata": {
+                               "key": "c",
+                               "author": "Joe",
+                               "categories": [
+                                              "category1",
+                                              "category2"
+                                              ],
+                               "timecode": "01:01:20:00",
+                               "frame": null
+                               },
+                               "data": {
+                               "text": "Geesh, this guy is crazy.",
+                               "drawing": "<getSVGOfDrawing()>",
+                               "audio": null
+                               }
+                               }
+                               ]
+             }
+             ]
+}

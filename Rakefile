@@ -17,7 +17,10 @@ Motion::Project::App.setup do |app|
   app.vendor_project 'vendor/CrittercismSDK', :static, :headers_dir => 'vendor/CrittercismSDK'
   app.vendor_project 'vendor/Base64', :static
 
-  app.vendor_project 'vendor/SB', :static
+  app.vendor_project 'vendor/SB/Tools', :static
+  app.vendor_project 'vendor/SB/Models', :static
+  # app.vendor_project 'vendor/SB/Controllers', :static
+  # app.vendor_project 'vendor/SB/Views', :static
   
   app.identifier = "com.digitalfilmtree.ScribbeoMotion"
   app.name = 'Scribbeo Pro'

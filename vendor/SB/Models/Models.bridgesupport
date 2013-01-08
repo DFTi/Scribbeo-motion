@@ -1,0 +1,271 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<constant const='true' declared_type='NSString*' name='SBFileEntryKeyName' type='@'/>
+<constant const='true' declared_type='NSString*' name='SBFileEntryKeyPrimaryKey' type='@'/>
+<constant const='true' declared_type='NSString*' name='SBFileEntryKeyType' type='@'/>
+<constant const='true' declared_type='NSString*' name='SBFileEntryTypeAudio' type='@'/>
+<constant const='true' declared_type='NSString*' name='SBFileEntryTypeClip' type='@'/>
+<constant const='true' declared_type='NSString*' name='SBFileEntryTypeFolder' type='@'/>
+<constant const='true' declared_type='NSString*' name='SBFileEntryTypeStill' type='@'/>
+<constant const='true' declared_type='NSString*' name='SBFileEntryTypeText' type='@'/>
+<enum value='32784' name='SBAssetAudio'/>
+<enum value='65536' name='SBAssetContainer'/>
+<enum value='65536' name='SBAssetFolder'/>
+<enum value='32772' name='SBAssetImage'/>
+<enum value='32768' name='SBAssetMedia'/>
+<enum value='0' name='SBAssetNone'/>
+<enum value='32776' name='SBAssetPDF'/>
+<enum value='32770' name='SBAssetVideo'/>
+<class name='SBAnnotation'>
+<method class_method='true' selector='annotationWithJSONData:'>
+<arg declared_type='NSData*' index='0' name='JSONData' type='@'/>
+<retval declared_type='SBAnnotation*' type='@'/>
+</method>
+<method selector='data'>
+<retval declared_type='SBAnnotationData*' type='@'/>
+</method>
+<method selector='initWithJSONData:'>
+<arg declared_type='NSData*' index='0' name='JSONData' type='@'/>
+<retval declared_type='SBAnnotation*' type='@'/>
+</method>
+<method selector='metadata'>
+<retval declared_type='SBAnnotationMetadata*' type='@'/>
+</method>
+<method selector='serializeToJSONData'>
+<retval declared_type='NSData*' type='@'/>
+</method>
+<method selector='setData:'>
+<arg declared_type='SBAnnotationData*' index='0' name='data' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setMetadata:'>
+<arg declared_type='SBAnnotationMetadata*' index='0' name='metadata' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='SBAnnotationData'>
+<method selector='audio'>
+<retval declared_type='NSData*' type='@'/>
+</method>
+<method selector='drawing'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='setAudio:'>
+<arg declared_type='NSData*' index='0' name='audio' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setDrawing:'>
+<arg declared_type='NSString*' index='0' name='drawing' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setText:'>
+<arg declared_type='NSString*' index='0' name='text' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='text'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+</class>
+<class name='SBAnnotationMetadata'>
+<method selector='author'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='categories'>
+<retval declared_type='NSMutableArray*' type='@'/>
+</method>
+<method selector='frame'>
+<retval declared_type='NSData*' type='@'/>
+</method>
+<method selector='frameThumbnail'>
+<retval declared_type='NSData*' type='@'/>
+</method>
+<method selector='key'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='setAuthor:'>
+<arg declared_type='NSString*' index='0' name='author' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setCategories:'>
+<arg declared_type='NSMutableArray*' index='0' name='categories' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setFrame:'>
+<arg declared_type='NSData*' index='0' name='frame' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setFrameThumbnail:'>
+<arg declared_type='NSData*' index='0' name='frameThumbnail' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setKey:'>
+<arg declared_type='NSString*' index='0' name='key' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setTimecode:'>
+<arg declared_type='NSString*' index='0' name='timecode' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='timecode'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+</class>
+<class name='SBAsset'>
+<method selector='annotations'>
+<retval declared_type='NSMutableArray*' type='@'/>
+</method>
+<method class_method='true' selector='assetWithJSONData:'>
+<arg declared_type='NSData*' index='0' name='JSONData' type='@'/>
+<retval declared_type='SBAsset*' type='@'/>
+</method>
+<method selector='initWithJSONData:'>
+<arg declared_type='NSData*' index='0' name='JSONData' type='@'/>
+<retval declared_type='SBAsset*' type='@'/>
+</method>
+<method selector='metadata'>
+<retval declared_type='SBAssetMetadata*' type='@'/>
+</method>
+<method selector='setAnnotations:'>
+<arg declared_type='NSMutableArray*' index='0' name='annotations' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setMetadata:'>
+<arg declared_type='SBAssetMetadata*' index='0' name='metadata' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setSubAssets:'>
+<arg declared_type='NSMutableArray*' index='0' name='subAssets' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='subAssets'>
+<retval declared_type='NSMutableArray*' type='@'/>
+</method>
+</class>
+<class name='SBAssetMetadata'>
+<method selector='creationDate'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='description'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='final'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='key'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='lastEditDate'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='lastEditor'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='locked'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='name'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='owner'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='preview'>
+<retval declared_type='NSData*' type='@'/>
+</method>
+<method selector='setCreationDate:'>
+<arg declared_type='NSString*' index='0' name='creationDate' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setDescription:'>
+<arg declared_type='NSString*' index='0' name='description' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setFinal:'>
+<arg declared_type='BOOL' index='0' name='final' type='B'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setKey:'>
+<arg declared_type='NSString*' index='0' name='key' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setLastEditDate:'>
+<arg declared_type='NSString*' index='0' name='lastEditDate' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setLastEditor:'>
+<arg declared_type='NSString*' index='0' name='lastEditor' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setLocked:'>
+<arg declared_type='BOOL' index='0' name='locked' type='B'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setName:'>
+<arg declared_type='NSString*' index='0' name='name' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setOwner:'>
+<arg declared_type='BOOL' index='0' name='owner' type='B'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setPreview:'>
+<arg declared_type='NSData*' index='0' name='preview' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setStartTimecode:'>
+<arg declared_type='NSString*' index='0' name='startTimecode' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setType:'>
+<arg declared_type='SBAssetType' index='0' name='type' type='i'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setUrl:'>
+<arg declared_type='NSString*' index='0' name='url' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='startTimecode'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='type'>
+<retval declared_type='SBAssetType' type='i'/>
+</method>
+<method selector='url'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+</class>
+<class name='SBFileEntry'>
+<method selector='dictionaryRepresentation'>
+<retval declared_type='NSDictionary*' type='@'/>
+</method>
+<method class_method='true' selector='fileEntryWithDictionary:'>
+<arg declared_type='NSDictionary*' index='0' name='aDictionary' type='@'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='initWithDictionary:'>
+<arg declared_type='NSDictionary*' index='0' name='aDictionary' type='@'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='name'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='primaryKey'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='setName:'>
+<arg declared_type='NSString*' index='0' name='name' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setPrimaryKey:'>
+<arg declared_type='NSString*' index='0' name='primaryKey' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setType:'>
+<arg declared_type='NSString*' index='0' name='type' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='type'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+</class>
+</signatures>

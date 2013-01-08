@@ -1,0 +1,475 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<struct name='CMTimecode' type='{_CMTimecode=&quot;frames&quot;I&quot;seconds&quot;i&quot;minutes&quot;i&quot;hours&quot;i&quot;framerate&quot;f}'>
+<field name='frames' type='I' declared_type='NSUInteger'/>
+<field name='seconds' type='i' declared_type='NSInteger'/>
+<field name='minutes' type='i' declared_type='NSInteger'/>
+<field name='hours' type='i' declared_type='NSInteger'/>
+<field name='framerate' type='f' declared_type='float'/>
+</struct>
+<constant name='CMTimcodeZero' const='true' type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+<enum name='CMTimecodeFramerateCompareTolerance' value='0.1'/>
+<enum name='CMTimecodeMinutesInHour' value='60'/>
+<enum name='CMTimecodeSecondsInHour' value='3600'/>
+<enum name='CMTimecodeSecondsInMinute' value='60'/>
+<enum name='InfComponentIndexBrightness' value='2'/>
+<enum name='InfComponentIndexHue' value='0'/>
+<enum name='InfComponentIndexSaturation' value='1'/>
+<enum name='RHHorizontalTableViewScrollIndicatorPositionBottom' value='1'/>
+<enum name='RHHorizontalTableViewScrollIndicatorPositionTop' value='0'/>
+<enum name='UIImage_AutoResizingKeyColor' value='4294902015'/>
+<enum name='UIImage_AutoResizingMarkerColor' value='4278190080'/>
+<function name='CMTimeFromCMTimecode'>
+<arg name='timecode' type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+<retval type='{_CMTime=qiIq}' declared_type='CMTime'/>
+</function>
+<function name='CMTimecodeAdd'>
+<arg name='addend1' type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+<arg name='addend2' type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+<retval type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+</function>
+<function name='CMTimecodeFromCMTime'>
+<arg name='time' type='{_CMTime=qiIq}' declared_type='CMTime'/>
+<arg name='framerate' type='f' declared_type='float'/>
+<retval type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+</function>
+<function name='CMTimecodeFromCMTimeWithoutDrop'>
+<arg name='time' type='{_CMTime=qiIq}' declared_type='CMTime'/>
+<arg name='framerate' type='f' declared_type='float'/>
+<retval type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+</function>
+<function name='CMTimecodeFromNSString'>
+<arg name='timecode' type='@' declared_type='NSString*'/>
+<arg name='framerate' type='f' declared_type='float'/>
+<retval type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+</function>
+<function name='CMTimecodeGetSeconds'>
+<arg name='timecode' type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+<retval type='d' declared_type='Float64'/>
+</function>
+<function name='HSVtoRGB'>
+<arg name='h' type='f' declared_type='float'/>
+<arg name='s' type='f' declared_type='float'/>
+<arg name='v' type='f' declared_type='float'/>
+<arg name='r' type='^f' declared_type='float*'/>
+<arg name='g' type='^f' declared_type='float*'/>
+<arg name='b' type='^f' declared_type='float*'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='NSStringFromCMTimecode'>
+<arg name='timecode' type='{_CMTimecode=Iiiif}' declared_type='CMTimecode'/>
+<retval type='@' declared_type='NSString*'/>
+</function>
+<function name='RGBToHSV'>
+<arg name='r' type='f' declared_type='float'/>
+<arg name='g' type='f' declared_type='float'/>
+<arg name='b' type='f' declared_type='float'/>
+<arg name='h' type='^f' declared_type='float*'/>
+<arg name='s' type='^f' declared_type='float*'/>
+<arg name='v' type='^f' declared_type='float*'/>
+<arg name='preserveHS' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='createCheckerPatternImage'>
+<retval type='^{CGImage=}' declared_type='CGImageRef'/>
+</function>
+<function name='createHSVBarContentImage'>
+<arg name='barComponentIndex' type='i' declared_type='InfComponentIndex'/>
+<arg name='hsv' type='^f' declared_type='float*'/>
+<retval type='^{CGImage=}' declared_type='CGImageRef'/>
+</function>
+<function name='createSaturationBrightnessSquareContentImageWithHue'>
+<arg name='hue' type='f' declared_type='float'/>
+<retval type='^{CGImage=}' declared_type='CGImageRef'/>
+</function>
+<function name='pin'>
+<arg name='minValue' type='f' declared_type='float'/>
+<arg name='value' type='f' declared_type='float'/>
+<arg name='maxValue' type='f' declared_type='float'/>
+<retval type='f' declared_type='float'/>
+</function>
+<class name='InfAlphaBarPicker'>
+<method selector='setValue:'>
+<arg name='value' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='value'>
+<retval type='f' declared_type='float'/>
+</method>
+</class>
+<class name='InfAlphaBarView'>
+<method selector='color'>
+<retval type='@' declared_type='UIColor*'/>
+</method>
+<method selector='setColor:'>
+<arg name='color' index='0' type='@' declared_type='UIColor*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='InfColorBarPicker'>
+<method selector='setValue:'>
+<arg name='value' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='value'>
+<retval type='f' declared_type='float'/>
+</method>
+</class>
+<class name='InfColorIndicatorView'>
+<method selector='color'>
+<retval type='@' declared_type='UIColor*'/>
+</method>
+<method selector='fill'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='setColor:'>
+<arg name='color' index='0' type='@' declared_type='UIColor*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setFill:'>
+<arg name='fill' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='InfColorPickerController'>
+<method selector='alphaPicker'>
+<retval type='@' declared_type='InfAlphaBarPicker*'/>
+</method>
+<method selector='alphaView'>
+<retval type='@' declared_type='InfAlphaBarView*'/>
+</method>
+<method selector='barPicker'>
+<retval type='@' declared_type='InfColorBarPicker*'/>
+</method>
+<method selector='barView'>
+<retval type='@' declared_type='InfColorBarView*'/>
+</method>
+<method class_method='true' selector='colorPickerViewController'>
+<retval type='@' declared_type='InfColorPickerController*'/>
+</method>
+<method selector='delegate'>
+<retval type='@' declared_type='id'/>
+</method>
+<method class_method='true' selector='idealSizeForViewInPopover'>
+<retval type='{CGSize=ff}' declared_type='CGSize'/>
+</method>
+<method selector='navController'>
+<retval type='@' declared_type='UINavigationController*'/>
+</method>
+<method selector='presentModallyOverViewController:'>
+<arg name='controller' index='0' type='@' declared_type='UIViewController*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='resultColor'>
+<retval type='@' declared_type='UIColor*'/>
+</method>
+<method selector='resultColorView'>
+<retval type='@' declared_type='UIView*'/>
+</method>
+<method selector='setAlphaPicker:'>
+<arg name='alphaPicker' index='0' type='@' declared_type='InfAlphaBarPicker*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAlphaView:'>
+<arg name='alphaView' index='0' type='@' declared_type='InfAlphaBarView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setBarPicker:'>
+<arg name='barPicker' index='0' type='@' declared_type='InfColorBarPicker*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setBarView:'>
+<arg name='barView' index='0' type='@' declared_type='InfColorBarView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setDelegate:'>
+<arg name='delegate' index='0' type='@' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setNavController:'>
+<arg name='navController' index='0' type='@' declared_type='UINavigationController*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setResultColor:'>
+<arg name='resultColor' index='0' type='@' declared_type='UIColor*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setResultColorView:'>
+<arg name='resultColorView' index='0' type='@' declared_type='UIView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSourceColor:'>
+<arg name='sourceColor' index='0' type='@' declared_type='UIColor*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSourceColorView:'>
+<arg name='sourceColorView' index='0' type='@' declared_type='UIView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSquarePicker:'>
+<arg name='squarePicker' index='0' type='@' declared_type='InfColorSquarePicker*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSquareView:'>
+<arg name='squareView' index='0' type='@' declared_type='InfColorSquareView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='sourceColor'>
+<retval type='@' declared_type='UIColor*'/>
+</method>
+<method selector='sourceColorView'>
+<retval type='@' declared_type='UIView*'/>
+</method>
+<method selector='squarePicker'>
+<retval type='@' declared_type='InfColorSquarePicker*'/>
+</method>
+<method selector='squareView'>
+<retval type='@' declared_type='InfColorSquareView*'/>
+</method>
+</class>
+<class name='InfColorSquarePicker'>
+<method selector='hue'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='setHue:'>
+<arg name='hue' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setValue:'>
+<arg name='value' index='0' type='{CGPoint=ff}' declared_type='CGPoint'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='value'>
+<retval type='{CGPoint=ff}' declared_type='CGPoint'/>
+</method>
+</class>
+<class name='InfColorSquareView'>
+<method selector='hue'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='setHue:'>
+<arg name='hue' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='InfSourceColorView'>
+<method selector='setTrackingInside:'>
+<arg name='trackingInside' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='trackingInside'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+</class>
+<class name='NSArray'>
+<method selector='isValidIndex:'>
+<arg name='index' index='0' type='i' declared_type='NSInteger'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='safeObjectAtIndex:'>
+<arg name='index' index='0' type='i' declared_type='NSInteger'/>
+<retval type='@' declared_type='id'/>
+</method>
+</class>
+<class name='NSData'>
+<method class_method='true' selector='dataWithBase64EncodedString:'>
+<arg name='string' index='0' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='NSData*'/>
+</method>
+<method class_method='true' selector='dataWithString:'>
+<arg name='aString' index='0' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='NSData*'/>
+</method>
+<method selector='hexString'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='initWithBase64EncodedString:'>
+<arg name='string' index='0' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+</class>
+<class name='NSMutableArray'>
+<method selector='safeRemoveObjectAtIndex:'>
+<arg name='index' index='0' type='i' declared_type='NSInteger'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='NSObject'>
+<method selector='allPropertyKeys'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method selector='colorPickerControllerDidChangeColor:'>
+<arg name='controller' index='0' type='@' declared_type='InfColorPickerController*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='colorPickerControllerDidFinish:'>
+<arg name='controller' index='0' type='@' declared_type='InfColorPickerController*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='dictionaryValue'>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+</class>
+<class name='RHHorizontalTableView'>
+<method selector='indicatorPosition'>
+<retval type='i' declared_type='RHHorizontalTableViewScrollIndicatorPosition'/>
+</method>
+<method selector='setIndicatorPosition:'>
+<arg name='indicatorPosition' index='0' type='i' declared_type='RHHorizontalTableViewScrollIndicatorPosition'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='SvgToBezier'>
+<method selector='bezier'>
+<retval type='@' declared_type='UIBezierPath*'/>
+</method>
+<method selector='dealloc'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='initFromSVGPathNodeDAttr:rect:'>
+<arg name='attr' index='0' type='@' declared_type='NSString*'/>
+<arg name='rect' index='1' type='{CGRect={CGPoint=ff}{CGSize=ff}}' declared_type='CGRect'/>
+<retval type='@' declared_type='id'/>
+</method>
+</class>
+<class name='UIColor'>
+<method class_method='true' selector='randomColor'>
+<retval type='@' declared_type='UIColor*'/>
+</method>
+</class>
+<class name='UIImage'>
+<method class_method='true' selector='autoResizingImageNamed:'>
+<arg name='imageName' index='0' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='UIImage*'/>
+</method>
+</class>
+<class name='UIToolbar'>
+<method selector='addBarButtonItem:afterBarButtonItem:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='barButtonItem' index='1' type='@' declared_type='UIBarButtonItem*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='addBarButtonItem:afterBarButtonItem:animated:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='barButtonItem' index='1' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='doAnimation' index='2' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='addBarButtonItem:beforeBarButtonItem:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='barButtonItem' index='1' type='@' declared_type='UIBarButtonItem*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='addBarButtonItem:beforeBarButtonItem:animated:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='barButtonItem' index='1' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='doAnimation' index='2' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='addBarButtonItemLeft:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='addBarButtonItemLeft:animated:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='doAnimation' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='addBarButtonItemRight:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='addBarButtonItemRight:animated:'>
+<arg name='newBarButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='doAnimation' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='removeBarButtonItem:'>
+<arg name='barButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='removeBarButtonItem:animated:'>
+<arg name='barButtonItem' index='0' type='@' declared_type='UIBarButtonItem*'/>
+<arg name='doAnimation' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='removeBarButtonItemAtIndex:'>
+<arg name='index' index='0' type='i' declared_type='NSInteger'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='removeBarButtonItemAtIndex:animated:'>
+<arg name='index' index='0' type='i' declared_type='NSInteger'/>
+<arg name='doAnimation' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='UIView'>
+<method selector='UIImage'>
+<retval type='@' declared_type='UIImage*'/>
+</method>
+<method selector='createLayerFromRect:'>
+<arg name='aRect' index='0' type='{CGRect={CGPoint=ff}{CGSize=ff}}' declared_type='CGRect'/>
+<retval type='@' declared_type='CALayer*'/>
+</method>
+<method class_method='true' selector='createLayerFromView:inRect:'>
+<arg name='aView' index='0' type='@' declared_type='UIView*'/>
+<arg name='aRect' index='1' type='{CGRect={CGPoint=ff}{CGSize=ff}}' declared_type='CGRect'/>
+<retval type='@' declared_type='CALayer*'/>
+</method>
+<method selector='fillSuperview'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='recursiveDescription'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='replaceWithView:'>
+<arg name='newView' index='0' type='@' declared_type='UIView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method class_method='true' selector='screenShot:inRect:'>
+<arg name='aView' index='0' type='@' declared_type='UIView*'/>
+<arg name='aRect' index='1' type='{CGRect={CGPoint=ff}{CGSize=ff}}' declared_type='CGRect'/>
+<retval type='@' declared_type='UIImage*'/>
+</method>
+<method selector='screenShotInRect:'>
+<arg name='aRect' index='0' type='{CGRect={CGPoint=ff}{CGSize=ff}}' declared_type='CGRect'/>
+<retval type='@' declared_type='UIImage*'/>
+</method>
+<method selector='sizeToView:'>
+<arg name='aView' index='0' type='@' declared_type='UIView*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='subviewContainerRect'>
+<retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' declared_type='CGRect'/>
+</method>
+</class>
+<class name='ZTTVCTemplateLibrary'>
+<method selector='cellOfKind:forTable:'>
+<arg name='theCellKind' index='0' type='@' declared_type='NSString*'/>
+<arg name='aTableView' index='1' type='@' declared_type='UITableView*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithNibNamed:'>
+<arg name='aNibName' index='0' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+</class>
+<informal_protocol name='InfColorPickerControllerDelegate'>
+<method type='v12@0:4@8' selector='colorPickerControllerDidChangeColor:'>
+<arg name='controller' index='0' type='@' declared_type='InfColorPickerController*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v12@0:4@8' selector='colorPickerControllerDidFinish:'>
+<arg name='controller' index='0' type='@' declared_type='InfColorPickerController*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</informal_protocol>
+<informal_protocol name='ZTAdditions'>
+<method type='@8@0:4' selector='allPropertyKeys'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method type='@8@0:4' selector='dictionaryValue'>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+</informal_protocol>
+</signatures>
